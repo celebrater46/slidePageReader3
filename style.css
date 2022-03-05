@@ -57,3 +57,21 @@ p#stealth{
     width: auto;
     opacity: 0.5;
 }
+
+button.stealthButton{
+    width: 47vw;
+    height: 70vh;
+    opacity: 0.2;
+    color: black;
+    background-color: silver;
+    position: fixed;
+    top: 15vh;
+}
+
+button#leftButton{
+    left: 2vw;
+}
+
+button#rightButton{
+    right: 2vw;
+}

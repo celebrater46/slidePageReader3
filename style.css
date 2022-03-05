@@ -25,9 +25,13 @@ p#test{
     font-size: 2rem;
 }
 
+div {
+    writing-mode: vertical-rl;
+}
+
 div#containter{
-    width: 70vw;
-    /*width: 5000vw;*/
+    /*width: 70vw;*/
+    width: 5000vw;
     height: 70vh;
     /*margin: 0 auto;*/
     /*display: flex;*/

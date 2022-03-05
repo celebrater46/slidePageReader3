@@ -11,8 +11,9 @@ const rubyLineHeight = document.getElementById("scale_p_ruby").clientHeight; // 
 // const furiganaMax = 60; // フリガナの最大文字数
 // const maxWidth = scale.clientHeight;
 // const maxHeight = scale.clientWidth;
-const maxWidth = scale.clientWidth;
-const maxHeight = scale.clientHeight;
+const isX = false; // 横書きなら true
+const maxWidth = isX ? scale.clientWidth : scale.clientHeight; // 縦書きの場合は反転
+const maxHeight = isX ? scale.clientHeight : scale.clientWidth;
 const fontSize = 20; // px
 const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
 // const rubyMax = 30; // ルビ漢字の最大文字数
@@ -196,13 +197,17 @@ const createPage = (i, remainText) => new Promise((resolve, reject) => {
     let page = document.createElement("div");
     outer.appendChild(page);
     container.appendChild(outer);
-    const pHeight = document.getElementById("scale_p").clientHeight;
+    const scaleP = document.getElementById("scale_p");
+    const pHeight = isX ? scaleP.clientHeight : scaleP.clientWidth;
     page.id = "p-" + i;
-    let currentHeight = 0;
+    // let currentWidth = 0;
+    let currentHeight = 0; // 縦書きの時は横幅を意味する
     let finalLine = 0;
     // console.log("maxHeight" + maxHeight);
     for(let j = 0; j < pages[i].lines.length; j++){
-        if(page.clientHeight < maxHeight){
+        const pageHeight = isX ? page.clientHeight : page.clientWidth;
+        // if(page.clientHeight < maxHeight){
+        if(pageHeight < maxHeight){
             let p = document.createElement("p");
             p.innerHTML = pages[i].lines[j];
             page.appendChild(p);

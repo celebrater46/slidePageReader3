@@ -9,6 +9,8 @@ const scale = document.getElementById("scale");
 const rubyLineHeight = document.getElementById("scale_p_ruby").clientHeight; // 一行の高さ（ルビあり）
 
 // const furiganaMax = 60; // フリガナの最大文字数
+// const maxWidth = scale.clientHeight;
+// const maxHeight = scale.clientWidth;
 const maxWidth = scale.clientWidth;
 const maxHeight = scale.clientHeight;
 const fontSize = 20; // px

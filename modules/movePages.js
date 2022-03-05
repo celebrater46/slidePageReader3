@@ -1,7 +1,6 @@
 "use strict";
 
 const storage = localStorage;
-
 // const pageNum = storage.currentPage.length > -1 ? storage.getItem("currentPage") : 1;
 
 
@@ -17,24 +16,32 @@ const storage = localStorage;
 //     alert('中身がない(使ってない)');
 // }
 
-const getPageNum = (isLeft) => {
+const getPageNum = () => {
     // const storage = localStorage;
     const pageNum = storage.getItem("currentPage");
     // const parsed = JSON.parse(pageNum);
-    return pageNum === "NaN" ? 1 : pageNum;
+    if(pageNum === "NaN"){
+        return 1;
+    } else if(pageNum > maxPage){
+        storage.currentPage = 1;
+        return 1;
+    } else {
+        return pageNum;
+    }
+    // return pageNum === "NaN" ? 1 : pageNum;
 }
 
-let maxPage = 0;
+let maxPage = 50;
 
 const clickedButton = (isLeft) => {
     // console.log("storage.currentPage: ");
     // console.log(storage.currentPage);
-    const pageNum = parseInt(getPageNum(isLeft));
+    const pageNum = parseInt(getPageNum());
     const newNum = isLeft ? pageNum + 1 : pageNum - 1;
     storage.currentPage = newNum;
     console.log("clicked left");
     console.log("pageNum: " + pageNum);
-    // scroll(newNum);
+    scroll(newNum);
 }
 //
 // const clickRight = () => {
@@ -58,4 +65,5 @@ const scroll = (pageNum) => {
         left: (maxPage - pageNum) * window.innerWidth,
         behavior: 'smooth'
     });
+    console.log("scrolled");
 }

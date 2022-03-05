@@ -26,16 +26,27 @@ p#test{
 }
 
 div#containter{
-    width: 700px;
+    width: 70vw;
+    /*width: 5000vw;*/
     height: 70vh;
-    margin: 0 auto;
-    /*background-color: #111111;*/
+    /*margin: 0 auto;*/
+    /*display: flex;*/
+    /*flex-direction: row-reverse;*/
+    /*justify-content: flex-start;*/
+    /*align-items: flex-start;*/
+    /*flex-wrap: nowrap;*/
+    /*position: absolute;*/
+    /*left: 0;*/
 }
 
 div.page{
     margin: 50px 0;
     padding: 50px;
     background-color: #222;
+}
+
+div.page > div {
+    /*writing-mode: vertical-rl;*/
 }
 
 div#scale{

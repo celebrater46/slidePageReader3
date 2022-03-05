@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+html{
+    font-size: 20px;
+}
+
+body {
+    background-color: black;
+    color: silver;
+    text-align: center;
+    /*font-family: 'Noto Serif JP', 'Kosugi', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;*/
+    font-family: 'Kosugi', 'Noto Serif JP', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;
+}
+
+p{
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    line-height: 150%;
+    text-align: left;
+}
+
+p#test{
+    display: inline-block;
+    font-size: 2rem;
+}
+
+div#containter{
+    width: 700px;
+    height: 70vh;
+    margin: 0 auto;
+    /*background-color: #111111;*/
+}
+
+div.page{
+    margin: 50px 0;
+    padding: 50px;
+    background-color: #222;
+}
+
+div#scale{
+    /*ページ生成の基準を決めるスケール*/
+    width: 600px;
+    height: 55vh;
+    background-color: silver;
+    opacity: 0.05;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: 0;
+}
+
+p#stealth{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: auto;
+    opacity: 0.5;
+}

@@ -5,6 +5,7 @@ const testLine = "　勤務先は大手家電量販店ビックリカメラ｜�
 const testLine2 = "　勤務先は大手家電量販店ビックリカメラ。\n";
 const testLine3 = "１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９｜《ルシファー》。";
 const scale = document.getElementById("scale");
+const container = document.getElementById("containter")
 // const lineHeight = document.getElementById("scale_p").clientHeight; // 一行の高さ（ルビなし）
 const rubyLineHeight = document.getElementById("scale_p_ruby").clientHeight; // 一行の高さ（ルビあり）
 
@@ -247,6 +248,11 @@ let i = 0;
 let remains = "";
 const awaitFunc = async(str) => {
     remains = await createPage(i, str);
+    container.style.width = (i + 1) * window.innerWidth;
+    localStorage.maxPage = i + 1;
+    // window.scrollTo({
+    //     left: (storage.maxPage - pageNum) * window.innerWidth,
+    // });
     if(remains.length > 0){
         i++;
         awaitFunc(remains);
@@ -254,6 +260,8 @@ const awaitFunc = async(str) => {
 }
 
 awaitFunc(sampleTexts[1]);
+
+localStorage.currentPage = 1;
 
 console.log("maxHeight: " + maxHeight);
 

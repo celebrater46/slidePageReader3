@@ -16,7 +16,8 @@ p{
     font-size: 1rem;
     margin: 0;
     padding: 0;
-    line-height: 150%;
+    /*padding: 0 0.6rem 0 0;*/
+    line-height: 180%;
     text-align: left;
 }
 
@@ -31,8 +32,8 @@ div {
 
 div#containter{
     /*width: 70vw;*/
-    width: 5000vw;
-    height: 70vh;
+    /*width: 1500vw;*/
+    height: 96vh;
     /*margin: 0 auto;*/
     /*display: flex;*/
     /*flex-direction: row-reverse;*/
@@ -44,8 +45,9 @@ div#containter{
 }
 
 div.page{
-    margin: 50px 0;
-    padding: 50px;
+    width: 70vw;
+    margin: 0;
+    padding: 50px 15vw;
     background-color: #222;
 }
 
@@ -55,8 +57,8 @@ div.page > div {
 
 div#scale{
     /*ページ生成の基準を決めるスケール*/
-    width: 600px;
-    height: 55vh;
+    width: 70vw;
+    height: 70vh;
     background-color: silver;
     opacity: 0.05;
     position: fixed;

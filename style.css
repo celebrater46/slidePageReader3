@@ -96,6 +96,10 @@ button#rightButton{
     right: 2vw;
 }
 
+div#swipSensor{
+    display: none;
+}
+
 @media screen and (max-width: 1000px){
     html{
         /*font-size: 40px;*/
@@ -118,8 +122,23 @@ button#rightButton{
         height: 80vh;
     }
 
-    button#leftButton{
-        left: auto;
-        right: 50vw;
+    div#swipSensor{
+        display: block;
+        position: fixed;
+        width: 100vw;
+        height: 70vh;
+        background-color: silver;
+        opacity: 0.2;
+        top: 15vh;
+        right: 0;
     }
+
+    button.stealthButton{
+        display: none;
+    }
+
+    /*button#leftButton{*/
+    /*    left: auto;*/
+    /*    right: 50vw;*/
+    /*}*/
 }

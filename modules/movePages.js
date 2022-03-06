@@ -1,6 +1,10 @@
 "use strict";
 
 const storage = localStorage;
+const swipSensor = document.getElementById("swipSensor");
+let startX = null;
+let endX = null;
+
 // let maxPage = storage;
 // const pageNum = storage.currentPage.length > -1 ? storage.getItem("currentPage") : 1;
 
@@ -83,5 +87,34 @@ const scroll = (pageNum, isSmooth) => {
     console.log("scrolled");
     // console.log("maxPage: " + storage.maxPage);
 }
+
+const logSwipeStart = (e) => {
+    e.preventDefault();
+    startX = e.touches[0].pageX;
+}
+
+const logSwipeMove = (e) => {
+    e.preventDefault();
+    endX = e.touches[0].pageX;
+}
+
+const logSwipeEnd = (e) => {
+    e.preventDefault();
+    console.log("startX: " + startX);
+    console.log("endX: " + endX);
+    if(endX - startX > 0) {
+        console.log("Swiped to right.");
+        clickedButton(true);
+    } else {
+        console.log("Swiped to left");
+        clickedButton(false);
+    }
+}
+
+window.addEventListener('load', () => {
+    swipSensor.addEventListener('touchmove', logSwipeMove);
+    swipSensor.addEventListener('touchstart', logSwipeStart);
+    swipSensor.addEventListener('touchend', logSwipeEnd);
+});
 
 scroll(1, false);

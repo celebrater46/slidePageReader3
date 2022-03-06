@@ -200,6 +200,11 @@ const getAdditionalStr = (remainHeight, array) => {
     }
 }
 
+const addFinalClass = () => {
+    const lastPage = container.lastElementChild;
+    lastPage.classList.add("final");
+}
+
 let pages = [];
 const createPage = (i, remainText) => new Promise((resolve, reject) => {
     pages.push(new Page(i));
@@ -252,6 +257,7 @@ const createPage = (i, remainText) => new Promise((resolve, reject) => {
         console.log("page.clientHeight: " + page.clientHeight);
         resolve(lines.join("\n"));
     } else {
+        addFinalClass();
         resolve("");
     }
 });

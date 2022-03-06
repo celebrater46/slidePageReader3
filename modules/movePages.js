@@ -84,4 +84,4 @@ const scroll = (pageNum, isSmooth) => {
     // console.log("maxPage: " + storage.maxPage);
 }
 
-// scroll(1, false);
+scroll(1, false);

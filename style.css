@@ -49,6 +49,9 @@ div.page{
     margin: 0;
     padding: 50px 15vw;
     background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 div.page > div {
@@ -103,15 +106,15 @@ button#rightButton{
     }
 
     div.page{
-        width: 90vw;
+        width: 86vw;
         margin: 0;
-        padding: 50px 5vw;
+        padding: 50px 7vw;
         background-color: #222;
     }
 
     div#scale{
         /*ページ生成の基準を決めるスケール*/
-        width: 90vw;
+        width: 86vw;
         height: 80vh;
     }
 

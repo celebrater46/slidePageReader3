@@ -115,6 +115,16 @@ window.addEventListener('load', () => {
     swipSensor.addEventListener('touchmove', logSwipeMove);
     swipSensor.addEventListener('touchstart', logSwipeStart);
     swipSensor.addEventListener('touchend', logSwipeEnd);
+    storage.currentPage = 1;
+    // scroll(1, false);
+    window.scrollTo({
+        left: (parseInt(storage.maxPage) - 1) * window.innerWidth,
+    });
+});
+
+window.addEventListener('unload', () => {
+    console.log('unload');
+    scroll(1, false);
 });
 
 scroll(1, false);

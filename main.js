@@ -15,12 +15,24 @@ const rubyLineHeight = document.getElementById("scale_p_ruby").clientHeight; // 
 const isX = false; // 横書きなら true
 const maxWidth = isX ? scale.clientWidth : scale.clientHeight; // 縦書きの場合は反転
 const maxHeight = isX ? scale.clientHeight : scale.clientWidth;
-const fontSize = 20; // px
-const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
+// const fontSize = 20; // px
+// const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
 // const rubyMax = 30; // ルビ漢字の最大文字数
-
 // console.log("lineHeight: " + lineHeight);
 // console.log("rubyLineHeight: " + rubyLineHeight);
+const checkIsPhone = () => {
+    if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1)
+        || navigator.userAgent.indexOf('iPod') > 0
+        || navigator.userAgent.indexOf('Android') > 0)
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+const isPhone = checkIsPhone();
+const fontSize = isPhone ? 40 : 20;
+const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
 
 const convertDot = (line) => {
     let str = line;
@@ -263,6 +275,6 @@ awaitFunc(sampleTexts[1]);
 
 localStorage.currentPage = 1;
 
-console.log("maxHeight: " + maxHeight);
-
+// console.log("maxHeight: " + maxHeight);
+console.log("isPhone: " + isPhone);
 

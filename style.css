@@ -92,3 +92,31 @@ button#leftButton{
 button#rightButton{
     right: 2vw;
 }
+
+@media screen and (max-width: 1000px){
+    html{
+        /*font-size: 40px;*/
+    }
+
+    div#containter{
+        /*height: 180vh;*/
+    }
+
+    div.page{
+        width: 90vw;
+        margin: 0;
+        padding: 50px 5vw;
+        background-color: #222;
+    }
+
+    div#scale{
+        /*ページ生成の基準を決めるスケール*/
+        width: 90vw;
+        height: 80vh;
+    }
+
+    button#leftButton{
+        left: auto;
+        right: 50vw;
+    }
+}

@@ -1,7 +1,7 @@
 "use strict";
 
 const storage = localStorage;
-const swipSensor = document.getElementById("swipSensor");
+const swipeSensor = document.getElementById("swipSensor");
 let startX = null;
 let endX = null;
 
@@ -112,14 +112,15 @@ const logSwipeEnd = (e) => {
 }
 
 window.addEventListener('load', () => {
-    swipSensor.addEventListener('touchmove', logSwipeMove);
-    swipSensor.addEventListener('touchstart', logSwipeStart);
-    swipSensor.addEventListener('touchend', logSwipeEnd);
+    swipeSensor.addEventListener('touchmove', logSwipeMove);
+    swipeSensor.addEventListener('touchstart', logSwipeStart);
+    swipeSensor.addEventListener('touchend', logSwipeEnd);
     storage.currentPage = 1;
     // scroll(1, false);
-    window.scrollTo({
-        left: (parseInt(storage.maxPage) - 1) * window.innerWidth,
-    });
+    // window.scrollTo({
+    //     left: (parseInt(storage.maxPage) - 1) * window.innerWidth,
+    // });
+
 });
 
 window.addEventListener('unload', () => {

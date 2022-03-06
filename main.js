@@ -205,11 +205,23 @@ const addFinalClass = () => {
     lastPage.classList.add("final");
 }
 
+const addTitlePage = () => {
+    let divPage = document.createElement("div");
+    divPage.classList.add("page");
+    let divPageChild = document.createElement("div");
+    divPageChild.id = "subTitle";
+    let h2 = document.createElement("h2");
+    h2.innerText = "テストタイトル";
+    divPageChild.appendChild(h2);
+    divPage.appendChild(divPageChild);
+    container.prepend(divPage);
+}
+
 let pages = [];
 const createPage = (i, remainText) => new Promise((resolve, reject) => {
     pages.push(new Page(i));
     pages[i].lines = encodeRuby(remainText).split("\n");
-    let container = document.getElementById("containter");
+    // let container = document.getElementById("containter");
     let outer = document.createElement("div");
     outer.classList.add("page");
     let page = document.createElement("div");
@@ -267,7 +279,7 @@ let remains = "";
 const awaitFunc = async(str) => {
     remains = await createPage(i, str);
     container.style.width = (i + 1) * window.innerWidth;
-    localStorage.maxPage = i + 1;
+    localStorage.maxPage = i + 2;
     // window.scrollTo({
     //     left: (storage.maxPage - pageNum) * window.innerWidth,
     // });
@@ -277,6 +289,7 @@ const awaitFunc = async(str) => {
     }
 }
 
+addTitlePage();
 awaitFunc(sampleTexts[1]);
 
 localStorage.currentPage = 1;

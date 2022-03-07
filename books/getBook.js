@@ -22,9 +22,14 @@ const getBook = async(id, txt) => {
 }
 
 const testCreateBook = async() => {
-    let book = new Book(1, "第三世界収容所", "prison");
-    await book.getChapters();
-    await book.getSubTitles();
+    const textPath = "./books/texts/shiroganeki.txt";
+    const response = await fetch(textPath);
+    const text = await response.text();
+    const book = new Book(1);
+    await book.init(text);
+    await book.getArticles();
+    // await book.getChapters();
+    // await book.getSubTitles();
     console.log("book: ");
     console.log(book);
 }

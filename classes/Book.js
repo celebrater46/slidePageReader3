@@ -1,61 +1,82 @@
 class Book {
-    constructor(num, title, dir) {
-        this.id = num;
-        this.title = title;
-        this.chapters = [];
-        this.subTitles = [];
-        this.dir = dir;
+    constructor(id) {
+        this.id = id;
+        this.title = null;
+        this.chapters = null;
+        this.subTitles = null;
+        this.planeTexts = null;
         this.articles = [];
-        this.currentArticle = 0;
-        // this.texts = []; // .txt
+        this.defaultText = null;
+        this.created = this.getUnixTime();
     }
 
-    async getChapters() {
-        try{
-            const response = await fetch(dir + "/books/" + this.dir + "/chapters.txt");
-            const text = await response.text();
-            const array = text.split("\n");
-            const replaced = array.map((line) => {
-                return line.replace("\r", "");
-            });
-            this.chapters = this.chapters.concat(replaced);
-            return await response.text();
-        } catch (error){
-            console.log(error);
-            this.chapters.push("none");
-            return null;
+    getUnixTime() {
+        const date = new Date();
+        return date.getTime();
+    }
+
+    getTitle(txt) {
+        const title = txt.match(/<Title>(.*)<\/Title>/i);
+        this.title = title[0].replace(/<Title>(.*)<\/Title>/i, "$1");
+    }
+
+    getChapters(txt) {
+        const tempArray = txt.match(/<Chapter>(.*)<\/Chapter>/gi);
+        let chapters = [];
+        for(let i = 0; i < tempArray.length; i++){
+            chapters.push(tempArray[i].replace(/<Chapter>(.*)<\/Chapter>/i, "$1"));
         }
+        this.chapters = chapters;
     }
 
-    async getSubTitles() {
-        try{
-            const response = await fetch(dir + "/books/" + this.dir + "/subTitles.txt");
-            const text = await response.text();
-            const array = text.split("\n");
-            return array.map((line) => {
-                const str = line.replace("\r", "");
-                const numNumtitle = str.split("|");
-                const obj = {
-                    "chapter": numNumtitle[0],
-                    "file": numNumtitle[1],
-                    "subTitle": numNumtitle[2]
-                };
-                this.subTitles.push(obj);
-                return obj;
-            });
-            // return await response.text();
-        } catch (error){
-            console.log(error);
-            this.subTitles.push("none");
-            return null;
+    getSubTitles(txt) {
+        const tempArray = txt.match(/<Sub>(.*)<\/Sub>/gi);
+        let subs = [];
+        for(let i = 0; i < tempArray.length; i++){
+            subs.push(tempArray[i].replace(/<Sub>(.*)<\/Sub>/i, "$1"));
         }
+        this.subTitles = subs;
     }
 
-    async getAsyncText() {
-        const chapters = await this.getChapters();
-        const subTitles = await this.getSubTitles();
-        console.log("From getAsyncText(): ");
-        console.log(chapters); // succeeded
-        console.log(subTitles); // succeeded
+    getTexts(txt) {
+        let array = [];
+        let replaced = txt.replace(/((\r\n)*|(\r)*|(\n)*)<Break(.*)\/>((\r\n)*|(\r)*|(\n)*)/gi, "#BR#");
+        replaced = replaced.split("#BR#");
+        for(let i = 0; i < replaced.length; i++){
+            // let str = replaced[i].replace(/<Title>(.*)<\/Title>((\r\n)*|(\r)*|(\n)*)/gi, "");
+            // array.push(str);
+            array.push(replaced[i]);
+        }
+        this.defaultText = txt;
+        this.planeTexts = array;
+    }
+
+    async init(txt){
+        return await this.initPromise(txt);
+    }
+
+    initPromise(txt) {
+        return new Promise(resolve => {
+            this.getTitle(txt);
+            this.getChapters(txt);
+            this.getSubTitles(txt);
+            this.getTexts(txt);
+            resolve();
+        });
+    }
+
+    async getArticles() {
+        return await this.getArticlesPromise();
+    }
+
+    getArticlesPromise() {
+        return new Promise(resolve => {
+            let i = 0;
+            this.planeTexts.map((text) => {
+                this.articles.push(new Article(i, text));
+                i++;
+            });
+            resolve();
+        });
     }
 }

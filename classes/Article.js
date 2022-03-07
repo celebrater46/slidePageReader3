@@ -1,20 +1,30 @@
 class Article {
-    constructor(num, title, font, width, height) {
+    constructor(num, text) {
         this.id = num;
-        this.title = title;
-        this.chapterNum = 0;
-        this.chapterName = "";
-        this.startPage = 0;
-        this.lines = [];
-        this.pageObjs = [];
-        this.maxWidth = width;
-        // this.maxHeight = height;
-        this.maxHeight = height;
-        this.fontSize = font; // px
-        this.rubyLineHeight = this.fontSize * 2; // px
-        this.maxChars = Math.floor(this.maxWidth / this.fontSize);
-        this.i = 0;
-        this.remains = [];
-        this.plane = ""; // txt data (for remaking pages)
+        this.chapter = this.getChapter(text);
+        this.title = this.getTitle(text);
+        this.plane = this.getText(text);
+        this.pages = [];
+    }
+
+    getChapter(text){
+        // console.log("text: ");
+        // console.log(text);
+        const chap = text.match(/<Chapter>(.*)<\/Chapter>/i);
+        console.log("chap:");
+        console.log(chap);
+        return chap === null ? null : chap[0].replace(/<Chapter>(.*)<\/Chapter>/i, "$1");
+    }
+
+    getTitle(text){
+        const sub = text.match(/<Sub>(.*)<\/Sub>/i);
+        return sub === null ? null : sub[0].replace(/<Sub>(.*)<\/Sub>/i, "$1");
+    }
+
+    getText(text) {
+        let str = text.replace(/((\r\n)*|(\r)*|(\n)*)<Title>(.*)<\/Title>((\r\n)*|(\r)*|(\n)*)/gi, "");
+        str = str.replace(/((\r\n)*|(\r)*|(\n)*)<Chapter>(.*)<\/Chapter>((\r\n)*|(\r)*|(\n)*)/gi, "");
+        str = str.replace(/((\r\n)*|(\r)*|(\n)*)<Sub>(.*)<\/Sub>((\r\n)*|(\r)*|(\n)*)/gi, "");
+        return str;
     }
 }

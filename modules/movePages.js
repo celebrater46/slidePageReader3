@@ -27,7 +27,7 @@ const getPageNum = () => {
     // const parsed = JSON.parse(pageNum);
     // console.log("pageNum: " + pageNum);
     // console.log("typeof pageNum: " + typeof pageNum);
-    if(pageNum === "NaN"){
+    if(pageNum === "NaN" || pageNum < 1 || pageNum === null || pageNum === undefined){
         return 1;
     } else if(pageNum > storage.maxPage){
         storage.currentPage = 1;

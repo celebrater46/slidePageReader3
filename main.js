@@ -205,18 +205,6 @@ const addFinalClass = () => {
     lastPage.classList.add("final");
 }
 
-const addTitlePage = () => {
-    let divPage = document.createElement("div");
-    divPage.classList.add("page");
-    let divPageChild = document.createElement("div");
-    divPageChild.id = "subTitle";
-    let h2 = document.createElement("h2");
-    h2.innerText = "テストタイトル";
-    divPageChild.appendChild(h2);
-    divPage.appendChild(divPageChild);
-    container.prepend(divPage);
-}
-
 let pages = [];
 const createPage = (i, remainText) => new Promise((resolve, reject) => {
     pages.push(new Page(i));
@@ -230,7 +218,7 @@ const createPage = (i, remainText) => new Promise((resolve, reject) => {
     const scaleP = document.getElementById("scale_p");
     const pHeight = isX ? scaleP.clientHeight : scaleP.clientWidth;
     page.id = "p-" + i;
-    // let currentWidth = 0;
+    // let currentWidth = prison;
     let currentHeight = 0; // 縦書きの時は横幅を意味する
     let finalLine = 0;
     // console.log("maxHeight" + maxHeight);
@@ -289,11 +277,46 @@ const awaitFunc = async(str) => {
     }
 }
 
+const addTitlePage = () => {
+    let divPage = document.createElement("div");
+    divPage.classList.add("page");
+    let divPageChild = document.createElement("div");
+    divPageChild.id = "subTitle";
+    let h2 = document.createElement("h2");
+    h2.innerText = "テストタイトル";
+    divPageChild.appendChild(h2);
+    divPage.appendChild(divPageChild);
+    container.prepend(divPage);
+}
+
+const getAndInitStorage = (key) => {
+    const value = storage.getItem(key);
+    if(value === "NaN" || value < 1 || value === null || value === undefined){
+        storage[key] = 1;
+        return 1;
+    } else {
+        return parseInt(value);
+    }
+}
+
+const getUrlParameterToArray = () => {
+    const parameter = location.search;
+    if(parameter !== ""){
+
+    }
+}
+
+const init = () => {
+
+    // const novelId = getAndInitStorage("sprNovelId");
+    // const epId = getAndInitStorage("sprNovel1_EpisodeId");
+}
+
 addTitlePage();
 awaitFunc(sampleTexts[1]);
 
 localStorage.currentPage = 1;
 
 // console.log("maxHeight: " + maxHeight);
-console.log("isPhone: " + isPhone);
-
+// console.log("isPhone: " + isPhone);
+// console.log(location.search === "" ? '""' : location.search); // ""

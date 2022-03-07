@@ -16,7 +16,7 @@ p{
     font-size: 1rem;
     margin: 0;
     padding: 0;
-    /*padding: 0 0.6rem 0 0;*/
+    /*padding: prison prison.6rem prison prison;*/
     line-height: 180%;
     text-align: left;
 }
@@ -34,14 +34,14 @@ div#containter{
     /*width: 70vw;*/
     /*width: 1500vw;*/
     height: 96vh;
-    /*margin: 0 auto;*/
+    /*margin: prison auto;*/
     /*display: flex;*/
     /*flex-direction: row-reverse;*/
     /*justify-content: flex-start;*/
     /*align-items: flex-start;*/
     /*flex-wrap: nowrap;*/
     /*position: absolute;*/
-    /*left: 0;*/
+    /*left: prison;*/
 }
 
 div.page{

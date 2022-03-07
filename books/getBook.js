@@ -28,12 +28,15 @@ const testCreateBook = async() => {
     const book = new Book(1);
     await book.init(text);
     await book.getArticles();
-    localStorage["shiroganeki"] = book;
+    // localStorage["shiroganeki"] = book;
+    localStorage.setItem("shiroganeki", JSON.stringify(book));
     // await book.getChapters();
     // await book.getSubTitles();
     // console.log("book: ");
     // console.log(book);
-    console.log(localStorage.getItem("shiroganeki")); // [object object]
+    // console.log(localStorage.getItem("shiroganeki")); // [object object]
+    const json = JSON.parse(localStorage.getItem("shiroganeki"));
+    console.log(json); // succeeded
 }
 
 // getBook(1, "bookList");

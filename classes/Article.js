@@ -1,7 +1,9 @@
-class Episode {
+class Article {
     constructor(num, title, font, width, height) {
         this.id = num;
         this.title = title;
+        this.chapterNum = 0;
+        this.chapterName = "";
         this.startPage = 0;
         this.lines = [];
         this.pageObjs = [];
@@ -13,5 +15,6 @@ class Episode {
         this.maxChars = Math.floor(this.maxWidth / this.fontSize);
         this.i = 0;
         this.remains = [];
+        this.plane = ""; // txt data (for remaking pages)
     }
 }

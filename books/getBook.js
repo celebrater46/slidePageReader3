@@ -11,7 +11,7 @@ const getBook = async(txt) => {
     // const href = location.href; // https://enin-world.sakura.ne.jp/index.html
     // const pathname = location.pathname; // /index.html
     // const textPath = href.replace(pathname, "") + "/books/bookList.txt";
-    const textPath = "./books/" + txt;
+    const textPath = "./books/" + txt + ".txt";
     const response = await fetch(textPath);
     const text = await response.text();
     const array = convertTextToArray(text);
@@ -19,4 +19,4 @@ const getBook = async(txt) => {
     console.log(array);
 }
 
-getBook("bookList.txt");
+getBook("bookList");

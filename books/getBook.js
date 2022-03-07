@@ -28,10 +28,12 @@ const testCreateBook = async() => {
     const book = new Book(1);
     await book.init(text);
     await book.getArticles();
+    localStorage["shiroganeki"] = book;
     // await book.getChapters();
     // await book.getSubTitles();
-    console.log("book: ");
-    console.log(book);
+    // console.log("book: ");
+    // console.log(book);
+    console.log(localStorage.getItem("shiroganeki")); // [object object]
 }
 
 // getBook(1, "bookList");

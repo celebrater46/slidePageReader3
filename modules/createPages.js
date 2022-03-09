@@ -169,10 +169,26 @@ const addFinalClass = () => {
     lastPage.classList.add("final");
 }
 
+const checkBrCode = (str) => {
+    if(str.indexOf("\r\n") > -1){
+        return "\r\n";
+    } else if(str.indexOf("\n") > -1){
+        return "\n";
+    } else if(str.indexOf("\r") > -1){
+        return "\r"
+    } else {
+        return "";
+    }
+}
+
 let pages = [];
 const createPage = (i, remainText) => new Promise(resolve => {
     pages.push(new Page(i));
-    pages[i].lines = encodeRuby(remainText).split("\n");
+    const encoded = encodeRuby(remainText);
+    const br = checkBrCode(encoded);
+    if(br !== ""){
+        pages[i].lines = encoded.split(br);
+    }
     // let container = document.getElementById("containter");
     let outer = document.createElement("div");
     outer.classList.add("page");
@@ -187,7 +203,8 @@ const createPage = (i, remainText) => new Promise(resolve => {
     let finalLine = 0;
     for(let j = 0; j < pages[i].lines.length; j++){
         // const pageHeight = isX ? page.clientHeight : page.clientWidth;
-        const line = pages[i].lines[j];
+        let line = pages[i].lines[j];
+        line = line === "" ? "　" : line;
         scaleP.innerHTML = line;
         // if(page.clientHeight < maxHeight){
         // if(pageHeight < maxHeight){

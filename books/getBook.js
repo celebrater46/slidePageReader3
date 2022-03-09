@@ -34,6 +34,7 @@ const createBook = async() => {
     // const json = JSON.parse(localStorage.getItem("shiroganeki"));
     // console.log("json"); // succeeded
     // console.log(json); // succeeded
+    console.log(book);
     return book;
 }
 

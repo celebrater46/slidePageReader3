@@ -21,10 +21,10 @@ const checkIsPhone = () => {
 const isPhone = checkIsPhone();
 const fontSizeNum = parseInt(storage.sprFontSize);
 const fontSize = isPhone ? fontSizeArray[fontSizeNum] * 2 : fontSizeArray[fontSizeNum];
-const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
+const maxChars = Math.floor((isX ? maxWidth : maxHeight) / fontSize); // 1行あたりの最大文字数
 
 const getIndexOfLineBreak = (encodedLine, remainLines) => {
-    let scaleTest = document.getElementById("scale_test");
+    const scaleTest = document.getElementById("scaleTest");
     scaleTest.innerHTML = "";
     const maxHeight = rubyLineHeight * remainLines;
     console.log("maxHeight: " + maxHeight);
@@ -35,7 +35,10 @@ const getIndexOfLineBreak = (encodedLine, remainLines) => {
             // ルビタグの抽出
             const ruby = str.match(/<ruby><rb>([^\x01-\x7E]+)<\/rb><rp>\(<\/rp><rt>([^\x01-\x7E]+)<\/rt><rp>\)<\/rp><\/ruby>/);
             scaleTest.innerHTML += ruby[0];
-            if(scaleTest.clientHeight > maxHeight){
+            const pHeight = isX ? scaleTest.clientHeight : scaleTest.clientWidth;
+            // if(scaleTest.clientHeight > maxHeight){
+            console.log("pHeight:maxHeight " + pHeight + " : " + maxHeight);
+            if(pHeight > maxHeight){
                 console.log(scaleTest.innerHTML);
                 return Math.floor(num);
             } else {
@@ -44,15 +47,21 @@ const getIndexOfLineBreak = (encodedLine, remainLines) => {
             str = str.replace("<ruby>", "<xxxx>"); // 現在のルビタグの無効化
         } else {
             scaleTest.innerHTML += str.substr(num, 1);
-            if(scaleTest.clientHeight > maxHeight){
+            const pHeight = isX ? scaleTest.clientHeight : scaleTest.clientWidth;
+            // if(scaleTest.clientHeight > maxHeight){
+            console.log("pHeight:maxHeight " + pHeight + " : " + maxHeight);
+            if(pHeight > maxHeight){
                 console.log(scaleTest.innerHTML);
                 return Math.floor(num);
             } else {
                 num++;
             }
         }
+        if(num > str.length){
+            return Math.floor(num);
+        }
         if(num > 5000){
-            console.log("endless loop occurred")
+            console.log("endless loop occurred");
             return -1; // 無限ループエラー対策
         }
     }
@@ -60,8 +69,10 @@ const getIndexOfLineBreak = (encodedLine, remainLines) => {
 
 // 禁則処理によって排除される文字数を算出
 const getNumOfDeletedCharsByKinsokuOneLine = (line) => {
+    console.log("kinsoku onelined");
     const char = line.substr(maxChars - 1, 1);
     const next = line.substr(maxChars, 1);
+    console.log("maxChars: " + maxChars);
     if(char.search(/[「『（《〈【〚［〔｛]/) > -1){
         return 1;
     } else if(char === "―") {
@@ -81,6 +92,7 @@ const getNumOfDeletedCharsByKinsokuOneLine = (line) => {
 }
 
 const getNumOfDeletedCharsBykinsoku = (line) => {
+    console.log("kinsokued");
     let sum = 0;
     let remains = line;
     let i = 0;
@@ -99,10 +111,10 @@ const getNumOfDeletedCharsBykinsoku = (line) => {
 }
 
 const separateFinalLine = (line, remainLines) => {
-    const hasRuby = line.indexOf("｜");
+    const hasRuby = line.indexOf("<ruby>");
     const max = maxChars * remainLines;
-    console.log("max: " + max);
-        console.log("line in separateFinalLine: " + line);
+    // console.log("max: " + max);
+    // console.log("line in separateFinalLine: " + line);
     if(hasRuby > -1 && hasRuby < max){
         // const encoded = encodeRuby(line);
         // ルビが１行内にあるなら、新しい改行ポイント indexOf を取得

@@ -21,11 +21,6 @@ p{
     text-align: left;
 }
 
-p#test{
-    display: inline-block;
-    font-size: 2rem;
-}
-
 div {
     writing-mode: vertical-rl;
 }
@@ -46,8 +41,9 @@ div#containter{
 
 div.page{
     width: 70vw;
+    height: 86vh;
     margin: 0;
-    padding: 50px 15vw;
+    padding: 5vh 15vw;
     background-color: #222;
     display: flex;
     justify-content: center;
@@ -61,13 +57,18 @@ div.page > div {
 div#scale{
     /*ページ生成の基準を決めるスケール*/
     width: 70vw;
-    height: 70vh;
+    height: 86vh;
     background-color: silver;
     opacity: 0.05;
     position: fixed;
     inset: 0;
     margin: auto;
     padding: 0;
+}
+
+p#scaleTest{
+    display: inline-block;
+    font-size: 1rem;
 }
 
 p#stealth{

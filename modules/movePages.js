@@ -1,6 +1,6 @@
 "use strict";
 
-const storage = localStorage;
+// const storage = localStorage;
 const swipeSensor = document.getElementById("swipSensor");
 let startX = null;
 let endX = null;

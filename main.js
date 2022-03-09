@@ -12,15 +12,54 @@ const getAndInitStorage = (key) => {
 
 const getUrlParameterToArray = () => {
     const parameter = location.search;
-    if(parameter !== ""){
-
+    // book=1
+    if(parameter.indexOf("book") > -1){
+        const book = parameter.match(/book=\d+/);
+        const id = book[0].substr(5);
+        console.log(id);
     }
 }
 
-const init = () => {
+// const initLocalStorage = () => {
+//     const storage = localStorage;
+//     // storage.sprColor = storage.sprColor === undefined ? "black";
+//     if(storage.sprColor === undefined){
+//         storage.sprColor = "black";
+//     }
+//     if(storage.sprFontFamily === undefined){
+//         storage.sprFontFamily = "mincho";
+//     }
+//     if(storage.sprFontSize === undefined){
+//         storage.sprFontSize = 2; // 1-4
+//     }
+//     if(storage.currentPage === undefined){
+//         storage.currentPage = 1;
+//     }
+// }
 
+const init = async() => {
+    // initLocalStorage();
+    const book = await createBook(); // getBook.js
+    // console.log("book:");
+    // console.log(book); // succeeded
+    let pages = [];
+    addTitlePage(book.title, 1);
+    for(let i = 0; i < book.articles.length; i++){
+        const chapter = book.articles[i].chapter;
+        if(chapter !== null){
+            addTitlePage(chapter, 2);
+        }
+        const subTitle = book.articles[i].title;
+        if(subTitle !== null){
+            addTitlePage(subTitle, 2);
+        }
+        await asyncCreatePages(book.articles[i].plane);
+    }
     // const novelId = getAndInitStorage("sprNovelId");
     // const epId = getAndInitStorage("sprNovel1_EpisodeId");
 }
 
-localStorage.currentPage = 1;
+init();
+// getUrlParameterToArray();
+
+// localStorage.currentPage = 1;

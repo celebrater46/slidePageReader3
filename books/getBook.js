@@ -21,7 +21,9 @@ const convertTextToArray =(txt) => {
 //     console.log(array);
 // }
 
-const testCreateBook = async() => {
+// const testCreateBook = async() => {
+const createBook = async() => {
+    // console.log("hello");
     const textPath = "./books/texts/shiroganeki.txt";
     const response = await fetch(textPath);
     const text = await response.text();
@@ -29,9 +31,11 @@ const testCreateBook = async() => {
     await book.init(text);
     await book.getArticles();
     localStorage.setItem("shiroganeki", JSON.stringify(book));
-    const json = JSON.parse(localStorage.getItem("shiroganeki"));
-    console.log(json); // succeeded
+    // const json = JSON.parse(localStorage.getItem("shiroganeki"));
+    // console.log("json"); // succeeded
+    // console.log(json); // succeeded
+    return book;
 }
 
 // getBook(1, "bookList");
-testCreateBook();
+// testCreateBook();

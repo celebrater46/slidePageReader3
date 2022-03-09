@@ -1,16 +1,29 @@
 "use strict";
 
+// const novel = document.getElementById("novel");
+const testLine = "　勤務先は大手家電量販店ビックリカメラ｜六出那《ろくでな》支店。無論、正社員などではない。ここに｜《サラリーマン》は｜存在しない《ノット・イクシスト》。会社の都合でいつでも｜馘首《クビ》にされる百円ライターさながらの使い捨て｜非正規社員《イレギュラー》である。";
+const testLine2 = "　勤務先は大手家電量販店ビックリカメラ。\n";
+const testLine3 = "１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９｜《ルシファー》。";
 const scale = document.getElementById("scale");
 const container = document.getElementById("containter")
+// const lineHeight = document.getElementById("scale_p").clientHeight; // 一行の高さ（ルビなし）
 const rubyLineHeight = document.getElementById("scale_p_ruby").clientHeight; // 一行の高さ（ルビあり）
+
+// const furiganaMax = 60; // フリガナの最大文字数
+// const maxWidth = scale.clientHeight;
+// const maxHeight = scale.clientWidth;
 const isX = false; // 横書きなら true
 const maxWidth = isX ? scale.clientWidth : scale.clientHeight; // 縦書きの場合は反転
 const maxHeight = isX ? scale.clientHeight : scale.clientWidth;
+// const fontSize = 20; // px
+// const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
+// const rubyMax = 30; // ルビ漢字の最大文字数
+// console.log("lineHeight: " + lineHeight);
+// console.log("rubyLineHeight: " + rubyLineHeight);
 const checkIsPhone = () => {
-    const agent = navigator.userAgent;
-    if ((agent.indexOf('iPhone') > 0 && agent.indexOf('iPad') == -1)
-        || agent.indexOf('iPod') > 0
-        || agent.indexOf('Android') > 0)
+    if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1)
+        || navigator.userAgent.indexOf('iPod') > 0
+        || navigator.userAgent.indexOf('Android') > 0)
     {
         return true;
     } else {
@@ -18,9 +31,51 @@ const checkIsPhone = () => {
     }
 }
 const isPhone = checkIsPhone();
-const fontSizeNum = parseInt(storage.sprFontSize);
-const fontSize = isPhone ? fontSizeArray[fontSizeNum] * 2 : fontSizeArray[fontSizeNum];
+const fontSize = isPhone ? 40 : 20;
 const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
+
+const convertDot = (line) => {
+    let str = line;
+    let i = 0;
+    while(str.search(/《《[^》]+》》/) > -1){
+        const chars = str.match(/《《[^》]+》》/);
+        let converted = "";
+        for(let j = 2; j < chars[0].length - 2; j++){ // match() returns not String but Array
+            converted += "<ruby><rb>";
+            converted += chars[0].substr(j, 1);
+            converted += "</rb><rp>(</rp><rt>・</rt><rp>)</rp></ruby>";
+        }
+        str = str.replace(/《《[^》]+》》/, converted);
+        i++;
+        if(i > 1000){
+            console.log("endless loop occurred!");
+            break;
+        }
+    }
+    return str;
+}
+
+const encodeRuby = (line) => {
+    const dotConverted = convertDot(line);
+    if(dotConverted.indexOf("｜") > -1){
+        return dotConverted.replace(
+            /｜([^《]+)《([^》]+)》/g,
+            "<ruby><rb>$1</rb><rp>(</rp><rt>$2</rt><rp>)</rp></ruby>"
+        );
+    }
+    return dotConverted;
+}
+
+const decodeRuby = (line) => {
+    let str = line;
+    if(str.indexOf("<ruby><rb>") > -1) {
+        str = str.replace(
+            /<ruby><rb>([^\x01-\x7E]+)<\/rb><rp>\(<\/rp><rt>([^\x01-\x7E]+)<\/rt><rp>\)<\/rp><\/ruby>/g,
+            "｜$1《$2》"
+        );
+        return str;
+    }
+}
 
 const getIndexOfLineBreak = (encodedLine, remainLines) => {
     let scaleTest = document.getElementById("scale_test");
@@ -222,21 +277,20 @@ const asyncCreatePages = async(str) => {
     }
 }
 
-const addTitlePage = (str, num) => {
+const addTitlePage = () => {
     let divPage = document.createElement("div");
     divPage.classList.add("page");
     let divPageChild = document.createElement("div");
     divPageChild.id = "subTitle";
-    let h = document.createElement("h" + num);
-    // h2.innerText = "テストタイトル";
-    h.innerText = str;
-    divPageChild.appendChild(h);
+    let h2 = document.createElement("h2");
+    h2.innerText = "テストタイトル";
+    divPageChild.appendChild(h2);
     divPage.appendChild(divPageChild);
     container.prepend(divPage);
 }
 
-// addTitlePage();
-// asyncCreatePages(sampleTexts[1]);
+addTitlePage();
+asyncCreatePages(sampleTexts[1]);
 
 // localStorage.currentPage = 1;
 

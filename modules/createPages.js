@@ -202,7 +202,7 @@ const createPage = (i, remainText) => new Promise(resolve => {
             // console.log("pHeight: " + pHeight);
         } else {
             // console.log("currentHeight > maxHeight");
-            // console.log("finalLine: " + finalLine);
+            console.log("finalLine: " + finalLine);
             if(finalLine === 0){
                 finalLine = j - 1;
             }
@@ -216,9 +216,12 @@ const createPage = (i, remainText) => new Promise(resolve => {
         const remainHeight = maxHeight - pageHeight;
         console.log("remainHeight: " + remainHeight);
         console.log("rubyLineHeight: " + rubyLineHeight);
-        let lines = pages[i].lines.slice(finalLine + 1);
         // console.log("lines: " + lines);
+        // let lines = pages[i].lines.slice(finalLine + 1);
+        let lines = pages[i].lines.slice(finalLine);
         if(remainHeight >= rubyLineHeight){
+            lines.shift();
+            // lines.push(pages[i].lines.slice(finalLine + 1));
             const array = separateFinalLine(
                 pages[i].lines[finalLine],
                 Math.floor(remainHeight / rubyLineHeight)

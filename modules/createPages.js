@@ -151,7 +151,7 @@ const addFinalClass = () => {
 }
 
 let pages = [];
-const createPage = (i, remainText) => new Promise((resolve, reject) => {
+const createPage = (i, remainText) => new Promise(resolve => {
     pages.push(new Page(i));
     pages[i].lines = encodeRuby(remainText).split("\n");
     // let container = document.getElementById("containter");
@@ -222,18 +222,24 @@ const asyncCreatePages = async(str) => {
     }
 }
 
-const addTitlePage = (str, num) => {
+const addTitlePage = (str, num) => new Promise(resolve => {
     let divPage = document.createElement("div");
     divPage.classList.add("page");
     let divPageChild = document.createElement("div");
-    divPageChild.id = "subTitle";
+    // divPageChild.id = "subTitle";
     let h = document.createElement("h" + num);
     // h2.innerText = "テストタイトル";
     h.innerText = str;
     divPageChild.appendChild(h);
     divPage.appendChild(divPageChild);
-    container.prepend(divPage);
-}
+    // container.prepend(divPage);
+    container.appendChild(divPage);
+    resolve();
+});
+
+// const addTitlePage = (str, num) => {
+//
+// }
 
 // addTitlePage();
 // asyncCreatePages(sampleTexts[1]);

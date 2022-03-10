@@ -25,6 +25,65 @@ div {
     writing-mode: vertical-rl;
 }
 
+select{
+    font-size: 1rem;
+    height: 4vh;
+    margin: 1vh auto;
+}
+
+div#nowLoading{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    right: 0;
+}
+
+@keyframes loadingRoll {
+    0% {
+        transform:rotate(0deg);
+    }
+    12.5% {
+        transform:rotate(45deg);
+    }
+    25% {
+        transform:rotate(90deg);
+    }
+    37.5% {
+        transform:rotate(135deg);
+    }
+    50% {
+        transform:rotate(180deg);
+    }
+    62.5% {
+        transform:rotate(225deg);
+    }
+    75% {
+        transform:rotate(270deg);
+    }
+    87.5% {
+        transform:rotate(315deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}
+
+img#rolling{
+    /*transform: rotate(45deg);*/
+    /*transition-propaty: transform;*/
+    /*transition-duration: 500ms;*/
+    animation-duration: 700ms;
+    animation-timing-function: step-start;
+    animation-direction: normal;
+    animation-iteration-count: infinite;
+    animation-name: loadingRoll;
+}
+
 div#containter{
     /*width: 70vw;*/
     /*width: 1500vw;*/
@@ -114,30 +173,38 @@ button#bottomButton{
     bottom: 0;
 }
 
-div#sliderDiv{
+div.tbPanels{
     background-color: #333;
     opacity: 1;
     position: fixed;
     width: 96vw;
     height: 6vh;
     left: 2vw;
-    bottom: -10vh;
     text-align: center;
     vertical-align: middle;
-    /*transition-property: transform;*/
     transition-duration: .7s;
-    /*transform: translate(0, 30);*/
     display: flex;
-    /*flex-wrap: nowrap;*/
     writing-mode: horizontal-tb;
 }
 
-.in{
+div#headerDiv{
+    top: -10vh;
+}
+
+div#sliderDiv{
+    bottom: -10vh;
+}
+
+.headerIn{
+    transform: translateY(10vh);
+}
+
+.sliderIn{
     transform: translateY(-10vh);
 }
 
 input#pageSlider{
-    width: 80vw;
+    width: 85vw;
     background-color: black;
     margin: 2vh 10px 0 auto;
     transform: scale(-1, 1);
@@ -147,8 +214,9 @@ input#pageSlider{
 }
 
 p#currentPageNum{
-    width: 80px;
-    height: 30px;
+    width: 5vw;
+    font-size: 1vw;
+    height: 3vh;
     background: black;
     color: silver;
     border: 1px solid gray;
@@ -167,6 +235,10 @@ div#swipSensor{
 @media screen and (max-width: 1000px){
     html{
         /*font-size: 40px;*/
+    }
+
+    select{
+        font-size: 0.7rem;
     }
 
     div#containter{
@@ -213,6 +285,7 @@ div#swipSensor{
 
     p#currentPageNum{
         width: 10vw;
+        font-size: 4vw;
         background: black;
         color: silver;
         border-width: 0;

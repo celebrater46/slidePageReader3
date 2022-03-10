@@ -29,7 +29,7 @@ const getNewNum = (pageNum, isLeft) => {
 const clickedButton = (isLeft) => {
     const pageNum = parseInt(getPageNum());
     const newNum = getNewNum(pageNum, isLeft);
-    storage.currentPage = newNum;
+    // storage.currentPage = newNum;
     console.log("clicked " + (isLeft ? "Left" : "Right"));
     console.log("newNum: " + newNum);
     scroll(newNum, true);
@@ -43,6 +43,7 @@ const scroll = (pageNum, isSmooth) => {
         left: (parseInt(storage.sprMaxPage) - pageNum) * window.innerWidth,
         behavior: isSmooth ? 'smooth' : "instant"
     });
+    storage.currentPage = pageNum;
     console.log("scrolled");
 }
 

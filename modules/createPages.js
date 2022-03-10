@@ -273,8 +273,9 @@ let i = 0;
 let remains = "";
 const asyncCreatePages = async(str) => {
     remains = await createPage(i, str);
-    container.style.width = (i + 1) * window.innerWidth;
-    localStorage.maxPage = i + 2;
+    // container.style.width = (i + 1) * window.innerWidth;
+    // const array = localStorage.getItem("sprArticleStartPageArray");
+    // localStorage.setItem("sprArticleStartPageArray", array.push())
     // window.scrollTo({
     //     left: (storage.maxPage - pageNum) * window.innerWidth,
     // });

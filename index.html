@@ -26,13 +26,20 @@
         <p id="scaleTest"></p>
     </div>
     <div id="swipSensor"></div>
-    <button id="topButton" class="stealthButton tb" onclick="clickedButton(false)">テスト</button>
+    <button id="topButton" class="stealthButton tb" onclick="toggleHeader()">テスト</button>
     <button id="leftButton" class="stealthButton lr" onclick="clickedButton(true)">テスト</button>
     <button id="rightButton" class="stealthButton lr" onclick="clickedButton(false)">テスト</button>
-    <button id="bottomButton" class="stealthButton tb" onclick="togglePanel()">テスト</button>
-    <div id="sliderDiv" class="hoge">
+    <button id="bottomButton" class="stealthButton tb" onclick="toggleSlider()">テスト</button>
+    <div id="headerDiv" class="tbPanels">
+        <select id="articleSelector" name="articleSelector" size="1" onchange="changeArticle()">
+        </select>
+    </div>
+    <div id="sliderDiv" class="tbPanels">
         <p id="currentPageNum">1</p>
         <input id="pageSlider" name="pageSlider" min="1" step="1" max="10" type="range" value="0" />
+    </div>
+    <div id="nowLoading">
+        <img id="rolling" src="img/nowLoading.png" />
     </div>
 
     <script type="text/javascript" src="const.js"></script>
@@ -47,6 +54,7 @@
     <script type="text/javascript" src="modules/createPages.js"></script>
     <script type="text/javascript" src="modules/movePages.js"></script>
     <script type="text/javascript" src="modules/slider.js"></script>
+    <script type="text/javascript" src="modules/header.js"></script>
     <script type="text/javascript" src="books/getBook.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </body>

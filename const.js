@@ -21,3 +21,9 @@ if(storage.sprFontSize === undefined){
 if(storage.currentPage === undefined){
     storage.currentPage = 1;
 }
+if(storage.sprMaxPage === undefined){
+    storage.sprMaxPage = 1;
+}
+if(storage.sprArticleStartPageArray === undefined){
+    storage.sprArticleStartPageArray = [1];
+}

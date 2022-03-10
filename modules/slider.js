@@ -1,4 +1,4 @@
-const div = document.getElementById("sliderDiv");
+const sliderDiv = document.getElementById("sliderDiv");
 const slider = document.querySelector('input[name="pageSlider"]');
 const pageNumP = document.getElementById("currentPageNum");
 
@@ -8,9 +8,9 @@ const changeSlider = () => {
     scroll(slider.value, true);
 }
 
-const togglePanel = () => {
+const toggleSlider = () => {
     // console.log("did togglePanel()");
-    div.classList.toggle("in");
+    sliderDiv.classList.toggle("sliderIn");
     // console.log("classList toggled");
     // console.log(slider.classList);
     // if(slider.classList.contains('in')){

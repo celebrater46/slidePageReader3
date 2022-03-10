@@ -51,7 +51,14 @@ const getList = async() => {
             path: titleAndPath[1]
         };
     });
+}
 
+const setArticleSelector = (titles) => {
+    titles.map((title) => {
+        let option = document.createElement("option");
+        option.text = title;
+        select.appendChild(option);
+    });
 }
 
 const init = async() => {
@@ -59,10 +66,11 @@ const init = async() => {
     const id = getId();
     const listObj = await getList();
     const book = await createBook(listObj[id]["path"]); // getBook.js
-    // console.log("book:");
-    // console.log(book); // succeeded
+    console.log("book:");
+    console.log(book); // succeeded
     // let pages = [];
     await addTitlePage(book.title, 1);
+    let articlePagesArray = [1];
     for(let i = 0; i < book.articles.length; i++){
         const chapter = book.articles[i].chapter;
         if(chapter !== null){
@@ -73,11 +81,19 @@ const init = async() => {
             await addTitlePage(subTitle, 2);
         }
         await asyncCreatePages(book.articles[i].plane);
+        articlePagesArray.push(container.childElementCount + 1);
     }
+    articlePagesArray.pop();
+    storage.sprArticleStartPageArray = articlePagesArray;
+    setArticleSelector(book.subTitles);
+    // console.log("articlePagesArray: ");
+    // console.log(articlePagesArray);
     const max = container.childElementCount;
+    container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
     setSlidersMax(max);
     scroll(1, false);
+    document.getElementById("nowLoading").style.display = "none";
     // const novelId = getAndInitStorage("sprNovelId");
     // const epId = getAndInitStorage("sprNovel1_EpisodeId");
 }

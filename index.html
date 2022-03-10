@@ -2,7 +2,6 @@
 <html lang="jp">
 <head>
     <meta charset="UTF-8">
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>Slide Page Reader</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,10 +11,7 @@
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-<!--    <h1>Novel Title</h1>-->
-    <div id="containter">
-<!--        <p id="stealth">勤務先は大手家電量販店ビックリカメラ｜六出那《ろくでな》支店。無論、正社員などではない。ここに正社員とい</p>-->
-    </div>
+    <div id="containter"></div>
     <div id="scale">
         <p id="scale_p">
             テスト
@@ -26,10 +22,10 @@
         <p id="scaleTest"></p>
     </div>
     <div id="swipSensor"></div>
-    <button id="topButton" class="stealthButton tb" onclick="toggleHeader()">テスト</button>
-    <button id="leftButton" class="stealthButton lr" onclick="clickedButton(true)">テスト</button>
-    <button id="rightButton" class="stealthButton lr" onclick="clickedButton(false)">テスト</button>
-    <button id="bottomButton" class="stealthButton tb" onclick="toggleSlider()">テスト</button>
+    <button id="topButton" class="stealthButton tb" onclick="toggleHeader()"></button>
+    <button id="leftButton" class="stealthButton lr" onclick="clickedButton(true)"></button>
+    <button id="rightButton" class="stealthButton lr" onclick="clickedButton(false)"></button>
+    <button id="bottomButton" class="stealthButton tb" onclick="toggleSlider()"></button>
     <div id="headerDiv" class="tbPanels">
         <div>
             <select id="colorSelector" name="colorSelector" size="1" onchange="changeColor()">
@@ -49,10 +45,6 @@
     </div>
 
     <script type="text/javascript" src="const.js"></script>
-    <script type="text/javascript" src="sample.js"></script>
-    <script type="text/javascript" src="sample2.js"></script>
-<!--    <script type="text/javascript" src="LineJs.js"></script>-->
-<!--    <script type="text/javascript" src="lineBreak.js.old"></script>-->
     <script type="text/javascript" src="classes/Article.js"></script>
     <script type="text/javascript" src="classes/Book.js"></script>
     <script type="text/javascript" src="classes/Page.js"></script>

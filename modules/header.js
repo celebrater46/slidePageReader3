@@ -25,9 +25,6 @@ const changeColor = () => {
     sliderDiv.style.backgroundColor = colors[0];
     pageNumP.style.backgroundColor = value === "beige" ? "white" : colors[0];
     pageNumP.style.color = colors[1];
-    // document.querySelectorAll("div.page").style.backgroundColor = selectColor.value;
-    console.log("changed color.");
-    console.log("changed color.");
 }
 
 const changeArticle = () => {
@@ -37,12 +34,4 @@ const changeArticle = () => {
     scroll(num, true);
     document.getElementById("pageSlider").value = num;
     document.getElementById("currentPageNum").innerText = num.toString();
-    console.log("array: ");
-    console.log(array);
-    console.log("select.value: " + select.value);
-    console.log("select.selectedIndex: " + select.selectedIndex);
-    // console.log("array[select.value]: " + array[select.value]);
-    // console.log("array[select.selectedIndex]: " + array[select.selectedIndex]);
-    console.log("array[key]: " + array[key]);
-    console.log("num: " + num);
 }

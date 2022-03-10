@@ -1,18 +1,7 @@
 "use strict";
 
-const getAndInitStorage = (key) => {
-    const value = storage.getItem(key);
-    if(value === "NaN" || value < 1 || value === null || value === undefined){
-        storage[key] = 1;
-        return 1;
-    } else {
-        return parseInt(value);
-    }
-}
-
 const getId = () => {
     const parameter = location.search;
-    // book=1
     if(parameter.indexOf("book") > -1){
         const book = parameter.match(/book=\d+/);
         const id = book[0].substr(5);
@@ -32,23 +21,6 @@ const getArticleNum = () => {
         return 0;
     }
 }
-
-// const initLocalStorage = () => {
-//     const storage = localStorage;
-//     // storage.sprColor = storage.sprColor === undefined ? "black";
-//     if(storage.sprColor === undefined){
-//         storage.sprColor = "black";
-//     }
-//     if(storage.sprFontFamily === undefined){
-//         storage.sprFontFamily = "mincho";
-//     }
-//     if(storage.sprFontSize === undefined){
-//         storage.sprFontSize = 2; // 1-4
-//     }
-//     if(storage.currentPage === undefined){
-//         storage.currentPage = 1;
-//     }
-// }
 
 const getList = async() => {
     const response = await fetch('./books/bookList.txt');
@@ -73,14 +45,10 @@ const setArticleSelector = (titles) => {
 }
 
 const init = async() => {
-    // initLocalStorage();
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();
     const book = await createBook(listObj[id]["path"]); // getBook.js
-    console.log("book:");
-    console.log(book); // succeeded
-    // let pages = [];
     await addTitlePage(book.title, 1);
     let articlePagesArray = [1];
     for(let i = 0; i < book.articles.length; i++){
@@ -98,20 +66,12 @@ const init = async() => {
     articlePagesArray.pop();
     storage.sprArticleStartPageArray = articlePagesArray;
     setArticleSelector(book.subTitles);
-    // console.log("articlePagesArray: ");
-    // console.log(articlePagesArray);
     const max = container.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
     setSlidersMax(max);
-    // scroll(1, false);
     scroll(articlePagesArray[articleNum], false);
     document.getElementById("nowLoading").style.display = "none";
-    // const novelId = getAndInitStorage("sprNovelId");
-    // const epId = getAndInitStorage("sprNovel1_EpisodeId");
 }
 
 init();
-// getUrlParameterToArray();
-
-// localStorage.currentPage = 1;

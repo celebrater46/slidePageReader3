@@ -12,7 +12,6 @@ const convertDot = (line) => {
         str = str.replace(/《《[^》]+》》/, converted);
         i++;
         if(i > 1000){
-            console.log("endless loop occurred!");
             break;
         }
     }

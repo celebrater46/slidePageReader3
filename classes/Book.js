@@ -23,8 +23,6 @@ class Book {
     getChapters(txt) {
         const tempArray = txt.match(/<Chapter>(.*)<\/Chapter>/gi);
         let chapters = [];
-        // console.log("tempArray in getChapters():");
-        // console.log(tempArray);
         if(tempArray !== null){
             for(let i = 0; i < tempArray.length; i++){
                 chapters.push(tempArray[i].replace(/<Chapter>(.*)<\/Chapter>/i, "$1"));
@@ -47,8 +45,6 @@ class Book {
         let replaced = txt.replace(/((\r\n)*|(\r)*|(\n)*)<Break(.*)\/>((\r\n)*|(\r)*|(\n)*)/gi, "#BR#");
         replaced = replaced.split("#BR#");
         for(let i = 0; i < replaced.length; i++){
-            // let str = replaced[i].replace(/<Title>(.*)<\/Title>((\r\n)*|(\r)*|(\n)*)/gi, "");
-            // array.push(str);
             array.push(replaced[i]);
         }
         this.defaultText = txt;

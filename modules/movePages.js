@@ -19,23 +19,17 @@ const getPageNum = () => {
 const getNewNum = (pageNum, isLeft) => {
     if(isLeft){
         return pageNum < parseInt(storage.sprMaxPage) ? pageNum + 1 : pageNum;
-        // return pageNum + 1;
     } else {
         return pageNum > 1 ? pageNum - 1 : pageNum;
-        // return pageNum - 1;
     }
 }
 
 const clickedButton = (isLeft) => {
     const pageNum = parseInt(getPageNum());
     const newNum = getNewNum(pageNum, isLeft);
-    // storage.currentPage = newNum;
-    console.log("clicked " + (isLeft ? "Left" : "Right"));
-    console.log("newNum: " + newNum);
     scroll(newNum, true);
     document.getElementById("pageSlider").value = newNum;
     document.getElementById("currentPageNum").innerText = newNum;
-    // slider.value = newNum;
 }
 
 const scroll = (pageNum, isSmooth) => {
@@ -44,7 +38,6 @@ const scroll = (pageNum, isSmooth) => {
         behavior: isSmooth ? 'smooth' : "instant"
     });
     storage.currentPage = pageNum;
-    console.log("scrolled");
 }
 
 const logSwipeStart = (e) => {
@@ -59,13 +52,9 @@ const logSwipeMove = (e) => {
 
 const logSwipeEnd = (e) => {
     e.preventDefault();
-    console.log("startX: " + startX);
-    console.log("endX: " + endX);
     if(endX - startX > 0) {
-        console.log("Swiped to right.");
         clickedButton(true);
     } else {
-        console.log("Swiped to left");
         clickedButton(false);
     }
 }
@@ -76,10 +65,3 @@ window.addEventListener('load', () => {
     swipeSensor.addEventListener('touchend', logSwipeEnd);
     storage.currentPage = 1;
 });
-
-// window.addEventListener('unload', () => {
-//     console.log('unload');
-//     scroll(1, false);
-// });
-
-// scroll(1, false);

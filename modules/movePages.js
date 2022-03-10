@@ -1,32 +1,11 @@
 "use strict";
 
-// const storage = localStorage;
 const swipeSensor = document.getElementById("swipSensor");
 let startX = null;
 let endX = null;
 
-// let maxPage = storage;
-// const pageNum = storage.currentPage.length > -1 ? storage.getItem("currentPage") : 1;
-
-
-// var ABC = localStorage.getItem( "DATA" ); // なかったらnullが返る
-// if ( ABC ){
-//     ABC = JSON.parse( ABC );
-//     if ( ABC.value ){
-//         alert('中身がある');
-//     } else {
-//         alert('中身がない');
-//     }
-// } else {
-//     alert('中身がない(使ってない)');
-// }
-
 const getPageNum = () => {
-    // const storage = localStorage;
     const pageNum = parseInt(storage.getItem("currentPage"));
-    // const parsed = JSON.parse(pageNum);
-    // console.log("pageNum: " + pageNum);
-    // console.log("typeof pageNum: " + typeof pageNum);
     if(pageNum === "NaN" || pageNum < 1 || pageNum === null || pageNum === undefined){
         return 1;
     } else if(pageNum > storage.maxPage){
@@ -35,14 +14,12 @@ const getPageNum = () => {
     } else {
         return pageNum;
     }
-    // return pageNum === "NaN" ? 1 : pageNum;
 }
 
 const getNewNum = (pageNum, isLeft) => {
     if(isLeft){
-        // console.log("maxPage: " + storage.maxPage);
         return pageNum < parseInt(storage.maxPage) ? pageNum + 1 : pageNum;
-        return pageNum + 1;
+        // return pageNum + 1;
     } else {
         return pageNum > 1 ? pageNum - 1 : pageNum;
         // return pageNum - 1;
@@ -50,42 +27,20 @@ const getNewNum = (pageNum, isLeft) => {
 }
 
 const clickedButton = (isLeft) => {
-    // console.log("storage.currentPage: ");
-    // console.log(storage.currentPage);
     const pageNum = parseInt(getPageNum());
-    // const newNum = isLeft ? pageNum + 1 : pageNum - 1;
     const newNum = getNewNum(pageNum, isLeft);
     storage.currentPage = newNum;
     console.log("clicked " + (isLeft ? "Left" : "Right"));
-    // console.log("pageNum: " + pageNum);
     console.log("newNum: " + newNum);
     scroll(newNum, true);
 }
-//
-// const clickRight = () => {
-//     const pageNum = getPageNum(false);
-//     console.log("clicked right");
-//     console.log("pageNum: " + pageNum);
-//     // scroll(pageNum);
-// }
-
-// const getLocation = () => {
-//     if(xy === "horizontal-tb"){
-//         return (currentPage - 1) * window.innerWidth;
-//     } else {
-//         return (maxPage - currentPage + 1) * window.innerWidth;
-//         // 1-5 2-4 3-3 4-2 5-1
-//     }
-// }
 
 const scroll = (pageNum, isSmooth) => {
     window.scrollTo({
         left: (parseInt(storage.maxPage) - pageNum) * window.innerWidth,
-        // right: pageNum * window.innerWidth,
         behavior: isSmooth ? 'smooth' : "instant"
     });
     console.log("scrolled");
-    // console.log("maxPage: " + storage.maxPage);
 }
 
 const logSwipeStart = (e) => {
@@ -116,11 +71,6 @@ window.addEventListener('load', () => {
     swipeSensor.addEventListener('touchstart', logSwipeStart);
     swipeSensor.addEventListener('touchend', logSwipeEnd);
     storage.currentPage = 1;
-    // scroll(1, false);
-    // window.scrollTo({
-    //     left: (parseInt(storage.maxPage) - 1) * window.innerWidth,
-    // });
-
 });
 
 window.addEventListener('unload', () => {

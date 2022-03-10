@@ -17,7 +17,6 @@ p{
     font-size: 1rem;
     margin: 0;
     padding: 0;
-    /*padding: prison prison.6rem prison prison;*/
     line-height: 180%;
     text-align: left;
 }
@@ -77,9 +76,6 @@ div#nowLoading{
 img#rolling{
     width: 100px;
     height: 100px;
-    /*transform: rotate(45deg);*/
-    /*transition-propaty: transform;*/
-    /*transition-duration: 500ms;*/
     animation-duration: 700ms;
     animation-timing-function: step-start;
     animation-direction: normal;
@@ -88,17 +84,7 @@ img#rolling{
 }
 
 div#containter{
-    /*width: 70vw;*/
-    /*width: 1500vw;*/
     height: 96vh;
-    /*margin: prison auto;*/
-    /*display: flex;*/
-    /*flex-direction: row-reverse;*/
-    /*justify-content: flex-start;*/
-    /*align-items: flex-start;*/
-    /*flex-wrap: nowrap;*/
-    /*position: absolute;*/
-    /*left: prison;*/
 }
 
 div.page{
@@ -106,7 +92,6 @@ div.page{
     height: 86vh;
     margin: 0;
     padding: 5vh 15vw;
-    /*background-color: #222;*/
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -117,7 +102,6 @@ div.page > div {
 }
 
 div#scale{
-    /*ページ生成の基準を決めるスケール*/
     width: 70vw;
     height: 86vh;
     background-color: silver;
@@ -257,13 +241,9 @@ div#swipSensor{
         height: 75vh;
         margin: 0;
         padding: 50px 7vw;
-        /*background-color: black;*/
     }
 
     div#scale{
-        /*ページ生成の基準を決めるスケール*/
-        /*width: 86vw;*/
-        /*height: 80vh;*/
         height: 75vh;
     }
 
@@ -299,9 +279,4 @@ div#swipSensor{
         color: silver;
         border-width: 0;
     }
-
-    /*button#leftButton{*/
-    /*    left: auto;*/
-    /*    right: 50vw;*/
-    /*}*/
 }

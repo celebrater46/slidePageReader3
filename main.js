@@ -18,7 +18,18 @@ const getId = () => {
         const id = book[0].substr(5);
         return parseInt(id);
     } else {
-        return -1;
+        return 0;
+    }
+}
+
+const getArticleNum = () => {
+    const parameter = location.search;
+    if(parameter.indexOf("article") > -1){
+        const book = parameter.match(/article=\d+/);
+        const num = book[0].substr(8);
+        return parseInt(num);
+    } else {
+        return 0;
     }
 }
 
@@ -64,6 +75,7 @@ const setArticleSelector = (titles) => {
 const init = async() => {
     // initLocalStorage();
     const id = getId();
+    const articleNum = getArticleNum();
     const listObj = await getList();
     const book = await createBook(listObj[id]["path"]); // getBook.js
     console.log("book:");
@@ -92,7 +104,8 @@ const init = async() => {
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
     setSlidersMax(max);
-    scroll(1, false);
+    // scroll(1, false);
+    scroll(articlePagesArray[articleNum], false);
     document.getElementById("nowLoading").style.display = "none";
     // const novelId = getAndInitStorage("sprNovelId");
     // const epId = getAndInitStorage("sprNovel1_EpisodeId");

@@ -121,15 +121,19 @@ div#sliderDiv{
     width: 96vw;
     height: 6vh;
     left: 2vw;
-    bottom: 0;
+    bottom: -10vh;
     text-align: center;
     vertical-align: middle;
-    transition-property: transform;
-    transition-duration: 1s;
+    /*transition-property: transform;*/
+    transition-duration: .7s;
     /*transform: translate(0, 30);*/
     display: flex;
     /*flex-wrap: nowrap;*/
     writing-mode: horizontal-tb;
+}
+
+.in{
+    transform: translateY(-10vh);
 }
 
 input#pageSlider{

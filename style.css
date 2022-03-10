@@ -75,6 +75,8 @@ div#nowLoading{
 }
 
 img#rolling{
+    width: 100px;
+    height: 100px;
     /*transform: rotate(45deg);*/
     /*transition-propaty: transform;*/
     /*transition-duration: 500ms;*/
@@ -119,7 +121,7 @@ div#scale{
     width: 70vw;
     height: 86vh;
     background-color: silver;
-    opacity: 0.05;
+    opacity: 0;
     position: fixed;
     inset: 0;
     margin: auto;
@@ -140,7 +142,7 @@ p#stealth{
 }
 
 button.stealthButton{
-    opacity: 0.2;
+    opacity: 0;
     color: black;
     background-color: silver;
     position: fixed;
@@ -252,15 +254,17 @@ div#swipSensor{
 
     div.page{
         width: 86vw;
+        height: 75vh;
         margin: 0;
         padding: 50px 7vw;
-        background-color: #222;
+        /*background-color: black;*/
     }
 
     div#scale{
         /*ページ生成の基準を決めるスケール*/
         /*width: 86vw;*/
         /*height: 80vh;*/
+        height: 75vh;
     }
 
     div#swipSensor{
@@ -269,7 +273,7 @@ div#swipSensor{
         width: 100vw;
         height: 70vh;
         background-color: silver;
-        opacity: 0.2;
+        opacity: 0;
         top: 15vh;
         right: 0;
     }

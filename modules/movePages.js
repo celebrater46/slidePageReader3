@@ -73,9 +73,9 @@ window.addEventListener('load', () => {
     storage.currentPage = 1;
 });
 
-window.addEventListener('unload', () => {
-    console.log('unload');
-    scroll(1, false);
-});
+// window.addEventListener('unload', () => {
+//     console.log('unload');
+//     scroll(1, false);
+// });
 
-scroll(1, false);
+// scroll(1, false);

@@ -55,7 +55,9 @@ const init = async() => {
         }
         await asyncCreatePages(book.articles[i].plane);
     }
-    storage.sprMaxPage = container.childElementCount;
+    const max = container.childElementCount;
+    storage.sprMaxPage = max;
+    setSlidersMax(max);
     scroll(1, false);
     // const novelId = getAndInitStorage("sprNovelId");
     // const epId = getAndInitStorage("sprNovel1_EpisodeId");

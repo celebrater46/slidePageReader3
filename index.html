@@ -26,8 +26,14 @@
         <p id="scaleTest"></p>
     </div>
     <div id="swipSensor"></div>
-    <button id="leftButton" class="stealthButton" onclick="clickedButton(true)">テスト</button>
-    <button id="rightButton" class="stealthButton" onclick="clickedButton(false)">テスト</button>
+    <button id="topButton" class="stealthButton tb" onclick="clickedButton(false)">テスト</button>
+    <button id="leftButton" class="stealthButton lr" onclick="clickedButton(true)">テスト</button>
+    <button id="rightButton" class="stealthButton lr" onclick="clickedButton(false)">テスト</button>
+    <button id="bottomButton" class="stealthButton tb" onclick="clickedButton(false)">テスト</button>
+    <div id="sliderDiv">
+        <p id="currentPageNum">1</p>
+        <input id="pageSlider" name="pageSlider" min="1" step="1" max="10" type="range" value="0" />
+    </div>
 
     <script type="text/javascript" src="const.js"></script>
     <script type="text/javascript" src="sample.js"></script>
@@ -40,6 +46,7 @@
     <script type="text/javascript" src="modules/encoder.js"></script>
     <script type="text/javascript" src="modules/createPages.js"></script>
     <script type="text/javascript" src="modules/movePages.js"></script>
+    <script type="text/javascript" src="modules/slider.js"></script>
     <script type="text/javascript" src="books/getBook.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </body>

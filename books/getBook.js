@@ -22,19 +22,19 @@ const convertTextToArray =(txt) => {
 // }
 
 // const testCreateBook = async() => {
-const createBook = async() => {
+const createBook = async(path) => {
     // console.log("hello");
-    const textPath = "./books/texts/shiroganeki.txt";
+    const textPath = "./books/texts/" + path + ".txt";
     const response = await fetch(textPath);
     const text = await response.text();
     const book = new Book(1);
     await book.init(text);
     await book.getArticles();
-    localStorage.setItem("shiroganeki", JSON.stringify(book));
+    localStorage.setItem("sprBookObject_" + path, JSON.stringify(book));
     // const json = JSON.parse(localStorage.getItem("shiroganeki"));
     // console.log("json"); // succeeded
     // console.log(json); // succeeded
-    console.log(book);
+    // console.log(book);
     return book;
 }
 

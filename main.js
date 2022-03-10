@@ -10,13 +10,15 @@ const getAndInitStorage = (key) => {
     }
 }
 
-const getUrlParameterToArray = () => {
+const getId = () => {
     const parameter = location.search;
     // book=1
     if(parameter.indexOf("book") > -1){
         const book = parameter.match(/book=\d+/);
         const id = book[0].substr(5);
-        console.log(id);
+        return parseInt(id);
+    } else {
+        return -1;
     }
 }
 
@@ -37,12 +39,29 @@ const getUrlParameterToArray = () => {
 //     }
 // }
 
+const getList = async() => {
+    const response = await fetch('./books/bookList.txt');
+    const str = await response.text();
+    const br = checkBrCode(str);
+    const array = str.split(br);
+    return array.map((line) => {
+        const titleAndPath = line.split("|");
+        return {
+            title: titleAndPath[0],
+            path: titleAndPath[1]
+        };
+    });
+
+}
+
 const init = async() => {
     // initLocalStorage();
-    const book = await createBook(); // getBook.js
+    const id = getId();
+    const listObj = await getList();
+    const book = await createBook(listObj[id]["path"]); // getBook.js
     // console.log("book:");
     // console.log(book); // succeeded
-    let pages = [];
+    // let pages = [];
     await addTitlePage(book.title, 1);
     for(let i = 0; i < book.articles.length; i++){
         const chapter = book.articles[i].chapter;

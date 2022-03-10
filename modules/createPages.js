@@ -170,6 +170,8 @@ const addFinalClass = () => {
 }
 
 const checkBrCode = (str) => {
+    // console.log("str in checkBrCode(): ");
+    // console.log(str);
     if(str.indexOf("\r\n") > -1){
         return "\r\n";
     } else if(str.indexOf("\n") > -1){

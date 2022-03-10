@@ -11,8 +11,8 @@ class Article {
         // console.log("text: ");
         // console.log(text);
         const chap = text.match(/<Chapter>(.*)<\/Chapter>/i);
-        console.log("chap:");
-        console.log(chap);
+        // console.log("chap:");
+        // console.log(chap);
         return chap === null ? null : chap[0].replace(/<Chapter>(.*)<\/Chapter>/i, "$1");
     }
 

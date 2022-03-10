@@ -23,10 +23,14 @@ class Book {
     getChapters(txt) {
         const tempArray = txt.match(/<Chapter>(.*)<\/Chapter>/gi);
         let chapters = [];
-        for(let i = 0; i < tempArray.length; i++){
-            chapters.push(tempArray[i].replace(/<Chapter>(.*)<\/Chapter>/i, "$1"));
+        // console.log("tempArray in getChapters():");
+        // console.log(tempArray);
+        if(tempArray !== null){
+            for(let i = 0; i < tempArray.length; i++){
+                chapters.push(tempArray[i].replace(/<Chapter>(.*)<\/Chapter>/i, "$1"));
+            }
+            this.chapters = chapters;
         }
-        this.chapters = chapters;
     }
 
     getSubTitles(txt) {

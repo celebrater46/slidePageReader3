@@ -31,8 +31,14 @@
     <button id="rightButton" class="stealthButton lr" onclick="clickedButton(false)">テスト</button>
     <button id="bottomButton" class="stealthButton tb" onclick="toggleSlider()">テスト</button>
     <div id="headerDiv" class="tbPanels">
-        <select id="articleSelector" name="articleSelector" size="1" onchange="changeArticle()">
-        </select>
+        <div>
+            <select id="colorSelector" name="colorSelector" size="1" onchange="changeColor()">
+                <option value="black" selected>黒</option>
+                <option value="white">白</option>
+                <option value="beige">ベージュ</option>
+            </select>
+            <select id="articleSelector" name="articleSelector" size="1" onchange="changeArticle()"></select>
+        </div>
     </div>
     <div id="sliderDiv" class="tbPanels">
         <p id="currentPageNum">1</p>

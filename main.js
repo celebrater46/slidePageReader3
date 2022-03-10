@@ -68,7 +68,7 @@ const setArticleSelector = (titles) => {
     titles.map((title) => {
         let option = document.createElement("option");
         option.text = title;
-        select.appendChild(option);
+        selectArticle.appendChild(option);
     });
 }
 

@@ -46,7 +46,7 @@ div.page{
     padding: 5vh 15vw;
     background-color: #222;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -115,7 +115,7 @@ button#bottomButton{
 }
 
 div#sliderDiv{
-    background-color: silver;
+    background-color: #333;
     opacity: 1;
     position: fixed;
     width: 96vw;
@@ -149,7 +149,7 @@ input#pageSlider{
 p#currentPageNum{
     width: 80px;
     height: 30px;
-    background: #333;
+    background: black;
     color: silver;
     border: 1px solid gray;
     margin: 10px auto;
@@ -157,6 +157,7 @@ p#currentPageNum{
     position: absolute;
     left: 20px;
     text-align: center;
+    vertical-align: middle;
 }
 
 div#swipSensor{
@@ -181,8 +182,8 @@ div#swipSensor{
 
     div#scale{
         /*ページ生成の基準を決めるスケール*/
-        width: 86vw;
-        height: 80vh;
+        /*width: 86vw;*/
+        /*height: 80vh;*/
     }
 
     div#swipSensor{
@@ -196,8 +197,25 @@ div#swipSensor{
         right: 0;
     }
 
-    button.stealthButton{
+    button.stealthButton.lr{
         display: none;
+    }
+
+    input#pageSlider{
+        width: 70vw;
+        background-color: black;
+        margin: 2vh 10px 0 auto;
+        transform: scale(-1, 1);
+        display: block;
+        position: absolute;
+        right: 20px;
+    }
+
+    p#currentPageNum{
+        width: 10vw;
+        background: black;
+        color: silver;
+        border-width: 0;
     }
 
     /*button#leftButton{*/

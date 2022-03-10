@@ -16,7 +16,7 @@ if(storage.sprFontFamily === undefined){
     storage.sprFontFamily = "mincho";
 }
 if(storage.sprFontSize === undefined){
-    storage.sprFontSize = 2; // 1-4
+    storage.sprFontSize = 1; // 0-3
 }
 if(storage.currentPage === undefined){
     storage.currentPage = 1;

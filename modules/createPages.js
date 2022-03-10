@@ -3,10 +3,13 @@
 const scale = document.getElementById("scale");
 const container = document.getElementById("containter")
 const isX = false; // 横書きなら true
+// const isX = window.innerWidth < window.innerHeight; // 横書きなら true
 const scale_p_ruby = document.getElementById("scale_p_ruby");
 const rubyLineHeight = isX ? scale_p_ruby.clientHeight : scale_p_ruby.clientWidth; // 一行の高さ（ルビあり）
 const maxWidth = isX ? scale.clientWidth : scale.clientHeight; // 縦書きの場合は反転
 const maxHeight = isX ? scale.clientHeight : scale.clientWidth;
+// const maxWidth = scale.clientWidth; // 縦書きの場合は反転
+// const maxHeight = scale.clientHeight;
 const checkIsPhone = () => {
     const agent = navigator.userAgent;
     if ((agent.indexOf('iPhone') > 0 && agent.indexOf('iPad') == -1)
@@ -20,8 +23,10 @@ const checkIsPhone = () => {
 }
 const isPhone = checkIsPhone();
 const fontSizeNum = parseInt(storage.sprFontSize);
-const fontSize = isPhone ? fontSizeArray[fontSizeNum] * 2 : fontSizeArray[fontSizeNum];
-const maxChars = Math.floor((isX ? maxWidth : maxHeight) / fontSize); // 1行あたりの最大文字数
+const fontSize = fontSizeArray[fontSizeNum];
+// const fontSize = isPhone ? fontSizeArray[fontSizeNum] * 2 : fontSizeArray[fontSizeNum];
+const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
+console.log("maxHeight:fontSize == " + maxHeight + " : " + fontSize);
 
 const getIndexOfLineBreak = (encodedLine, remainLines) => {
     const scaleTest = document.getElementById("scaleTest");

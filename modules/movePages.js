@@ -33,6 +33,9 @@ const clickedButton = (isLeft) => {
     console.log("clicked " + (isLeft ? "Left" : "Right"));
     console.log("newNum: " + newNum);
     scroll(newNum, true);
+    document.getElementById("pageSlider").value = newNum;
+    document.getElementById("currentPageNum").innerText = newNum;
+    // slider.value = newNum;
 }
 
 const scroll = (pageNum, isSmooth) => {

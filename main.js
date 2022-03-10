@@ -55,6 +55,7 @@ const init = async() => {
         }
         await asyncCreatePages(book.articles[i].plane);
     }
+    storage.sprMaxPage = container.childElementCount;
     // const novelId = getAndInitStorage("sprNovelId");
     // const epId = getAndInitStorage("sprNovel1_EpisodeId");
 }

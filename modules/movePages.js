@@ -8,7 +8,7 @@ const getPageNum = () => {
     const pageNum = parseInt(storage.getItem("currentPage"));
     if(pageNum === "NaN" || pageNum < 1 || pageNum === null || pageNum === undefined){
         return 1;
-    } else if(pageNum > storage.maxPage){
+    } else if(pageNum > storage.sprMaxPage){
         storage.currentPage = 1;
         return 1;
     } else {
@@ -18,7 +18,7 @@ const getPageNum = () => {
 
 const getNewNum = (pageNum, isLeft) => {
     if(isLeft){
-        return pageNum < parseInt(storage.maxPage) ? pageNum + 1 : pageNum;
+        return pageNum < parseInt(storage.sprMaxPage) ? pageNum + 1 : pageNum;
         // return pageNum + 1;
     } else {
         return pageNum > 1 ? pageNum - 1 : pageNum;
@@ -37,7 +37,7 @@ const clickedButton = (isLeft) => {
 
 const scroll = (pageNum, isSmooth) => {
     window.scrollTo({
-        left: (parseInt(storage.maxPage) - pageNum) * window.innerWidth,
+        left: (parseInt(storage.sprMaxPage) - pageNum) * window.innerWidth,
         behavior: isSmooth ? 'smooth' : "instant"
     });
     console.log("scrolled");

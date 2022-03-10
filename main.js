@@ -43,15 +43,15 @@ const init = async() => {
     // console.log("book:");
     // console.log(book); // succeeded
     let pages = [];
-    // await addTitlePage(book.title, 1);
+    await addTitlePage(book.title, 1);
     for(let i = 0; i < book.articles.length; i++){
         const chapter = book.articles[i].chapter;
         if(chapter !== null){
-            // await addTitlePage(chapter, 2);
+            await addTitlePage(chapter, 2);
         }
         const subTitle = book.articles[i].title;
         if(subTitle !== null){
-            // await addTitlePage(subTitle, 2);
+            await addTitlePage(subTitle, 2);
         }
         await asyncCreatePages(book.articles[i].plane);
     }

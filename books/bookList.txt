@@ -1,3 +1,4 @@
-第三世界収容所|prison|2
-白金記|shiroganeki|1
-極楽戦争|gokuraku|1
+第三世界収容所|prison.txt|2
+白金記|shiroganeki.txt|1
+極楽戦争|gokuraku.txt|1
+黒を討つ者|ss/black_breaker.txt|1

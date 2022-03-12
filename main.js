@@ -46,20 +46,31 @@ const getList = async() => {
     const array = str.split(br);
     return array.map((line) => {
         const titleAndPath = line.split("|");
+        // let path = titleAndPath[1];
+        // if(path.indexOf("/") > -1){
+        //     const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
+        //     path = fileName[0].replace(".txt", "");
+        // }
         return {
             title: titleAndPath[0],
             path: titleAndPath[1],
+            // path: path,
             ver: titleAndPath[2]
         };
     });
 }
 
 const setArticleSelector = (titles) => {
-    titles.map((title) => {
-        let option = document.createElement("option");
-        option.text = title;
-        selectArticle.appendChild(option);
-    });
+    // console.log(titles);
+    if(titles){
+        titles.map((title) => {
+            let option = document.createElement("option");
+            option.text = title;
+            selectArticle.appendChild(option);
+        });
+    } else {
+        selectArticle.style.display = "none";
+    }
 }
 
 // const loadBookObj = (fileName) => {
@@ -81,20 +92,31 @@ const updateVerInLocalStorage = (path, ver) => {
     storage.sprVersions = JSON.stringify(vers);
 }
 
+const getFileName = (path) => {
+    if(path.indexOf("/") > -1){
+        const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
+        return fileName[0].replace(".txt", "");
+    } else {
+        // console.log(path);
+        return path.replace(".txt", "");
+    }
+}
+
 const init = async() => {
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();
-    const reload = allowReload(listObj[id].ver, listObj[id].path);
+    const fileName = getFileName(listObj[id].path);
+    const reload = allowReload(listObj[id].ver, fileName);
     let book = {};
     if(reload){
         book = await createBook(listObj[id].path);
         let json = JSON.parse(storage.sprBookObj);
-        json[listObj[id].path] = book;
+        json[fileName] = book;
         storage.sprBookObj = JSON.stringify(json);
     } else {
         const obj = JSON.parse(storage.sprBookObj);
-        book = obj[listObj[id].path];
+        book = obj[fileName];
     }
     await addTitlePage(book.title, 1);
     let articlePagesArray = [1];
@@ -116,7 +138,7 @@ const init = async() => {
     const max = container.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
-    updateVerInLocalStorage(listObj[id].path, listObj[id].ver);
+    updateVerInLocalStorage(fileName, listObj[id].ver);
     setSlidersMax(max);
     scroll(articlePagesArray[articleNum], false);
     document.getElementById("nowLoading").style.display = "none";

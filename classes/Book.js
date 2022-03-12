@@ -34,11 +34,14 @@ class Book {
 
     getSubTitles(txt) {
         const tempArray = txt.match(/<Sub>(.*)<\/Sub>/gi);
+        // console.log(tempArray);
         let subs = [];
-        for(let i = 0; i < tempArray.length; i++){
-            subs.push(tempArray[i].replace(/<Sub>(.*)<\/Sub>/i, "$1"));
+        if(tempArray){
+            for(let i = 0; i < tempArray.length; i++){
+                subs.push(tempArray[i].replace(/<Sub>(.*)<\/Sub>/i, "$1"));
+            }
+            this.subTitles = subs;
         }
-        this.subTitles = subs;
     }
 
     getTexts(txt) {

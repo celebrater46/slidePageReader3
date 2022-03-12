@@ -35,7 +35,7 @@ const getVer = (fileName) => {
 
 // バージョン番号を比べ、更新されていれば true
 const allowReload = (latest, fileName) => {
-    console.log("latest:ls " + latest + " : " + ls);
+    const ls = getVer(fileName);
     return latest > ls;
 }
 

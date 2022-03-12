@@ -107,8 +107,10 @@ const getNumOfDeletedCharsBykinsoku = (line) => {
 }
 
 const separateFinalLine = (line, remainLines) => {
+    // console.log("line in separageFinalLine: " + line);
     const hasRuby = line.indexOf("<ruby>");
     const max = maxChars * remainLines;
+    // console.log("maxChars: " + maxChars);
     if(hasRuby > -1 && hasRuby < max){
         // ルビが１行内にあるなら、新しい改行ポイント indexOf を取得
         const lineBreak = getIndexOfLineBreak(line, remainLines);
@@ -194,27 +196,30 @@ const createPage = (i, remainText) => new Promise(resolve => {
     for(let j = 0; j < lines.length; j++){
         // let line = pages[i].lines[j];
         const line = lines[j] === "" ? "　" : lines[j];
-        // console.log("line: " + line);
+        console.log("line: " + line);
         // let line = lines[j];
         // line = line === "" ? "　" : line;
         scaleP.innerHTML = line;
-        currentWidth += scaleP.clientWidth;
+        // currentWidth += scaleP.clientWidth;
         // if(currentHeight < maxHeight){
         // console.log("scaleP.clientWidth:maxWidth " + scaleP.clientWidth + " : " + maxWidth);
         console.log("currentWidth:maxWidth " + scaleP.clientWidth + " : " + maxWidth);
-        if(currentWidth < maxWidth){
+        if(currentWidth < maxWidth && scaleP.clientWidth < maxWidth){
             let p = document.createElement("p");
             p.innerHTML = line;
             pageDiv.appendChild(p);
             page.lines.push(p);
             // const pHeight = isX ? scaleP.clientHeight : scaleP.clientWidth;
             // currentHeight += pHeight;
+            currentWidth += scaleP.clientWidth;
         } else {
-            finalLine = j > 0 ? j - 1 : 0;
+            finalLine = j - 1;
+            // finalLine = j > 0 ? j - 1 : 0;
+            // finalLine = j;
             break;
         }
     }
-    // console.log("finalLine: " + finalLine);
+    console.log("finalLine: " + finalLine);
 
     if(finalLine !== null){
         // console.log("pageDiv.lastElementChild: ");
@@ -230,18 +235,20 @@ const createPage = (i, remainText) => new Promise(resolve => {
         // let lines = pages[i].lines.slice(finalLine);
         let newLines = lines.slice(finalLine);
         // if(remainHeight >= rubyLineHeight){
-        // console.log("remainWidth : rubyLineWidth ");
-        // console.log(remainWidth + ":" + rubyLineWidth);
+        console.log("remainWidth : rubyLineWidth ");
+        console.log(remainWidth + ":" + rubyLineWidth);
         if(remainWidth >= rubyLineWidth){
             newLines.shift();
+            // const i = finalLine >= 0 ? finalLine : 0;
             const array = separateFinalLine(
                 // pages[i].lines[finalLine],
                 lines[finalLine],
+                // lines[i],
                 // Math.floor(remainHeight / rubyLineHeight)
                 Math.floor(remainWidth / rubyLineWidth)
             );
-            // console.log("separated array:");
-            // console.log(array);
+            console.log("separated array:");
+            console.log(array);
             const additionalArray = getAdditionalStr(remainWidth, array);
             let finalP = document.createElement("p");
             finalP.innerHTML = array[0] + additionalArray[0];

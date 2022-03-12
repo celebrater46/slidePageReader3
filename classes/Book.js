@@ -1,6 +1,7 @@
 class Book {
     constructor(id) {
         this.id = id;
+        // this.ver = ver;
         this.title = null;
         this.chapters = null;
         this.subTitles = null;

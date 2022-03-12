@@ -22,6 +22,27 @@ const getArticleNum = () => {
     }
 }
 
+const getVer = (fileName) => {
+    if(storage.sprVersions){
+        // const v = parseInt(JSON.parse(storage.sprVersions));
+        const v = JSON.parse(storage.sprVersions);
+        // console.log("v:");
+        // console.log(v);
+        if(v[fileName]){
+            return parseInt(v[fileName]);
+        } else {
+            return 0;
+        }
+    }
+}
+
+// バージョン番号を比べ、更新されていれば true
+const allowReload = (latest, fileName) => {
+    const ls = getVer(fileName);
+    console.log("latest:ls " + latest + " : " + ls);
+    return latest > ls;
+}
+
 const getList = async() => {
     const response = await fetch('./books/bookList.txt');
     const str = await response.text();
@@ -31,7 +52,8 @@ const getList = async() => {
         const titleAndPath = line.split("|");
         return {
             title: titleAndPath[0],
-            path: titleAndPath[1]
+            path: titleAndPath[1],
+            ver: titleAndPath[2]
         };
     });
 }
@@ -44,11 +66,57 @@ const setArticleSelector = (titles) => {
     });
 }
 
+// const loadBookObj = (fileName) => {
+//     if(storage.sprVersions){
+//         const json = JSON.parse(storage.sprVersions);
+//         if(json[fileName]){
+//             return json[fileName];
+//         } else {
+//             return null;
+//         }
+//     } else {
+//         return null;
+//     }
+// }
+
+const updateVerInLocalStorage = (path, ver) => {
+    let vers = JSON.parse(storage.sprVersions);
+    vers[path] = ver;
+    console.log("vers");
+    console.log(vers);
+    storage.sprVersions = JSON.stringify(vers);
+    console.log("updated ver");
+}
+
 const init = async() => {
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();
-    const book = await createBook(listObj[id]["path"]); // getBook.js
+    // const ver = getVer(listObj[id]["path"]);
+    const reload = allowReload(listObj[id].ver, listObj[id].path);
+    console.log("reload: " + reload);
+    // const book = reload ? await createBook(listObj[id]["path"]) : storage["sprBookObj"][listObj[id]["path"]]; // getBook.js
+    let book = {};
+    // console.log("listObj[id].path: " + listObj[id].path);
+    // console.log("storage.sprBookObj[listObj[id].path]: ");
+    // console.log(storage.sprBookObj[listObj[id].path]);
+    // if(reload || storage.sprBookObj[listObj[id].path] === undefined){
+    if(reload){
+        book = await createBook(listObj[id].path);
+        let json = JSON.parse(storage.sprBookObj);
+        json[listObj[id].path] = book;
+        storage.sprBookObj = JSON.stringify(json);
+        console.log("reloaded");
+        console.log("sprBookObj:");
+        console.log(json);
+    } else {
+        console.log("storage.sprBookObj[listObj[id].path]: ");
+        console.log(storage.sprBookObj[listObj[id].path]);
+        const obj = JSON.parse(storage.sprBookObj);
+        book = obj[listObj[id].path];
+        console.log("not reloaded - book:");
+        console.log(book);
+    }
     await addTitlePage(book.title, 1);
     let articlePagesArray = [1];
     for(let i = 0; i < book.articles.length; i++){
@@ -69,6 +137,10 @@ const init = async() => {
     const max = container.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
+    // let vers = JSON.parse(storage.sprVersions);
+    // vers[listObj[id].path] = listObj[id].ver;
+    // storage.sprVersions = JSON.stringify(vers);
+    updateVerInLocalStorage(listObj[id].path, listObj[id].ver);
     setSlidersMax(max);
     scroll(articlePagesArray[articleNum], false);
     document.getElementById("nowLoading").style.display = "none";

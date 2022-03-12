@@ -22,3 +22,11 @@ if(storage.sprArticleStartPageArray === undefined){
 if(storage.sprBackGroundColor === undefined){
     storage.sprBackGroundColor = "black";
 }
+if(storage.sprVersions === undefined){
+    storage.sprVersions = JSON.stringify({
+        default: "1"
+    });
+}
+if(storage.sprBookObj === undefined){
+    storage.sprBookObj = JSON.stringify({ default: null });
+}

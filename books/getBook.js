@@ -1,6 +1,7 @@
 "use strict";
 
 const createBook = async(path) => {
+    // if(storage.)
     const textPath = "./books/texts/" + path + ".txt";
     const response = await fetch(textPath);
     const text = await response.text();

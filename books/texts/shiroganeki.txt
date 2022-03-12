@@ -1,6 +1,5 @@
 <Title>白金記 - Unify the World</Title>
 
-
 <Chapter>第一章「日本編」</Chapter>
 
 

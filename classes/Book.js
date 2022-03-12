@@ -34,7 +34,6 @@ class Book {
 
     getSubTitles(txt) {
         const tempArray = txt.match(/<Sub>(.*)<\/Sub>/gi);
-        // console.log(tempArray);
         let subs = [];
         if(tempArray){
             for(let i = 0; i < tempArray.length; i++){

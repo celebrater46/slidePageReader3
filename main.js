@@ -46,22 +46,15 @@ const getList = async() => {
     const array = str.split(br);
     return array.map((line) => {
         const titleAndPath = line.split("|");
-        // let path = titleAndPath[1];
-        // if(path.indexOf("/") > -1){
-        //     const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
-        //     path = fileName[0].replace(".txt", "");
-        // }
         return {
             title: titleAndPath[0],
             path: titleAndPath[1],
-            // path: path,
             ver: titleAndPath[2]
         };
     });
 }
 
 const setArticleSelector = (titles) => {
-    // console.log(titles);
     if(titles){
         titles.map((title) => {
             let option = document.createElement("option");
@@ -72,19 +65,6 @@ const setArticleSelector = (titles) => {
         selectArticle.style.display = "none";
     }
 }
-
-// const loadBookObj = (fileName) => {
-//     if(storage.sprVersions){
-//         const json = JSON.parse(storage.sprVersions);
-//         if(json[fileName]){
-//             return json[fileName];
-//         } else {
-//             return null;
-//         }
-//     } else {
-//         return null;
-//     }
-// }
 
 const updateVerInLocalStorage = (path, ver) => {
     let vers = JSON.parse(storage.sprVersions);
@@ -97,7 +77,6 @@ const getFileName = (path) => {
         const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
         return fileName[0].replace(".txt", "");
     } else {
-        // console.log(path);
         return path.replace(".txt", "");
     }
 }

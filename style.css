@@ -238,13 +238,14 @@ div#swipSensor{
     }
 
     div.page{
-        width: 86vw;
+        width: 96vw;
         height: 75vh;
         margin: 0;
-        padding: 50px 7vw;
+        padding: 50px 2vw;
     }
 
     div#scale{
+        width: 96vw;
         height: 75vh;
     }
 

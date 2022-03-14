@@ -22,12 +22,8 @@ const changeSelector = (color) => {
     for(let i = 0; i < options.length; i++){
         options[i].selected = options[i].value === color;
     }
-    // options.map((item) => {
-    //     item.selected = item.value === color;
-    // });
 }
 
-// 0 == from select, 1 == daytime (white)
 const changeColor = (color) => {
     if(color !== ""){
         changeSelector(color);

@@ -4,8 +4,7 @@ const isDaytime = () => {
     const h_temp = date.getHours();
     const min = date.getMinutes();
     const h = min / 60 + h_temp; // 18:30 -> 18.5
-    // const h = 12; // test
-    console.log("time: " + h);
+
     // 各月21日の日の出と日没時刻から、昼か夜かを判断（昼なら true）
     switch (month){
         case 1:  return h >= 6.8 && h <= 16.9;

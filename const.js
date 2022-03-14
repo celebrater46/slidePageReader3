@@ -10,11 +10,19 @@ if(storage.sprFontFamily === undefined){
 if(storage.sprFontSize === undefined){
     storage.sprFontSize = 1; // 0-3
 }
+if(storage.currentTitle === undefined){
+    storage.currentTitle = "defaultTitle";
+    console.log("currentTitle: " + storage.currentTitle);
+}
+// console.log("currentTitle: " + storage.currentTitle);
 if(storage.currentPage === undefined){
     storage.currentPage = 1;
 }
 if(storage.sprMaxPage === undefined){
     storage.sprMaxPage = 1;
+}
+if(storage.sprMaxArticle === undefined){
+    storage.sprMaxArticle = 1;
 }
 // if(storage.sprArticleStartPageArray === undefined){
 //     storage.sprArticleStartPageArray = [1];

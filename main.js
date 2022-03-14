@@ -1,37 +1,38 @@
 "use strict";
 
-const getId = () => {
-    const parameter = location.search;
-    if(parameter.indexOf("book") > -1){
-        const book = parameter.match(/book=\d+/);
-        const id = book[0].substr(5);
-        return parseInt(id);
-    } else {
-        return 0;
-    }
-}
-
-const getArticleNum = () => {
-    const parameter = location.search;
-    if(parameter.indexOf("article") > -1){
-        const book = parameter.match(/article=\d+/);
-        const num = book[0].substr(8);
-        return parseInt(num);
-    } else {
-        return 0;
-    }
-}
-
-const getVer = (fileName) => {
-    if(storage.sprVersions){
-        const v = JSON.parse(storage.sprVersions);
-        if(v[fileName]){
-            return parseInt(v[fileName]);
-        } else {
-            return 0;
-        }
-    }
-}
+// const getId = () => {
+//     const parameter = location.search;
+//     if(parameter.indexOf("book") > -1){
+//         const book = parameter.match(/book=\d+/);
+//         const id = book[0].substr(5);
+//         return parseInt(id);
+//     } else {
+//         return 0;
+//     }
+// }
+//
+// const getArticleNum = (id) => {
+//     const parameter = location.search;
+//     if(parameter.indexOf("article") > -1){
+//         const book = parameter.match(/article=\d+/);
+//         const num = book[0].substr(8);
+//         storage["sprBook" + getId() + "_article"] = num;
+//         return parseInt(num);
+//     } else {
+//         return 0;
+//     }
+// }
+//
+// const getVer = (fileName) => {
+//     if(storage.sprVersions){
+//         const v = JSON.parse(storage.sprVersions);
+//         if(v[fileName]){
+//             return parseInt(v[fileName]);
+//         } else {
+//             return 0;
+//         }
+//     }
+// }
 
 // バージョン番号を比べ、更新されていれば true
 const allowReload = (latest, fileName) => {
@@ -39,20 +40,20 @@ const allowReload = (latest, fileName) => {
     return latest > ls;
 }
 
-const getList = async() => {
-    const response = await fetch('./books/bookList.txt');
-    const str = await response.text();
-    const br = checkBrCode(str);
-    const array = str.split(br);
-    return array.map((line) => {
-        const titleAndPath = line.split("|");
-        return {
-            title: titleAndPath[0],
-            path: titleAndPath[1],
-            ver: titleAndPath[2]
-        };
-    });
-}
+// const getList = async() => {
+//     const response = await fetch('./books/bookList.txt');
+//     const str = await response.text();
+//     const br = checkBrCode(str);
+//     const array = str.split(br);
+//     return array.map((line) => {
+//         const titleAndPath = line.split("|");
+//         return {
+//             title: titleAndPath[0],
+//             path: titleAndPath[1],
+//             ver: titleAndPath[2]
+//         };
+//     });
+// }
 
 const setArticleSelector = (titles) => {
     if(titles){
@@ -72,19 +73,20 @@ const updateVerInLocalStorage = (path, ver) => {
     storage.sprVersions = JSON.stringify(vers);
 }
 
-const getFileName = (path) => {
-    if(path.indexOf("/") > -1){
-        const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
-        return fileName[0].replace(".txt", "");
-    } else {
-        return path.replace(".txt", "");
-    }
-}
+// const getFileName = (path) => {
+//     if(path.indexOf("/") > -1){
+//         const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
+//         return fileName[0].replace(".txt", "");
+//     } else {
+//         return path.replace(".txt", "");
+//     }
+// }
 
 const init = async() => {
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();
+    storage.currentTitle = getFileName(listObj[id].path);
     const fileName = getFileName(listObj[id].path);
     const reload = allowReload(listObj[id].ver, fileName);
     let book = {};
@@ -97,6 +99,7 @@ const init = async() => {
         const obj = JSON.parse(storage.sprBookObj);
         book = obj[fileName];
     }
+    storage.sprMaxArticle = book.articles.length;
     if(articleNum === 0){
         await addTitlePage(book.title, 1);
     }
@@ -128,6 +131,8 @@ const init = async() => {
     const max = container.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
+    // console.log("listObj:");
+    // console.log(listObj);
     updateVerInLocalStorage(fileName, listObj[id].ver);
     setSlidersMax(max);
     // scroll(articlePagesArray[articleNum], false);

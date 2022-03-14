@@ -20,6 +20,8 @@ p{
     padding: 0;
     line-height: 180%;
     text-align: left;
+    /*text-align: justify;*/
+    line-break: strict;
 }
 
 div {

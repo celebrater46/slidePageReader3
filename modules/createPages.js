@@ -48,7 +48,6 @@ const getIndexOfLineBreak = (encodedLine, remainLines) => {
 }
 
 // 禁則処理によって排除される文字数を算出
-// const getNumOfDeletedCharsByKinsokuOneLine = (line) => {
 const getNumOfDeletedCharsByKinsokuOneLine = (line, max) => {
     const char = line.substr(max - 1, 1);
     const next = line.substr(max, 1);
@@ -74,25 +73,11 @@ const getNumOfDeletedCharsBykinsoku = (max, line) => {
     let sum = 0;
     let remains = line;
     const lines = max / maxChars;
-    // let i = 0;
     for(let i = 0; i < lines; i++){
         const num = getNumOfDeletedCharsByKinsokuOneLine(remains, maxChars);
-        // console.log("kinsoku 1line: " + num);
         remains = remains.substr(maxChars - num);
         sum += num;
     }
-    // while(remains.length > 0){
-    //     const num = getNumOfDeletedCharsByKinsokuOneLine(remains, maxChars);
-    //     console.log("kinsoku 1line: " + num);
-    //     remains = remains.substr(maxChars - num);
-    //     sum += num;
-    //     i++;
-    //     // 無限ループ対策
-    //     if(i > 1000){
-    //         console.log("endless loop occurred");
-    //         break;
-    //     }
-    // }
     return sum;
 }
 
@@ -103,8 +88,6 @@ const separateFinalLine = (line, remainLines) => {
         // ルビが１行内にあるなら、新しい改行ポイント indexOf を取得
         const lineBreak = getIndexOfLineBreak(line, remainLines);
         const kinsoku = getNumOfDeletedCharsByKinsokuOneLine(line, lineBreak);
-        // console.log(line);
-        // console.log("kinsoku" + kinsoku);
         const kinsoked = lineBreak - kinsoku;
         // １行で収まりきらない場合は分割
         if(line.length > kinsoked){
@@ -113,14 +96,7 @@ const separateFinalLine = (line, remainLines) => {
     } else {
         const kinsoku = getNumOfDeletedCharsBykinsoku(max, line);
         const kinsoked = max - kinsoku;
-        // console.log("max: " + max);
-        // console.log(line);
-        // console.log("kinsoku" + kinsoku);
-        // if(line.length > max - kinsoku){
         if(line.length > kinsoked){
-            // console.log('maxChars: ' + maxChars);
-            // const line1 = line.substr(0, max - kinsoku);
-            // const line2 = line.substr(max - kinsoku);
             const line1 = line.substr(0, kinsoked);
             const line2 = line.substr(kinsoked);
             return [line1, line2];
@@ -140,8 +116,11 @@ const getTruePHeight = (line) => {
 const getAdditionalStr = (remainWidth, array) => {
     const trueWidth = getTruePHeight(array[0]);
     const remainLines = remainWidth - trueWidth;
+    console.log("array in getAdditionalStr: ");
+    console.log(array);
     if(remainLines > rubyLineWidth
-        && array[1].length > 0)
+        // && array[1].length > 0)
+        && array[1] !== null)
     {
         // 実測した最終行が空きスペースより1行以上少ない場合、追加分を再取得
         return separateFinalLine(
@@ -178,20 +157,11 @@ const brSplitOrNot = (str, br) => {
     }
 }
 
-// let pages = [];
 const createPage = (i, remainText) => new Promise(resolve => {
     let page = new Page(i);
     const encoded = encodeRuby(remainText);
     const br = checkBrCode(encoded);
     const lines = brSplitOrNot(encoded, br);
-    // let lines = [];
-    // if(br !== ""){
-    //     lines = encoded.split(br);
-    // } else {
-    //     lines = [encoded];
-    // }
-    console.log("lines under br split: ");
-    console.log(lines);
     let outer = document.createElement("div");
     outer.classList.add("page");
     let pageDiv = document.createElement("div");
@@ -201,7 +171,6 @@ const createPage = (i, remainText) => new Promise(resolve => {
     pageDiv.id = "p-" + i;
     let currentWidth = 0;
     let finalLine = null;
-    // for(let j = 0; j < lines.length; j++){
     for(let j = 0; j <= lines.length; j++){
         const line = lines[j] === "" ? "　" : lines[j];
         scaleP.innerHTML = line;
@@ -210,35 +179,26 @@ const createPage = (i, remainText) => new Promise(resolve => {
             p.innerHTML = line;
             pageDiv.appendChild(p);
             page.lines.push(p);
-            console.log("line: " + line);
-            console.log("scaleP.clientWidth: " + scaleP.clientWidth);
             currentWidth += scaleP.clientWidth;
-            console.log("currentWidth:maxWidth " + currentWidth + " : " + maxWidth);
         } else {
             finalLine = j - 1;
             break;
         }
     }
-    console.log("finalLine: " + finalLine);
+
     if(finalLine !== null){
         if(pageDiv.lastElementChild){
             pageDiv.lastElementChild.remove(); // はみ出した最後の一行を削除
         }
         page.lines.pop();
-        // const pageWidth = pageDiv.clientWidth;
-        // const remainWidth = maxWidth - pageWidth;
         const remainWidth = maxWidth - pageDiv.clientWidth;
         let newLines = lines.slice(finalLine);
-        console.log("newLines: ");
-        console.log(newLines);
         if(remainWidth >= rubyLineWidth){
             newLines.shift();
             const array = separateFinalLine(
                 lines[finalLine],
                 Math.floor(remainWidth / rubyLineWidth)
             );
-            console.log("separated array: ");
-            console.log(array);
             const additionalArray = getAdditionalStr(remainWidth, array);
             let finalP = document.createElement("p");
             finalP.innerHTML = array[0] + additionalArray[0];
@@ -258,9 +218,8 @@ const createPage = (i, remainText) => new Promise(resolve => {
 let i = 0;
 const asyncCreatePages = async(str) => {
     const remain = await createPage(i, str);
-    console.log("remain: " + remain);
     if(remain.length > 0){
-        if(i > 100){
+        if(i > 10000){
             // 無限ループ対策
             console.log("endless loop occurred!");
         } else {

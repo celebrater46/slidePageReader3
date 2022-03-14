@@ -16,9 +16,9 @@ if(storage.currentPage === undefined){
 if(storage.sprMaxPage === undefined){
     storage.sprMaxPage = 1;
 }
-if(storage.sprArticleStartPageArray === undefined){
-    storage.sprArticleStartPageArray = [1];
-}
+// if(storage.sprArticleStartPageArray === undefined){
+//     storage.sprArticleStartPageArray = [1];
+// }
 if(storage.sprBackGroundColor === undefined){
     storage.sprBackGroundColor = "black";
 }

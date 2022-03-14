@@ -97,29 +97,41 @@ const init = async() => {
         const obj = JSON.parse(storage.sprBookObj);
         book = obj[fileName];
     }
-    await addTitlePage(book.title, 1);
-    let articlePagesArray = [1];
-    for(let i = 0; i < book.articles.length; i++){
-        const chapter = book.articles[i].chapter;
-        if(chapter !== null){
-            await addTitlePage(chapter, 2);
-        }
-        const subTitle = book.articles[i].title;
-        if(subTitle !== null){
-            await addTitlePage(subTitle, 2);
-        }
-        await asyncCreatePages(book.articles[i].plane);
-        articlePagesArray.push(container.childElementCount + 1);
+    if(articleNum === 0){
+        await addTitlePage(book.title, 1);
     }
-    articlePagesArray.pop();
-    storage.sprArticleStartPageArray = articlePagesArray;
+    const chapter = book.articles[articleNum].chapter;
+    const subTitle = book.articles[articleNum].title;
+    if(chapter !== null){
+        await addTitlePage(chapter, 2);
+    }
+    if(subTitle !== null){
+        await addTitlePage(subTitle, 2);
+    }
+    await asyncCreatePages(book.articles[articleNum].plane);
+    // let articlePagesArray = [1];
+    // for(let i = 0; i < book.articles.length; i++){
+    //     const chapter = book.articles[i].chapter;
+    //     if(chapter !== null){
+    //         await addTitlePage(chapter, 2);
+    //     }
+    //     const subTitle = book.articles[i].title;
+    //     if(subTitle !== null){
+    //         await addTitlePage(subTitle, 2);
+    //     }
+    //     await asyncCreatePages(book.articles[i].plane);
+    //     articlePagesArray.push(container.childElementCount + 1);
+    // }
+    // articlePagesArray.pop();
+    // storage.sprArticleStartPageArray = articlePagesArray;
     setArticleSelector(book.subTitles);
     const max = container.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
     updateVerInLocalStorage(fileName, listObj[id].ver);
     setSlidersMax(max);
-    scroll(articlePagesArray[articleNum], false);
+    // scroll(articlePagesArray[articleNum], false);
+    scroll(1, false);
     if(isDaytime()){
         changeColor("white");
     }

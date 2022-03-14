@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
 <body>
     <div id="containter"></div>
@@ -28,7 +28,7 @@
     <button id="bottomButton" class="stealthButton tb" onclick="toggleSlider()"></button>
     <div id="headerDiv" class="tbPanels">
         <div>
-            <select id="colorSelector" name="colorSelector" size="1" onchange="changeColor()">
+            <select id="colorSelector" name="colorSelector" size="1" onchange="changeColor('')">
                 <option value="black" selected>黒</option>
                 <option value="white">白</option>
                 <option value="beige">ベージュ</option>
@@ -45,6 +45,7 @@
     </div>
 
     <script type="text/javascript" src="const.js"></script>
+    <script type="text/javascript" src="modules/isDaytime.js"></script>
     <script type="text/javascript" src="classes/Article.js"></script>
     <script type="text/javascript" src="classes/Book.js"></script>
     <script type="text/javascript" src="classes/Page.js"></script>

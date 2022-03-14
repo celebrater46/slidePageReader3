@@ -120,6 +120,9 @@ const init = async() => {
     updateVerInLocalStorage(fileName, listObj[id].ver);
     setSlidersMax(max);
     scroll(articlePagesArray[articleNum], false);
+    if(isDaytime()){
+        changeColor("white");
+    }
     document.getElementById("nowLoading").style.display = "none";
 }
 

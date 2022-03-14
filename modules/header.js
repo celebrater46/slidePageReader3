@@ -8,15 +8,31 @@ const toggleHeader = () => {
 
 const getColors = (bgColor) => {
     switch (bgColor){
-        case "black": return ["black", "silver"];
+        case "black": return ["#333", "silver"];
         case "white": return ["white", "black"];
         case "beige": return ["#fedcbb", "#443322"];
         default: return ["#333", "silver"];
     }
 }
 
-const changeColor = () => {
-    const value = selectColor.value;
+const changeSelector = (color) => {
+    const options = selectColor.options;
+    console.log("options: ");
+    console.log(options);
+    for(let i = 0; i < options.length; i++){
+        options[i].selected = options[i].value === color;
+    }
+    // options.map((item) => {
+    //     item.selected = item.value === color;
+    // });
+}
+
+// 0 == from select, 1 == daytime (white)
+const changeColor = (color) => {
+    if(color !== ""){
+        changeSelector(color);
+    }
+    const value = color === "" ? selectColor.value : color;
     const colors = getColors(value)
     const body = document.querySelector("body");
     body.style.backgroundColor = colors[0];

@@ -5,7 +5,9 @@ let startX = null;
 let endX = null;
 
 const getPageNum = () => {
-    const pageNum = parseInt(storage.getItem("currentPage"));
+    console.log("storage.currentPage: ");
+    console.log(storage.currentPage);
+    const pageNum = parseInt(storage.currentPage);
     if(pageNum === "NaN" || pageNum < 1 || pageNum === null || pageNum === undefined){
         return 1;
     } else if(pageNum > storage.sprMaxPage){
@@ -24,31 +26,39 @@ const getNewNum = (pageNum, isLeft) => {
     }
 }
 
-const recreatePages = async (str) => {
+const recreatePages = async (article) => {
     container.innerHTML = "";
     // document.getElementById("nowLoading").style.display = "block";
     storage.currentPage = 1;
+    const chapter = article.chapter;
+    const subTitle = article.title;
+    if(chapter !== null){
+        await addTitlePage(chapter, 2);
+    }
+    if(subTitle !== null){
+        await addTitlePage(subTitle, 2);
+    }
+    await asyncCreatePages(article.plane);
     scroll(1, false);
-    await asyncCreatePages(str);
 }
 
 const moveToOtherArticle = (epNum) => {
     const maxArticle = parseInt(storage.sprMaxArticle);
     // const currentArticle = getArticleNum();
-    console.log("epNum: " + epNum);
-    console.log("maxArticle: " + maxArticle);
+    // console.log("epNum: " + epNum);
+    // console.log("maxArticle: " + maxArticle);
     if(epNum < maxArticle && epNum > 0){
         const book = JSON.parse(storage.sprBookObj);
         const title = storage.currentTitle;
-        console.log("storage.sprColor:");
-        console.log(storage.sprColor);
+        // console.log("storage.sprColor:");
+        // console.log(storage.sprColor);
         // console.log("book: ");
         // console.log(book);
         // console.log("storage.currentTitle: ");
         // console.log(storage.currentTitle);
         // console.log("book[storage.currentTitle].articles[epNum].plane: ");
-        console.log(book[title].articles[epNum].plane);
-        recreatePages(book[title].articles[epNum].plane);
+        // console.log(book[title].articles[epNum].plane);
+        recreatePages(book[title].articles[epNum]);
         // const href = location.href;
         // const index = href.indexOf("index.html");
         // const path = href.substr(0, index + 10);
@@ -69,10 +79,12 @@ const checkIsMoveArticle = (pageNum, isLeft) => {
             moveToOtherArticle(getArticleNum() + 1);
             // if(currentArticle < maxArticle){
             // }
+            return true;
         }
     } else {
         if(pageNum < 2){
             moveToOtherArticle(getArticleNum() - 1);
+            return true;
         }
     }
     return false;
@@ -85,6 +97,8 @@ const clickedButton = (isLeft) => {
     const isMove = checkIsMoveArticle(pageNum, isLeft);
     if(isMove === false){
         const newNum = getNewNum(pageNum, isLeft);
+        console.log("newNum: " + newNum);
+        // console.log("currentPage: " + storage.currentPage);
         scroll(newNum, true);
         document.getElementById("pageSlider").value = newNum;
         document.getElementById("currentPageNum").innerText = newNum;

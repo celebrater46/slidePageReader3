@@ -1,0 +1,284 @@
+@charset "UTF-8";
+
+html{
+    font-size: 20px;
+}
+
+body {
+    background-color: black;
+    color: silver;
+    text-align: center;
+    /*font-family: 'Noto Serif JP', 'Kosugi', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;*/
+    /*font-family: 'Kosugi', 'Noto Serif JP', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;*/
+    font-family: Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;
+    transition-duration: .7s;
+}
+
+p{
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    line-height: 180%;
+    text-align: left;
+}
+
+div {
+    writing-mode: vertical-rl;
+}
+
+select{
+    font-size: 1rem;
+    height: 4vh;
+    margin: 0 1vw;
+}
+
+div#nowLoading{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    right: 0;
+}
+
+@keyframes loadingRoll {
+    0% {
+        transform:rotate(0deg);
+    }
+    12.5% {
+        transform:rotate(45deg);
+    }
+    25% {
+        transform:rotate(90deg);
+    }
+    37.5% {
+        transform:rotate(135deg);
+    }
+    50% {
+        transform:rotate(180deg);
+    }
+    62.5% {
+        transform:rotate(225deg);
+    }
+    75% {
+        transform:rotate(270deg);
+    }
+    87.5% {
+        transform:rotate(315deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}
+
+img#rolling{
+    width: 100px;
+    height: 100px;
+    animation-duration: 700ms;
+    animation-timing-function: step-start;
+    animation-direction: normal;
+    animation-iteration-count: infinite;
+    animation-name: loadingRoll;
+}
+
+div#containter{
+    height: 96vh;
+}
+
+div.page{
+    width: 70vw;
+    height: 86vh;
+    margin: 0;
+    padding: 5vh 15vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.page > div {
+    /*writing-mode: vertical-rl;*/
+}
+
+div#scale{
+    width: 70vw;
+    height: 86vh;
+    background-color: silver;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: 0;
+}
+
+p#scaleTest{
+    display: inline-block;
+    font-size: 1rem;
+}
+
+p#stealth{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: auto;
+    opacity: 0.5;
+}
+
+button.stealthButton{
+    opacity: 0;
+    color: black;
+    background-color: silver;
+    position: fixed;
+}
+
+button.stealthButton.lr{
+    width: 47vw;
+    height: 70vh;
+    top: 15vh;
+}
+
+button.stealthButton.tb{
+    width: 96vw;
+    height: 15vh;
+    left: 2vw;
+}
+
+button#leftButton{
+    left: 2vw;
+}
+
+button#rightButton{
+    right: 2vw;
+}
+
+button#topButton{
+    top: 0;
+}
+
+button#bottomButton{
+    bottom: 0;
+}
+
+div.tbPanels{
+    background-color: #333;
+    opacity: 1;
+    position: fixed;
+    width: 96vw;
+    height: 6vh;
+    left: 2vw;
+    text-align: center;
+    vertical-align: middle;
+    transition-duration: .7s;
+    display: flex;
+    writing-mode: horizontal-tb;
+}
+
+div.tbPanels > div{
+    margin: 1vh auto;
+}
+
+div#headerDiv{
+    top: -10vh;
+}
+
+div#sliderDiv{
+    bottom: -10vh;
+}
+
+.headerIn{
+    transform: translateY(10vh);
+}
+
+.sliderIn{
+    transform: translateY(-10vh);
+}
+
+input#pageSlider{
+    width: 85vw;
+    background-color: black;
+    margin: 2vh 10px 0 auto;
+    transform: scale(-1, 1);
+    display: block;
+    position: absolute;
+    right: 20px;
+}
+
+p#currentPageNum{
+    width: 5vw;
+    font-size: 1vw;
+    height: 3vh;
+    background: black;
+    color: silver;
+    border: 1px solid gray;
+    margin: 10px auto;
+    display: block;
+    position: absolute;
+    left: 20px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+div#swipSensor{
+    display: none;
+}
+
+@media screen and (max-width: 1000px){
+    html{
+        /*font-size: 40px;*/
+    }
+
+    select{
+        font-size: 0.7rem;
+    }
+
+    div#containter{
+        /*height: 180vh;*/
+    }
+
+    div.page{
+        width: 96vw;
+        height: 75vh;
+        margin: 0;
+        padding: 50px 2vw;
+    }
+
+    div#scale{
+        width: 96vw;
+        height: 75vh;
+    }
+
+    div#swipSensor{
+        display: block;
+        position: fixed;
+        width: 100vw;
+        height: 70vh;
+        background-color: silver;
+        opacity: 0;
+        top: 15vh;
+        right: 0;
+    }
+
+    button.stealthButton.lr{
+        display: none;
+    }
+
+    input#pageSlider{
+        width: 70vw;
+        background-color: black;
+        margin: 2vh 10px 0 auto;
+        transform: scale(-1, 1);
+        display: block;
+        position: absolute;
+        right: 20px;
+    }
+
+    p#currentPageNum{
+        width: 10vw;
+        font-size: 4vw;
+        background: black;
+        color: silver;
+        border-width: 0;
+    }
+}

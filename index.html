@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Slide Page Reader</title>
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet">-->
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <div id="containter"></div>
+    <div id="scale">
+        <p id="scale_p">
+            テスト
+        </p>
+        <p id="scale_p_ruby">
+            <ruby><rb>試験</rb><rp>（</rp><rt>テスト</rt><rp>）</rp></ruby>
+        </p>
+        <p id="scaleTest"></p>
+    </div>
+    <div id="swipSensor"></div>
+    <button id="topButton" class="stealthButton tb" onclick="toggleHeader()"></button>
+    <button id="leftButton" class="stealthButton lr" onclick="clickedButton(true)"></button>
+    <button id="rightButton" class="stealthButton lr" onclick="clickedButton(false)"></button>
+    <button id="bottomButton" class="stealthButton tb" onclick="toggleSlider()"></button>
+    <div id="headerDiv" class="tbPanels">
+        <div>
+            <select id="colorSelector" name="colorSelector" size="1" onchange="changeColor()">
+                <option value="black" selected>黒</option>
+                <option value="white">白</option>
+                <option value="beige">ベージュ</option>
+            </select>
+            <select id="articleSelector" name="articleSelector" size="1" onchange="changeArticle()"></select>
+        </div>
+    </div>
+    <div id="sliderDiv" class="tbPanels">
+        <p id="currentPageNum">1</p>
+        <input id="pageSlider" name="pageSlider" min="1" step="1" max="10" type="range" value="0" />
+    </div>
+    <div id="nowLoading">
+        <img id="rolling" src="img/nowLoading.png" />
+    </div>
+
+    <script type="text/javascript" src="const.js"></script>
+    <script type="text/javascript" src="classes/Article.js"></script>
+    <script type="text/javascript" src="classes/Book.js"></script>
+    <script type="text/javascript" src="classes/Page.js"></script>
+    <script type="text/javascript" src="modules/encoder.js"></script>
+    <script type="text/javascript" src="modules/createPages.js"></script>
+    <script type="text/javascript" src="modules/movePages.js"></script>
+    <script type="text/javascript" src="modules/slider.js"></script>
+    <script type="text/javascript" src="modules/header.js"></script>
+    <script type="text/javascript" src="books/getBook.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+</html>

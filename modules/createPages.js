@@ -2,29 +2,12 @@
 
 const scale = document.getElementById("scale");
 const container = document.getElementById("containter")
-// const isX = false; // 横書きなら true
 const scale_p_ruby = document.getElementById("scale_p_ruby");
-// const rubyLineHeight = isX ? scale_p_ruby.clientHeight : scale_p_ruby.clientWidth; // 一行の高さ（ルビあり）
 const rubyLineWidth = scale_p_ruby.clientWidth; // 一行の高さ（ルビあり）
-// const maxWidth = isX ? scale.clientWidth : scale.clientHeight; // 縦書きの場合は反転
-// const maxHeight = isX ? scale.clientHeight : scale.clientWidth;
 const maxWidth = scale.clientWidth; // 縦書きの場合は反転
 const maxHeight = scale.clientHeight;
-// const checkIsPhone = () => {
-//     const agent = navigator.userAgent;
-//     if ((agent.indexOf('iPhone') > 0 && agent.indexOf('iPad') == -1)
-//         || agent.indexOf('iPod') > 0
-//         || agent.indexOf('Android') > 0)
-//     {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
-// const isPhone = checkIsPhone();
 const fontSizeNum = parseInt(storage.sprFontSize);
 const fontSize = fontSizeArray[fontSizeNum];
-// const maxChars = Math.floor(maxWidth / fontSize); // 1行あたりの最大文字数
 const maxChars = Math.floor(maxHeight / fontSize); // 1行あたりの最大文字数
 
 const getIndexOfLineBreak = (encodedLine, remainLines) => {
@@ -38,7 +21,6 @@ const getIndexOfLineBreak = (encodedLine, remainLines) => {
             // ルビタグの抽出
             const ruby = str.match(/<ruby><rb>([^\x01-\x7E]+)<\/rb><rp>\(<\/rp><rt>([^\x01-\x7E]+)<\/rt><rp>\)<\/rp><\/ruby>/);
             scaleTest.innerHTML += ruby[0];
-            // const pWidth = isX ? scaleTest.clientHeight : scaleTest.clientWidth;
             const pWidth = scaleTest.clientWidth;
             if(pWidth > maxWidth){
                 return Math.floor(num);
@@ -49,7 +31,6 @@ const getIndexOfLineBreak = (encodedLine, remainLines) => {
         } else {
             scaleTest.innerHTML += str.substr(num, 1);
             const pWidth = scaleTest.clientWidth;
-            // const pHeight = isX ? scaleTest.clientHeight : scaleTest.clientWidth;
             if(pWidth > maxWidth){
                 return Math.floor(num);
             } else {
@@ -82,7 +63,7 @@ const getNumOfDeletedCharsByKinsokuOneLine = (line) => {
         } else if(line.substr(maxChars - 1, 1) === "…"){
             return 2;
         }
-    } else if(next.search(/[、。」』）》〉】〛］〕｝]/) > -1){
+    } else if(next.search(/[、。・」』）》〉】〛］〕｝！？ぁぃぅぇぉゃゅょっァィゥェォャュョッ]/) > -1){
         return 1;
     }
     return 0;
@@ -107,10 +88,8 @@ const getNumOfDeletedCharsBykinsoku = (line) => {
 }
 
 const separateFinalLine = (line, remainLines) => {
-    // console.log("line in separageFinalLine: " + line);
     const hasRuby = line.indexOf("<ruby>");
     const max = maxChars * remainLines;
-    // console.log("maxChars: " + maxChars);
     if(hasRuby > -1 && hasRuby < max){
         // ルビが１行内にあるなら、新しい改行ポイント indexOf を取得
         const lineBreak = getIndexOfLineBreak(line, remainLines);
@@ -172,14 +151,11 @@ const checkBrCode = (str) => {
 
 // let pages = [];
 const createPage = (i, remainText) => new Promise(resolve => {
-    // console.log("remainText: " + remainText);
-    // pages.push(new Page(i));
     let page = new Page(i);
     const encoded = encodeRuby(remainText);
     const br = checkBrCode(encoded);
     let lines = "";
     if(br !== ""){
-        // pages[i].lines = encoded.split(br);
         lines = encoded.split(br);
     }
     let outer = document.createElement("div");
@@ -189,67 +165,37 @@ const createPage = (i, remainText) => new Promise(resolve => {
     container.appendChild(outer);
     const scaleP = document.getElementById("scale_p");
     pageDiv.id = "p-" + i;
-    // let currentHeight = 0; // 縦書きの時は横幅を意味する
     let currentWidth = 0;
     let finalLine = null;
-    // for(let j = 0; j < pages[i].lines.length; j++){
     for(let j = 0; j < lines.length; j++){
-        // let line = pages[i].lines[j];
         const line = lines[j] === "" ? "　" : lines[j];
-        console.log("line: " + line);
-        // let line = lines[j];
-        // line = line === "" ? "　" : line;
         scaleP.innerHTML = line;
-        // currentWidth += scaleP.clientWidth;
-        // if(currentHeight < maxHeight){
-        // console.log("scaleP.clientWidth:maxWidth " + scaleP.clientWidth + " : " + maxWidth);
-        console.log("currentWidth:maxWidth " + scaleP.clientWidth + " : " + maxWidth);
-        // if(currentWidth < maxWidth && scaleP.clientWidth < maxWidth){
         if(currentWidth < maxWidth){
             let p = document.createElement("p");
             p.innerHTML = line;
             pageDiv.appendChild(p);
             page.lines.push(p);
-            // const pHeight = isX ? scaleP.clientHeight : scaleP.clientWidth;
-            // currentHeight += pHeight;
             currentWidth += scaleP.clientWidth;
         } else {
             finalLine = j - 1;
-            // finalLine = j > 0 ? j - 1 : 0;
-            // finalLine = j;
             break;
         }
     }
-    console.log("finalLine: " + finalLine);
 
     if(finalLine !== null){
-        // console.log("pageDiv.lastElementChild: ");
-        // console.log(pageDiv.lastElementChild);
         if(pageDiv.lastElementChild){
             pageDiv.lastElementChild.remove(); // はみ出した最後の一行を削除
         }
         page.lines.pop();
-        // const pageHeight = isX ? pageDiv.clientHeight : pageDiv.clientWidth;
-        // const remainHeight = maxHeight - pageHeight;
         const pageWidth = pageDiv.clientWidth;
         const remainWidth = maxWidth - pageWidth;
-        // let lines = pages[i].lines.slice(finalLine);
         let newLines = lines.slice(finalLine);
-        // if(remainHeight >= rubyLineHeight){
-        console.log("remainWidth : rubyLineWidth ");
-        console.log(remainWidth + ":" + rubyLineWidth);
         if(remainWidth >= rubyLineWidth){
             newLines.shift();
-            // const i = finalLine >= 0 ? finalLine : 0;
             const array = separateFinalLine(
-                // pages[i].lines[finalLine],
                 lines[finalLine],
-                // lines[i],
-                // Math.floor(remainHeight / rubyLineHeight)
                 Math.floor(remainWidth / rubyLineWidth)
             );
-            console.log("separated array:");
-            console.log(array);
             const additionalArray = getAdditionalStr(remainWidth, array);
             let finalP = document.createElement("p");
             finalP.innerHTML = array[0] + additionalArray[0];
@@ -259,8 +205,6 @@ const createPage = (i, remainText) => new Promise(resolve => {
                 newLines.unshift(additionalArray[1]);
             }
         }
-        // console.log("newLines: ");
-        // console.log(newLines);
         resolve(newLines.join("\n"));
     } else {
         addFinalClass();
@@ -269,12 +213,8 @@ const createPage = (i, remainText) => new Promise(resolve => {
 });
 
 let i = 0;
-// let remains = "";
 const asyncCreatePages = async(str) => {
     const remain = await createPage(i, str);
-    // console.log("remains: " + remains);
-    // console.log("pages:");
-    // console.log(pages);
     if(remain.length > 0){
         if(i > 100){
             // 無限ループ対策

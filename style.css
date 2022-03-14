@@ -8,9 +8,9 @@ body {
     background-color: black;
     color: silver;
     text-align: center;
-    /*font-family: 'Noto Serif JP', 'Kosugi', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;*/
+    font-family: 'Noto Serif JP', 'Kosugi', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;
     /*font-family: 'Kosugi', 'Noto Serif JP', Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;*/
-    font-family: Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;
+    /*font-family: Hiragino Kaku Gothic ProN W3, Helvetica, Meiryo, Tahoma;*/
     transition-duration: .7s;
 }
 
@@ -238,14 +238,14 @@ div#swipSensor{
     }
 
     div.page{
-        width: 96vw;
+        width: 92vw;
         height: 75vh;
         margin: 0;
-        padding: 50px 2vw;
+        padding: 50px 4vw;
     }
 
     div#scale{
-        width: 96vw;
+        width: 92vw;
         height: 75vh;
     }
 

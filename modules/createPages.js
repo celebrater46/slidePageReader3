@@ -116,10 +116,7 @@ const getTruePHeight = (line) => {
 const getAdditionalStr = (remainWidth, array) => {
     const trueWidth = getTruePHeight(array[0]);
     const remainLines = remainWidth - trueWidth;
-    console.log("array in getAdditionalStr: ");
-    console.log(array);
     if(remainLines > rubyLineWidth
-        // && array[1].length > 0)
         && array[1] !== null)
     {
         // 実測した最終行が空きスペースより1行以上少ない場合、追加分を再取得

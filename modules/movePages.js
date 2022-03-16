@@ -26,91 +26,188 @@ const getNewNum = (pageNum, isLeft) => {
     }
 }
 
-const recreatePages = async (article, childNum, bookTitle) => {
-    const containerWidthPrev = container.clientWidth;
-    const containerChildrenPrev = container.childElementCount;
-    // container.innerHTML = "";
-    // document.getElementById("nowLoading").style.display = "block";
-    // storage.currentPage = 1;
-    // console.log("article: ");
-    // console.log(article);
-    const chapter = article.chapter;
-    // const chapter = article.chapter === undefined ? null : article.chapter;
-    const subTitle = article.title;
-    // await asyncCreatePages(article.plane, childNum);
-    // const leftButton = document.getElementById("leftButton");
-    // const rightButton = document.getElementById("rightButton");
-    leftButton.style.display = "none";
-    rightButton.style.display = "none";
-    await startCreatePages(article.plane, childNum);
-    if(subTitle !== null){
-        await addTitlePage(subTitle, 2, childNum);
-    }
-    if(chapter !== null){
-        await addTitlePage(chapter, 2, childNum);
-    }
-    if(bookTitle !== null){
-        await addTitlePage(bookTitle, 1, childNum);
-    }
-    console.log("article.id: " + article.id);
-    const childContainer = document.getElementById("childContainer_" + childNum);
-    // const max = container.childElementCount - containerChildrenPrev;
-    const max = childContainer.childElementCount;
-    // container.style.width = max * window.innerWidth + containerWidthPrev;
-    const prevMax = parseInt(storage.sprMaxPage);
-    storage.sprMaxPage = max;
-    // storage.sprScrollPermission = "false";
-    console.log("max: " + max);
-    let sliderNum = slider.value;
-    if(childNum === 0){
-        sliderNum--;
-        // nowLoading.style.display = "block";
-        storage.currentPage = max;
-        window.scrollTo({
-            // left: (parseInt(storage.sprMaxPage) - 1) * window.innerWidth
-            // left: parseInt(storage.sprMaxPage) * window.innerWidth
-            // left: max * window.innerWidth
-            left: (prevMax - 1) * window.innerWidth
-            // left: moveTo,
-            // behavior: "instant"
-        });
-        window.scrollTo({
-            // left: parseInt(storage.sprMaxPage) * window.innerWidth
-            // left: (parseInt(storage.sprMaxPage) + 1) * window.innerWidth,
-            // left: (prevMax + 1) * window.innerWidth,
-            left: prevMax * window.innerWidth,
-            behavior: "smooth"
-        });
-        // scroll(max, true);
-    } else {
-        sliderNum++;
-        storage.currentPage = 1;
-        scroll(0, false);
-        scroll(1, true);
-    }
-    // document.getElementById("currentPageNum").innerText = (sliderNewNum * maxLines).toString();
-    document.getElementById("currentPageNum").innerText = sliderNum.toString();
-    // scroll(childNum === 0 ? max + 1 : 0, false);
-    // scroll(childNum === 0 ? max : 1, true);
-    setTimeout(() =>{
-        const child1 = document.getElementById("childContainer_1");
-        if(child1 !== null){
-            child1.remove();
+const recreatePages = (article, childNum, bookTitle, isScroll) => {
+    return new Promise(async (resolve, reject)=> {
+        const containerWidthPrev = container.clientWidth;
+        const containerChildrenPrev = container.childElementCount;
+        // container.innerHTML = "";
+        // document.getElementById("nowLoading").style.display = "block";
+        // storage.currentPage = 1;
+        // console.log("article: ");
+        // console.log(article);
+        const chapter = article.chapter;
+        // const chapter = article.chapter === undefined ? null : article.chapter;
+        const subTitle = article.title;
+        // await asyncCreatePages(article.plane, childNum);
+        // const leftButton = document.getElementById("leftButton");
+        // const rightButton = document.getElementById("rightButton");
+        leftButton.style.display = "none";
+        rightButton.style.display = "none";
+        await startCreatePages(article.plane, childNum);
+        if(subTitle !== null){
+            await addTitlePage(subTitle, 2, childNum);
         }
-        console.log("hello world");
-        if(childNum === 0){
-            scroll(max, false);
-            nowLoading.style.display = "none";
+        if(chapter !== null){
+            await addTitlePage(chapter, 2, childNum);
         }
-        childContainer.id = "childContainer_1";
-        leftButton.style.display = "block";
-        rightButton.style.display = "block";
-        // storage.sprScrollPermission = "true";
-        // for(let i = 0; i < containerChildrenPrev; i++){
-        //     container.children[0].remove();
-        // }
-    }, 1000);
+        if(bookTitle !== null){
+            await addTitlePage(bookTitle, 1, childNum);
+        }
+        console.log("article.id: " + article.id);
+        const childContainer = document.getElementById("childContainer_" + childNum);
+        // const max = container.childElementCount - containerChildrenPrev;
+        const max = childContainer.childElementCount;
+        // container.style.width = max * window.innerWidth + containerWidthPrev;
+        const prevMax = parseInt(storage.sprMaxPage);
+        storage.sprMaxPage = max;
+        // storage.sprScrollPermission = "false";
+        console.log("max: " + max);
+        let sliderNum = slider.value;
+        if(isScroll){
+            if(childNum === 0){
+                sliderNum--;
+                // nowLoading.style.display = "block";
+                storage.currentPage = max;
+                window.scrollTo({
+                    // left: (parseInt(storage.sprMaxPage) - 1) * window.innerWidth
+                    // left: parseInt(storage.sprMaxPage) * window.innerWidth
+                    // left: max * window.innerWidth
+                    left: (prevMax - 1) * window.innerWidth
+                    // left: moveTo,
+                    // behavior: "instant"
+                });
+                window.scrollTo({
+                    // left: parseInt(storage.sprMaxPage) * window.innerWidth
+                    // left: (parseInt(storage.sprMaxPage) + 1) * window.innerWidth,
+                    // left: (prevMax + 1) * window.innerWidth,
+                    left: prevMax * window.innerWidth,
+                    behavior: "smooth"
+                });
+                // scroll(max, true);
+            } else {
+                sliderNum++;
+                storage.currentPage = 1;
+                scroll(0, false);
+                scroll(1, true);
+            }
+        }
+        // document.getElementById("currentPageNum").innerText = (sliderNewNum * maxLines).toString();
+        document.getElementById("currentPageNum").innerText = sliderNum.toString();
+        // scroll(childNum === 0 ? max + 1 : 0, false);
+        // scroll(childNum === 0 ? max : 1, true);
+        // console.log("Before setTimeOut!");
+        let timeId = setTimeout(() =>{
+            clearTimeout(timeId - 1);
+            console.log(timeId);
+            const child1 = document.getElementById("childContainer_1");
+            if(child1 !== null){
+                child1.remove();
+            }
+            console.log("hello world");
+            if(childNum === 0 && isScroll){
+                scroll(max, false);
+                nowLoading.style.display = "none";
+            }
+            childContainer.id = "childContainer_1";
+            leftButton.style.display = "block";
+            rightButton.style.display = "block";
+            // storage.sprScrollPermission = "true";
+            // for(let i = 0; i < containerChildrenPrev; i++){
+            //     container.children[0].remove();
+            // }
+            // console.log("After setTimeOut!");
+            resolve();
+        }, 10000);
+    });
 }
+
+// const recreatePages = async (article, childNum, bookTitle, isScroll) => {
+//     const containerWidthPrev = container.clientWidth;
+//     const containerChildrenPrev = container.childElementCount;
+//     // container.innerHTML = "";
+//     // document.getElementById("nowLoading").style.display = "block";
+//     // storage.currentPage = 1;
+//     // console.log("article: ");
+//     // console.log(article);
+//     const chapter = article.chapter;
+//     // const chapter = article.chapter === undefined ? null : article.chapter;
+//     const subTitle = article.title;
+//     // await asyncCreatePages(article.plane, childNum);
+//     // const leftButton = document.getElementById("leftButton");
+//     // const rightButton = document.getElementById("rightButton");
+//     leftButton.style.display = "none";
+//     rightButton.style.display = "none";
+//     await startCreatePages(article.plane, childNum);
+//     if(subTitle !== null){
+//         await addTitlePage(subTitle, 2, childNum);
+//     }
+//     if(chapter !== null){
+//         await addTitlePage(chapter, 2, childNum);
+//     }
+//     if(bookTitle !== null){
+//         await addTitlePage(bookTitle, 1, childNum);
+//     }
+//     console.log("article.id: " + article.id);
+//     const childContainer = document.getElementById("childContainer_" + childNum);
+//     // const max = container.childElementCount - containerChildrenPrev;
+//     const max = childContainer.childElementCount;
+//     // container.style.width = max * window.innerWidth + containerWidthPrev;
+//     const prevMax = parseInt(storage.sprMaxPage);
+//     storage.sprMaxPage = max;
+//     // storage.sprScrollPermission = "false";
+//     console.log("max: " + max);
+//     let sliderNum = slider.value;
+//     if(isScroll){
+//         if(childNum === 0){
+//             sliderNum--;
+//             // nowLoading.style.display = "block";
+//             storage.currentPage = max;
+//             window.scrollTo({
+//                 // left: (parseInt(storage.sprMaxPage) - 1) * window.innerWidth
+//                 // left: parseInt(storage.sprMaxPage) * window.innerWidth
+//                 // left: max * window.innerWidth
+//                 left: (prevMax - 1) * window.innerWidth
+//                 // left: moveTo,
+//                 // behavior: "instant"
+//             });
+//             window.scrollTo({
+//                 // left: parseInt(storage.sprMaxPage) * window.innerWidth
+//                 // left: (parseInt(storage.sprMaxPage) + 1) * window.innerWidth,
+//                 // left: (prevMax + 1) * window.innerWidth,
+//                 left: prevMax * window.innerWidth,
+//                 behavior: "smooth"
+//             });
+//             // scroll(max, true);
+//         } else {
+//             sliderNum++;
+//             storage.currentPage = 1;
+//             scroll(0, false);
+//             scroll(1, true);
+//         }
+//     }
+//     // document.getElementById("currentPageNum").innerText = (sliderNewNum * maxLines).toString();
+//     document.getElementById("currentPageNum").innerText = sliderNum.toString();
+//     // scroll(childNum === 0 ? max + 1 : 0, false);
+//     // scroll(childNum === 0 ? max : 1, true);
+//     setTimeout(() =>{
+//         const child1 = document.getElementById("childContainer_1");
+//         if(child1 !== null){
+//             child1.remove();
+//         }
+//         console.log("hello world");
+//         if(childNum === 0 && isScroll){
+//             scroll(max, false);
+//             nowLoading.style.display = "none";
+//         }
+//         childContainer.id = "childContainer_1";
+//         leftButton.style.display = "block";
+//         rightButton.style.display = "block";
+//         // storage.sprScrollPermission = "true";
+//         // for(let i = 0; i < containerChildrenPrev; i++){
+//         //     container.children[0].remove();
+//         // }
+//     }, 10000);
+// }
 
 const moveToOtherArticle = (articleNum, page) => {
     const maxArticle = parseInt(storage.sprMaxArticle);
@@ -133,7 +230,7 @@ const moveToOtherArticle = (articleNum, page) => {
         // console.log(book);
         const childNum = page > 1 ? 0 : 2;
         const bookTitle = articleNum === 0 ? book[title].title : null;
-        recreatePages(book[title].articles[articleNum], childNum, bookTitle);
+        recreatePages(book[title].articles[articleNum], childNum, bookTitle, true);
         // const href = location.href;
         // const index = href.indexOf("index.html");
         // const path = href.substr(0, index + 10);

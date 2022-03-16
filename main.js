@@ -135,7 +135,10 @@ const init = async() => {
     // console.log("listObj:");
     // console.log(listObj);
     updateVerInLocalStorage(fileName, listObj[id].ver);
-    setSlidersMax(max);
+    const obj = getArticleStartPageArray(book);
+    // console.log("obj: ");
+    // console.log(obj);
+    setSlidersMax(obj.sum);
     // scroll(articlePagesArray[articleNum], false);
     scroll(1, false);
     if(isDaytime()){

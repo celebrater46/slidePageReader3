@@ -39,3 +39,10 @@ const decodeRuby = (line) => {
         return str;
     }
 }
+
+const deleteRuby = (str) => {
+    return str.replace(
+        /｜([^《]+)《([^》]+)》/g,
+        "$1"
+    );
+}

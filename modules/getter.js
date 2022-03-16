@@ -1,5 +1,37 @@
 "use strict";
 
+// 1 article のページ数を「推計」する
+const calcPages = (lines) => {
+    const maxLines = Math.floor(maxWidth / rubyLineWidth);
+    let lineSizeSum = 0;
+    lines.map((line) => {
+        lineSizeSum += Math.ceil(line.length / maxChars);
+    });
+    return Math.ceil(lineSizeSum / maxLines);
+}
+
+const getArticleStartPageArray = (obj) => {
+    let articleStartPageArray = [1];
+    let pagesSum = 0;
+    for(let i = 0; i < obj.articles.length; i++){
+        // const lines = obj.articles[i].plane.replace(
+        //     /｜([^《]+)《([^》]+)》/g,
+        //     "$1"
+        // );
+        const str = deleteRuby(obj.articles[i].plane);
+        const br = checkBrCode(str);
+        const lines = str.split(br);
+        const pages = calcPages(lines);
+        pagesSum += pages;
+        articleStartPageArray.push(pagesSum + 1);
+    }
+    storage.sprArticleStartPageArray = articleStartPageArray;
+    return {
+        array: articleStartPageArray,
+        sum: pagesSum
+    };
+}
+
 const getId = () => {
     const parameter = location.search;
     if(parameter.indexOf("book") > -1){

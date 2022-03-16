@@ -31,6 +31,15 @@ const getArticleStartPageArray = (obj) => {
         const lines = str.split(br);
         const pages = calcPages(lines);
         pagesSum += pages;
+        if(i === 0){
+            pagesSum++;
+        }
+        if(obj.articles[i].chapter !== null){
+            pagesSum++;
+        }
+        if(obj.articles[i].title !== null){
+            pagesSum++;
+        }
         articleStartPageArray.push(pagesSum + 1);
     }
     storage.sprArticleStartPageArray = articleStartPageArray;

@@ -107,12 +107,15 @@ const init = async() => {
     const subTitle = book.articles[articleNum].title;
     // await asyncCreatePages(book.articles[articleNum].plane, 1);
     await startCreatePages(book.articles[articleNum].plane, 1);
-    // if(subTitle !== null){
-    //     await addTitlePage(subTitle, 2, 1);
-    // }
-    // if(chapter !== null){
-    //     await addTitlePage(chapter, 2, 1);
-    // }
+    if(subTitle !== null){
+        await addTitlePage(subTitle, 2, 1);
+    }
+    if(chapter !== null){
+        await addTitlePage(chapter, 2, 1);
+    }
+    if(articleNum === 0){
+        await addTitlePage(book.title, 1, 1);
+    }
     // let articlePagesArray = [1];
     // for(let i = 0; i < book.articles.length; i++){
     //     const chapter = book.articles[i].chapter;

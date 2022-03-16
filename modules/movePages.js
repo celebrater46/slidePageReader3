@@ -46,11 +46,32 @@ const recreatePages = async (article, childNum) => {
     // const max = container.childElementCount - containerChildrenPrev;
     const max = childContainer.childElementCount;
     // container.style.width = max * window.innerWidth + containerWidthPrev;
+    const prevMax = parseInt(storage.sprMaxPage);
     storage.sprMaxPage = max;
-    scroll(0, false);
-    scroll(1, true);
+    if(childNum === 0){
+        // nowLoading.style.display = "block";
+        window.scrollTo({
+            left: parseInt(storage.sprMaxPage) * window.innerWidth
+            // left: moveTo,
+            // behavior: "instant"
+        });
+        window.scrollTo({
+            left: (parseInt(storage.sprMaxPage) + 1) * window.innerWidth,
+            behavior: "smooth"
+        });
+        // scroll(max, true);
+    } else {
+        scroll(0, false);
+        scroll(1, true);
+    }
+    // scroll(childNum === 0 ? max + 1 : 0, false);
+    // scroll(childNum === 0 ? max : 1, true);
     setTimeout(() =>{
         document.getElementById("childContainer_1").remove();
+        if(childNum === 0){
+            scroll(max, false);
+            nowLoading.style.display = "none";
+        }
         childContainer.id = "childContainer_1";
         // for(let i = 0; i < containerChildrenPrev; i++){
         //     container.children[0].remove();
@@ -63,7 +84,7 @@ const moveToOtherArticle = (epNum, page) => {
     // const currentArticle = getArticleNum();
     console.log("epNum: " + epNum);
     console.log("maxArticle: " + maxArticle);
-    if(epNum < maxArticle && epNum > 0){
+    if(epNum < maxArticle && epNum >= 0){
         const book = JSON.parse(storage.sprBookObj);
         const title = storage.currentTitle;
         // console.log("storage.sprColor:");

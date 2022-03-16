@@ -21,6 +21,12 @@ if(storage.currentPage === undefined){
 if(storage.sprMaxPage === undefined){
     storage.sprMaxPage = 1;
 }
+if(storage.sprCurrentArticle === undefined
+    || parseInt(storage.sprCurrentArticle) > parseInt(storage.sprMaxArticle))
+{
+    storage.sprCurrentArticle = 0;
+    console.log("sprCurrentArticle: " + storage.sprCurrentArticle);
+}
 if(storage.sprMaxArticle === undefined){
     storage.sprMaxArticle = 1;
 }

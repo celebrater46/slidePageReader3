@@ -27,7 +27,9 @@ const getNewNum = (pageNum, isLeft) => {
 }
 
 const recreatePages = async (article) => {
-    container.innerHTML = "";
+    const containerWidthPrev = container.clientWidth;
+    const containerChildrenPrev = container.childElementCount;
+    // container.innerHTML = "";
     // document.getElementById("nowLoading").style.display = "block";
     storage.currentPage = 1;
     const chapter = article.chapter;
@@ -39,10 +41,16 @@ const recreatePages = async (article) => {
         await addTitlePage(subTitle, 2);
     }
     await asyncCreatePages(article.plane);
-    const max = container.childElementCount;
-    container.style.width = max * window.innerWidth;
+    const max = container.childElementCount - containerChildrenPrev;
+    container.style.width = max * window.innerWidth + containerWidthPrev;
     storage.sprMaxPage = max;
-    scroll(1, false);
+    scroll(0, false);
+    scroll(1, true);
+    setTimeout(() =>{
+        for(let i = 0; i < containerChildrenPrev; i++){
+            container.children[0].remove();
+        }
+    }, 1000);
 }
 
 const moveToOtherArticle = (epNum) => {

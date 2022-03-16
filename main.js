@@ -128,6 +128,7 @@ const init = async() => {
     // articlePagesArray.pop();
     // storage.sprArticleStartPageArray = articlePagesArray;
     setArticleSelector(book.subTitles);
+    storage.sprCurrentArticle = articleNum;
     const max = container.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;

@@ -100,18 +100,19 @@ const init = async() => {
         book = obj[fileName];
     }
     storage.sprMaxArticle = book.articles.length;
-    if(articleNum === 0){
-        await addTitlePage(book.title, 1);
-    }
+    // if(articleNum === 0){
+    //     await addTitlePage(book.title, 1, 1);
+    // }
     const chapter = book.articles[articleNum].chapter;
     const subTitle = book.articles[articleNum].title;
-    if(chapter !== null){
-        await addTitlePage(chapter, 2);
-    }
-    if(subTitle !== null){
-        await addTitlePage(subTitle, 2);
-    }
-    await asyncCreatePages(book.articles[articleNum].plane);
+    // await asyncCreatePages(book.articles[articleNum].plane, 1);
+    await startCreatePages(book.articles[articleNum].plane, 1);
+    // if(subTitle !== null){
+    //     await addTitlePage(subTitle, 2, 1);
+    // }
+    // if(chapter !== null){
+    //     await addTitlePage(chapter, 2, 1);
+    // }
     // let articlePagesArray = [1];
     // for(let i = 0; i < book.articles.length; i++){
     //     const chapter = book.articles[i].chapter;
@@ -129,7 +130,9 @@ const init = async() => {
     // storage.sprArticleStartPageArray = articlePagesArray;
     setArticleSelector(book.subTitles);
     storage.sprCurrentArticle = articleNum;
-    const max = container.childElementCount;
+    const childContainer = document.getElementById("childContainer_1");
+    // const max = container.childElementCount;
+    const max = childContainer.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
     // console.log("listObj:");

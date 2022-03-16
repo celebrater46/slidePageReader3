@@ -1,8 +1,16 @@
 "use strict";
 
+const getFinalPage = (articleNum) => {
+    const startPages = storage.sprArticleStartPageArray.split(",");
+    const startPage = parseInt(startPages[articleNum]);
+    const maxPage = parseInt(storage.sprMaxPage);
+    // const endPage = startPage + maxPage;
+    return startPage + maxPage;
+}
+
 // 1 article のページ数を「推計」する
 const calcPages = (lines) => {
-    const maxLines = Math.floor(maxWidth / rubyLineWidth);
+    // const maxLines = Math.floor(maxWidth / rubyLineWidth);
     let lineSizeSum = 0;
     lines.map((line) => {
         lineSizeSum += Math.ceil(line.length / maxChars);

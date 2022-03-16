@@ -1,14 +1,14 @@
 "use strict";
 
-const scale = document.getElementById("scale");
-const container = document.getElementById("containter")
-const scale_p_ruby = document.getElementById("scale_p_ruby");
-const rubyLineWidth = scale_p_ruby.clientWidth; // 一行の高さ（ルビあり）
-const maxWidth = scale.clientWidth; // 縦書きの場合は反転
-const maxHeight = scale.clientHeight;
-const fontSizeNum = parseInt(storage.sprFontSize);
-const fontSize = fontSizeArray[fontSizeNum];
-const maxChars = Math.floor(maxHeight / fontSize); // 1行あたりの最大文字数
+// const scale = document.getElementById("scale");
+// const container = document.getElementById("containter")
+// const scale_p_ruby = document.getElementById("scale_p_ruby");
+// const rubyLineWidth = scale_p_ruby.clientWidth; // 一行の高さ（ルビあり）
+// const maxWidth = scale.clientWidth; // 縦書きの場合は反転
+// const maxHeight = scale.clientHeight;
+// const fontSizeNum = parseInt(storage.sprFontSize);
+// const fontSize = fontSizeArray[fontSizeNum];
+// const maxChars = Math.floor(maxHeight / fontSize); // 1行あたりの最大文字数
 
 const getIndexOfLineBreak = (encodedLine, remainLines) => {
     const scaleTest = document.getElementById("scaleTest");
@@ -154,7 +154,8 @@ const brSplitOrNot = (str, br) => {
     }
 }
 
-const createPage = (i, remainText) => new Promise(resolve => {
+const createPage = (i, childNum, remainText) => new Promise(resolve => {
+    const childContainer = document.getElementById("childContainer_" + childNum);
     let page = new Page(i);
     const encoded = encodeRuby(remainText);
     const br = checkBrCode(encoded);
@@ -163,7 +164,8 @@ const createPage = (i, remainText) => new Promise(resolve => {
     outer.classList.add("page");
     let pageDiv = document.createElement("div");
     outer.appendChild(pageDiv);
-    container.appendChild(outer);
+    // container.appendChild(outer);
+    childContainer.appendChild(outer);
     const scaleP = document.getElementById("scale_p");
     pageDiv.id = "p-" + i;
     let currentWidth = 0;
@@ -213,20 +215,32 @@ const createPage = (i, remainText) => new Promise(resolve => {
 });
 
 let i = 0;
-const asyncCreatePages = async(str) => {
-    const remain = await createPage(i, str);
+const asyncCreatePages = async(str, childNum) => {
+    const remain = await createPage(i, childNum, str);
     if(remain.length > 0){
         if(i > 10000){
             // 無限ループ対策
             console.log("endless loop occurred!");
         } else {
             i++;
-            await asyncCreatePages(remain);
+            await asyncCreatePages(remain, childNum);
         }
     }
 }
 
-const addTitlePage = (str, num) => new Promise(resolve => {
+const startCreatePages = async(str, childNum) => {
+    const childContainer = document.createElement("div");
+    childContainer.id = "childContainer_" + childNum;
+    childContainer.classList.add("childContainer");
+    if(childNum === 0){
+        container.prepend(childContainer);
+    } else {
+        container.appendChild(childContainer);
+    }
+    await asyncCreatePages(str, childNum);
+}
+
+const addTitlePage = (str, num, childNum) => new Promise(resolve => {
     let divPage = document.createElement("div");
     divPage.classList.add("page");
     let divPageChild = document.createElement("div");
@@ -234,6 +248,9 @@ const addTitlePage = (str, num) => new Promise(resolve => {
     h.innerText = str;
     divPageChild.appendChild(h);
     divPage.appendChild(divPageChild);
-    container.appendChild(divPage);
+    const childContainer = document.getElementById("childContainer_" + childNum);
+    // container.appendChild(divPage);
+    // childContainer.appendChild(divPage);
+    childContainer.prepend(divPage);
     resolve();
 });

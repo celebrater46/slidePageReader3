@@ -32,11 +32,14 @@ const recreatePages = async (article, childNum, bookTitle) => {
     // container.innerHTML = "";
     // document.getElementById("nowLoading").style.display = "block";
     // storage.currentPage = 1;
+    // console.log("article: ");
+    // console.log(article);
     const chapter = article.chapter;
+    // const chapter = article.chapter === undefined ? null : article.chapter;
     const subTitle = article.title;
     // await asyncCreatePages(article.plane, childNum);
-    const leftButton = document.getElementById("leftButton");
-    const rightButton = document.getElementById("rightButton");
+    // const leftButton = document.getElementById("leftButton");
+    // const rightButton = document.getElementById("rightButton");
     leftButton.style.display = "none";
     rightButton.style.display = "none";
     await startCreatePages(article.plane, childNum);
@@ -58,7 +61,9 @@ const recreatePages = async (article, childNum, bookTitle) => {
     storage.sprMaxPage = max;
     // storage.sprScrollPermission = "false";
     console.log("max: " + max);
+    let sliderNum = slider.value;
     if(childNum === 0){
+        sliderNum--;
         // nowLoading.style.display = "block";
         storage.currentPage = max;
         window.scrollTo({
@@ -78,14 +83,21 @@ const recreatePages = async (article, childNum, bookTitle) => {
         });
         // scroll(max, true);
     } else {
+        sliderNum++;
         storage.currentPage = 1;
         scroll(0, false);
         scroll(1, true);
     }
+    // document.getElementById("currentPageNum").innerText = (sliderNewNum * maxLines).toString();
+    document.getElementById("currentPageNum").innerText = sliderNum.toString();
     // scroll(childNum === 0 ? max + 1 : 0, false);
     // scroll(childNum === 0 ? max : 1, true);
     setTimeout(() =>{
-        document.getElementById("childContainer_1").remove();
+        const child1 = document.getElementById("childContainer_1");
+        if(child1 !== null){
+            child1.remove();
+        }
+        console.log("hello world");
         if(childNum === 0){
             scroll(max, false);
             nowLoading.style.display = "none";
@@ -183,15 +195,29 @@ const clickedButton = (isLeft) => {
     // if(storage.sprScrollPermission === "true"){
     // }
     const pageNum = parseInt(getPageNum());
+    let additionalPage = 1;
+    // let sliderNewNum = 0;
+    const currentArticle = parseInt(storage.sprCurrentArticle);
+    if(currentArticle > 0){
+        const startPageArray = storage.sprArticleStartPageArray.split(",");
+        additionalPage = parseInt(startPageArray[currentArticle]);
+    }
+    console.log("currentArticle: " + currentArticle);
+    console.log("additionalPage: " + additionalPage);
+    const startPageArray = storage.sprArticleStartPageArray.split(",");
+    const startPage = parseInt(startPageArray[currentArticle]);
     // console.log("pageNum: " + pageNum);
     const isMove = checkIsMoveArticle(pageNum, isLeft);
     if(isMove === false){
         const newNum = getNewNum(pageNum, isLeft);
+        const sliderNewNum = newNum + additionalPage - 1;
         // console.log("newNum: " + newNum);
         // console.log("currentPage: " + storage.currentPage);
         scroll(newNum, true);
-        document.getElementById("pageSlider").value = newNum;
-        document.getElementById("currentPageNum").innerText = newNum;
+        // document.getElementById("pageSlider").value = newNum;
+        slider.value = sliderNewNum;
+        // document.getElementById("currentPageNum").innerText = (sliderNewNum * maxLines).toString();
+        document.getElementById("currentPageNum").innerText = sliderNewNum.toString();
         // nowLoading.style.display = "block";
     }
 }

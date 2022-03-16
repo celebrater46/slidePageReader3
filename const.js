@@ -10,6 +10,8 @@ const fontSizeNum = parseInt(storage.sprFontSize);
 const fontSize = fontSizeArray[fontSizeNum];
 const maxChars = Math.floor(maxHeight / fontSize); // 1行あたりの最大文字数
 const maxLines = Math.floor(maxWidth / rubyLineWidth);
+const leftButton = document.getElementById("leftButton");
+const rightButton = document.getElementById("rightButton");
 const nowLoading = document.getElementById("nowLoading");
 
 

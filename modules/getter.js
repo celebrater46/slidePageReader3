@@ -60,11 +60,17 @@ const getId = () => {
     }
 }
 
-const getArticleNumFromSliderValue = (num) => {
+const getArticleNumFromSliderValue = (sliderValue) => {
     // const articleNum = parseInt(storage.sprCurrentArticle);
     const startPages = storage.sprArticleStartPageArray.split(",");
     let i = 0;
-    while(num <= parseInt(startPages[i])){
+    // console.log("startPages: ");
+    // console.log(startPages);
+    // console.log("sliderValue: " + sliderValue);
+
+    while(sliderValue >= parseInt(startPages[i])){
+        // console.log("parseInt(startPages[i]): " + parseInt(startPages[i]));
+        // console.log("sliderValue: " + sliderValue);
         if(i > 1000){
             // 無限ループ対策
             console.log("endless loop occurred.");
@@ -72,7 +78,11 @@ const getArticleNumFromSliderValue = (num) => {
         }
         i++;
     }
-    return { i-1;
+    return {
+        id: i - 1,
+        page: sliderValue - startPages[i - 1]
+    };
+    // return i - 1;
     // for(let i = 0; i < startPages.length; i++){
     // }
     // const startPage = parseInt(startPages[articleNum]);

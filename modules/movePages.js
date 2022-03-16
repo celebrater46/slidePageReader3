@@ -100,13 +100,13 @@ const recreatePages = async (article, childNum, bookTitle) => {
     }, 1000);
 }
 
-const moveToOtherArticle = (epNum, page) => {
+const moveToOtherArticle = (articleNum, page) => {
     const maxArticle = parseInt(storage.sprMaxArticle);
     // const currentArticle = getArticleNum();
-    // console.log("epNum: " + epNum);
+    // console.log("articleNum: " + articleNum);
     // console.log("maxArticle: " + maxArticle);
-    if(epNum < maxArticle && epNum >= 0){
-        storage.sprCurrentArticle = epNum;
+    if(articleNum < maxArticle && articleNum >= 0){
+        storage.sprCurrentArticle = articleNum;
         const book = JSON.parse(storage.sprBookObj);
         const title = storage.currentTitle;
         // console.log("storage.sprColor:");
@@ -115,19 +115,19 @@ const moveToOtherArticle = (epNum, page) => {
         // console.log(book);
         // console.log("storage.currentTitle: ");
         // console.log(storage.currentTitle);
-        // console.log("book[storage.currentTitle].articles[epNum].plane: ");
-        // console.log(book[title].articles[epNum].plane);
+        // console.log("book[storage.currentTitle].articles[articleNum].plane: ");
+        // console.log(book[title].articles[articleNum].plane);
         // console.log("book: ");
         // console.log(book);
         const childNum = page > 1 ? 0 : 2;
-        const bookTitle = epNum === 0 ? book[title].title : null;
-        recreatePages(book[title].articles[epNum], childNum, bookTitle);
+        const bookTitle = articleNum === 0 ? book[title].title : null;
+        recreatePages(book[title].articles[articleNum], childNum, bookTitle);
         // const href = location.href;
         // const index = href.indexOf("index.html");
         // const path = href.substr(0, index + 10);
-        // const fullPath = path + "?book=" + getId() + "&article=" + epNum;
+        // const fullPath = path + "?book=" + getId() + "&article=" + articleNum;
         // console.log("fullPath: " + fullPath);
-        // window.location.href(path + "?book=" + getId() + "&article=" + epNum);
+        // window.location.href(path + "?book=" + getId() + "&article=" + articleNum);
         // window.location.href(path);
     } else {
         console.log("Could not move");

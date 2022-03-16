@@ -60,6 +60,26 @@ const getId = () => {
     }
 }
 
+const getArticleNumFromSliderValue = (num) => {
+    // const articleNum = parseInt(storage.sprCurrentArticle);
+    const startPages = storage.sprArticleStartPageArray.split(",");
+    let i = 0;
+    while(num <= parseInt(startPages[i])){
+        if(i > 1000){
+            // 無限ループ対策
+            console.log("endless loop occurred.");
+            break;
+        }
+        i++;
+    }
+    return { i-1;
+    // for(let i = 0; i < startPages.length; i++){
+    // }
+    // const startPage = parseInt(startPages[articleNum]);
+    // const maxPage = parseInt(storage.sprMaxPage);
+    // const endPage = startPage + maxPage;
+}
+
 const getArticleNum = () => {
     const parameter = location.search;
     if(parameter.indexOf("article") > -1){

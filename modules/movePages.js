@@ -106,6 +106,7 @@ const moveToOtherArticle = (epNum, page) => {
     // console.log("epNum: " + epNum);
     // console.log("maxArticle: " + maxArticle);
     if(epNum < maxArticle && epNum >= 0){
+        storage.sprCurrentArticle = epNum;
         const book = JSON.parse(storage.sprBookObj);
         const title = storage.currentTitle;
         // console.log("storage.sprColor:");
@@ -140,7 +141,7 @@ const checkIsMoveArticle = (pageNum, isLeft) => {
         // console.log("isLeft: " + isLeft);
         // console.log("pageNum: " + pageNum);
         // console.log("nextArticle: " + nextArticle);
-        storage.sprCurrentArticle = nextArticle;
+        // storage.sprCurrentArticle = nextArticle;
         moveToOtherArticle(nextArticle, 1);
         return true;
     } else if(isLeft === false && pageNum < 2){
@@ -148,7 +149,7 @@ const checkIsMoveArticle = (pageNum, isLeft) => {
         // console.log("isLeft: " + isLeft);
         // console.log("pageNum: " + pageNum);
         // console.log("nextArticle: " + nextArticle);
-        storage.sprCurrentArticle = nextArticle;
+        // storage.sprCurrentArticle = nextArticle;
         moveToOtherArticle(nextArticle, getFinalPage(nextArticle));
         return true;
     } else {

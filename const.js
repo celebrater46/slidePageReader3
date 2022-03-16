@@ -56,3 +56,6 @@ if(storage.sprVersions === undefined){
 if(storage.sprBookObj === undefined){
     storage.sprBookObj = JSON.stringify({ default: null });
 }
+// if(storage.sprScrollPermission === undefined){
+//     storage.sprScrollPermission = "true";
+// }

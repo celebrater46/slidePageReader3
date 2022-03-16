@@ -143,6 +143,9 @@ const scroll = (pageNum, isSmooth) => {
         left: moveTo,
         behavior: isSmooth ? 'smooth' : "instant"
     });
+    document.getElementById("nowLoading").style.right = "auto";
+    document.getElementById("nowLoading").style.left = moveTo.toString();
+    document.getElementById("nowLoading").style.display = "block";
     console.log("moveTo: " + moveTo);
     storage.currentPage = pageNum;
 }

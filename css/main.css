@@ -41,9 +41,13 @@ div#nowLoading{
     background-color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
     top: 0;
     right: 0;
+}
+
+img#rolling{
+    margin: auto calc(50vw - 50px);
 }
 
 @keyframes loadingRoll {

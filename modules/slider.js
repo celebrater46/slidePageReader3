@@ -27,6 +27,7 @@ const onChangeSlider = async () => {
         child2.remove();
     }
     await recreatePages(book[title].articles[newArticle.id], 2, bookTitle, false);
+    changeArticleSelector(newArticle.id);
     storage.currentPage = newArticle.page;
     storage.sprCurrentArticle = newArticle.id;
     const pageNums = getStartAndEndPage();

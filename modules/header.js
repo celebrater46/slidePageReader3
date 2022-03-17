@@ -39,6 +39,11 @@ const changeColor = (color) => {
     pageNumP.style.color = colors[1];
 }
 
+const changeArticleSelector = (articleNum) => {
+    selectArticle.selectedIndex = -1; // 選択の全解除
+    selectArticle.options[articleNum].selected = true;
+}
+
 const changeArticle = async () => {
     nowLoading.style.display = "block";
     leftButton.style.display = "none";
@@ -70,6 +75,7 @@ const changeArticle = async () => {
     storage.sprCurrentArticle = articleNum;
     // const pageNums = getStartAndEndPage();
     storage.sprSlidersAddtionalPageNum = startPage;
+    changeArticleSelector(articleNum);
     setTimeout(() => {
         scroll(1, false);
         nowLoading.style.display = "none";

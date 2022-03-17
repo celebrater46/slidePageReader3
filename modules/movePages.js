@@ -106,9 +106,11 @@ const moveToOtherArticle = (articleNum, page) => {
 const checkIsMoveArticle = (pageNum, isLeft) => {
     if(isLeft && pageNum >= parseInt(storage.sprMaxPage)){
         const nextArticle = parseInt(storage.sprCurrentArticle) + 1;
+        changeArticleSelector(nextArticle);
         return moveToOtherArticle(nextArticle, 1);
     } else if(isLeft === false && pageNum < 2){
         const nextArticle = parseInt(storage.sprCurrentArticle) - 1;
+        changeArticleSelector(nextArticle);
         return moveToOtherArticle(nextArticle, getFinalPage(nextArticle));
     } else {
         return false;

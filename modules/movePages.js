@@ -348,6 +348,7 @@ const scroll = (pageNum, isSmooth) => {
         left: moveTo,
         behavior: isSmooth ? 'smooth' : "instant"
     });
+    console.log("scrolled! pageNum: " + pageNum);
     // console.log("maxpage: " + storage.sprMaxPage);
     // document.getElementById("nowLoading").style.right = "auto";
     // document.getElementById("nowLoading").style.left = moveTo.toString();

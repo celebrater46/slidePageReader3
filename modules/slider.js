@@ -32,10 +32,14 @@ const onChangeSlider = async () => {
     storage.currentPage = newArticle.page;
     storage.sprCurrentArticle = newArticle.id;
     const pageNums = getStartAndEndPage();
-    if(slider.value < pageNums.start || slider.value >= pageNums.end){
-        scroll(newArticle.page, false);
-    }
+    storage.sprSlidersAddtionalPageNum = pageNums.start;
+    console.log("storage.sprSlidersAddtionalPageNum: ");
+    console.log(storage.sprSlidersAddtionalPageNum);
     setTimeout(() => {
+        // if(slider.value < pageNums.start || slider.value >= pageNums.end){
+        //     scroll(newArticle.page, false);
+        // }
+        scroll(newArticle.page, false);
         nowLoading.style.display = "none";
         leftButton.style.display = "block";
         rightButton.style.display = "block";

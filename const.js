@@ -58,9 +58,9 @@ if(storage.sprVersions === undefined){
 if(storage.sprBookObj === undefined){
     storage.sprBookObj = JSON.stringify({ default: null });
 }
-if(storage.sprSlidersAddtionalPageNum === undefined){
-    storage.sprSlidersAddtionalPageNum = 0;
-}
+storage.sprSlidersAddtionalPageNum = 0;
+// if(storage.sprSlidersAddtionalPageNum === undefined){
+// }
 // if(storage.sprScrollPermission === undefined){
 //     storage.sprScrollPermission = "true";
 // }

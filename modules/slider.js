@@ -16,8 +16,9 @@ const getStartAndEndPage = () => {
 
 const onChangeSlider = async () => {
     nowLoading.style.display = "block";
-    leftButton.style.display = "none";
-    rightButton.style.display = "none";
+    // leftButton.style.display = "none";
+    // rightButton.style.display = "none";
+    deactiveButtons();
     const book = JSON.parse(storage.sprBookObj);
     const title = storage.currentTitle;
     const newArticle = getArticleNumFromSliderValue(slider.value);
@@ -35,8 +36,9 @@ const onChangeSlider = async () => {
     setTimeout(() => {
         scroll(newArticle.page, false);
         nowLoading.style.display = "none";
-        leftButton.style.display = "block";
-        rightButton.style.display = "block";
+        // leftButton.style.display = "block";
+        // rightButton.style.display = "block";
+        activeButtons();
     }, 1000);
 }
 

@@ -1,8 +1,25 @@
 "use strict";
 
-const swipeSensor = document.getElementById("swipSensor");
+// const swipeSensor = document.getElementById("swipSensor");
 let startX = null;
 let endX = null;
+
+const activeButtons = () => {
+    if(isPhone){
+        swipeSensor.style.display = "block";
+    } else {
+        leftButton.style.display = "block";
+        rightButton.style.display = "block";
+    }
+}
+const deactiveButtons = () => {
+    if(isPhone){
+        swipeSensor.style.display = "none";
+    } else {
+        leftButton.style.display = "none";
+        rightButton.style.display = "none";
+    }
+}
 
 const getPageNum = () => {
     const pageNum = parseInt(storage.currentPage);
@@ -28,8 +45,9 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
     return new Promise(async (resolve, reject)=> {
         const chapter = article.chapter;
         const subTitle = article.title;
-        leftButton.style.display = "none";
-        rightButton.style.display = "none";
+        // leftButton.style.display = "none";
+        // rightButton.style.display = "none";
+        deactiveButtons();
         await startCreatePages(article.plane, childNum);
         if(subTitle !== null){
             await addTitlePage(subTitle, 2, childNum);
@@ -80,8 +98,9 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
                 nowLoading.style.display = "none";
             }
             childContainer.id = "childContainer_1";
-            leftButton.style.display = "block";
-            rightButton.style.display = "block";
+            // leftButton.style.display = "block";
+            // rightButton.style.display = "block";
+            activeButtons();
             resolve();
         }, 1000);
     });
@@ -158,6 +177,7 @@ const logSwipeMove = (e) => {
 
 const logSwipeEnd = (e) => {
     e.preventDefault();
+    console.log("swiped");
     if(endX - startX > 0) {
         clickedButton(true);
     } else {

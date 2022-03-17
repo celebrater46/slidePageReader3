@@ -46,9 +46,9 @@ const changeArticleSelector = (articleNum) => {
 
 const changeArticle = async () => {
     nowLoading.style.display = "block";
-    leftButton.style.display = "none";
-    rightButton.style.display = "none";
-
+    // leftButton.style.display = "none";
+    // rightButton.style.display = "none";
+    deactiveButtons();
     const array = storage.getItem("sprArticleStartPageArray").split(",");
     const articleNum = parseInt(selectArticle.selectedIndex);
     const startPage = parseInt(array[articleNum]);
@@ -71,7 +71,8 @@ const changeArticle = async () => {
     setTimeout(() => {
         scroll(1, false);
         nowLoading.style.display = "none";
-        leftButton.style.display = "block";
-        rightButton.style.display = "block";
+        // leftButton.style.display = "block";
+        // rightButton.style.display = "block";
+        activeButtons();
     }, 1000);
 }

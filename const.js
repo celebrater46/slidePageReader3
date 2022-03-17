@@ -12,7 +12,9 @@ const maxChars = Math.floor(maxHeight / fontSize); // 1行あたりの最大文�
 const maxLines = Math.floor(maxWidth / rubyLineWidth);
 const leftButton = document.getElementById("leftButton");
 const rightButton = document.getElementById("rightButton");
+const swipeSensor = document.getElementById("swipSensor");
 const nowLoading = document.getElementById("nowLoading");
+const isPhone = window.innerWidth < 1001;
 
 
 if(storage.sprColor === undefined){

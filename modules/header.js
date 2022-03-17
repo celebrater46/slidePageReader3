@@ -53,12 +53,12 @@ const changeArticle = async () => {
     document.getElementById("currentPageNum").innerText = "1";
     const title = storage.currentTitle;
     const book = JSON.parse(storage["sprBookObj_" + title]);
-    const bookTitle = articleNum === 0 ? book[title].title : null;
+    const bookTitle = articleNum === 0 ? book.title : null;
     const child2 = document.getElementById("childContainer_2");
     if(child2 !== null){
         child2.remove();
     }
-    await recreatePages(book[title].articles[articleNum], 2, bookTitle, false);
+    await recreatePages(book.articles[articleNum], 2, bookTitle, false);
     storage.currentPage = 1;
     storage.sprCurrentArticle = articleNum;
     storage.sprSlidersAddtionalPageNum = startPage;

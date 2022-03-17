@@ -4,17 +4,30 @@
 let startX = null;
 let endX = null;
 
+// スクロール無効化
+const disableScroll = (e) => {
+    e.preventDefault();
+}
+
 const activeButtons = () => {
+    console.log("isPhone: " + isPhone);
     if(isPhone){
         swipeSensor.style.display = "block";
+        document.removeEventListener('touchmove', disableScroll, { passive: false });
+        document.removeEventListener('mousewheel', disableScroll, { passive: false });
+        console.log("passive: true");
     } else {
         leftButton.style.display = "block";
         rightButton.style.display = "block";
     }
 }
 const deactiveButtons = () => {
+    console.log("isPhone: " + isPhone);
     if(isPhone){
         swipeSensor.style.display = "none";
+        document.addEventListener('touchmove', disableScroll, { passive: false });
+        document.addEventListener('mousewheel', disableScroll, { passive: false });
+        console.log("passive: false");
     } else {
         leftButton.style.display = "none";
         rightButton.style.display = "none";
@@ -110,11 +123,14 @@ const moveToOtherArticle = (articleNum, page) => {
     const maxArticle = parseInt(storage.sprMaxArticle);
     if(articleNum < maxArticle && articleNum >= 0){
         storage.sprCurrentArticle = articleNum;
-        const book = JSON.parse(storage.sprBookObj);
         const title = storage.currentTitle;
+        // const book = JSON.parse(storage.sprBookObj);
+        const book = JSON.parse(storage["sprBookObj_" + title]);
         const childNum = page > 1 ? 0 : 2;
-        const bookTitle = articleNum === 0 ? book[title].title : null;
-        recreatePages(book[title].articles[articleNum], childNum, bookTitle, true);
+        // const bookTitle = articleNum === 0 ? book[title].title : null;
+        // recreatePages(book[title].articles[articleNum], childNum, bookTitle, true);
+        const bookTitle = articleNum === 0 ? book.title : null;
+        recreatePages(book.articles[articleNum], childNum, bookTitle, true);
         return true;
     } else {
         console.log("Could not move");

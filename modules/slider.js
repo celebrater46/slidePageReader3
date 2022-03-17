@@ -19,15 +19,18 @@ const onChangeSlider = async () => {
     // leftButton.style.display = "none";
     // rightButton.style.display = "none";
     deactiveButtons();
-    const book = JSON.parse(storage.sprBookObj);
     const title = storage.currentTitle;
+    // const book = JSON.parse(storage.sprBookObj);
+    const book = JSON.parse(storage["sprBookObj_" + title]);
     const newArticle = getArticleNumFromSliderValue(slider.value);
-    const bookTitle = newArticle.id === 0 ? book[title].title : null;
+    // const bookTitle = newArticle.id === 0 ? book[title].title : null;
+    const bookTitle = newArticle.id === 0 ? book.title : null;
     const child2 = document.getElementById("childContainer_2");
     if(child2 !== null){
         child2.remove();
     }
-    await recreatePages(book[title].articles[newArticle.id], 2, bookTitle, false);
+    // await recreatePages(book[title].articles[newArticle.id], 2, bookTitle, false);
+    await recreatePages(book.articles[newArticle.id], 2, bookTitle, false);
     changeArticleSelector(newArticle.id);
     storage.currentPage = newArticle.page;
     storage.sprCurrentArticle = newArticle.id;

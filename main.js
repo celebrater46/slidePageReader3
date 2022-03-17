@@ -1,10 +1,5 @@
 "use strict";
 
-// スクロール無効化
-const disableScroll = (e) => {
-    e.preventDefault();
-}
-
 // バージョン番号を比べ、更新されていれば true
 const allowReload = (latest, fileName) => {
     const ls = getVer(fileName);
@@ -30,23 +25,26 @@ const updateVerInLocalStorage = (path, ver) => {
 }
 
 const init = async() => {
-    document.addEventListener('touchmove', disableScroll, { passive: false });
-    document.addEventListener('mousewheel', disableScroll, { passive: false });
+    // document.addEventListener('touchmove', disableScroll, { passive: false });
+    // document.addEventListener('mousewheel', disableScroll, { passive: false });
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();
-    storage.currentTitle = getFileName(listObj[id].path);
+    const bookTitle = getFileName(listObj[id].path);
+    storage.currentTitle = bookTitle;
     const fileName = getFileName(listObj[id].path);
     const reload = allowReload(listObj[id].ver, fileName);
     let book = {};
     if(reload){
         book = await createBook(listObj[id].path);
-        let json = JSON.parse(storage.sprBookObj);
-        json[fileName] = book;
-        storage.sprBookObj = JSON.stringify(json);
+        // let json = JSON.parse(storage["sprBookObj_" + bookTitle]);
+        // json[fileName] = book;
+        storage["sprBookObj_" + bookTitle] = JSON.stringify(book);
     } else {
-        const obj = JSON.parse(storage.sprBookObj);
-        book = obj[fileName];
+        console.log('storage["sprBookObj_" + bookTitle]: ');
+        console.log(storage["sprBookObj_" + bookTitle]);
+        book = JSON.parse(storage["sprBookObj_" + bookTitle]);
+        // book = obj[fileName];
     }
     storage.sprMaxArticle = book.articles.length;
     const chapter = book.articles[articleNum].chapter;

@@ -1,5 +1,5 @@
-第三世界収容所|prison.txt|2
-白金記|shiroganeki.txt|1
-極楽戦争|gokuraku.txt|2
-神仏非習合|shinfutsu.txt|1
-黒を討つ者|ss/black_breaker.txt|1
+第三世界収容所|prison.txt|3
+白金記|shiroganeki.txt|2
+極楽戦争|gokuraku.txt|3
+神仏非習合|shinfutsu.txt|2
+黒を討つ者|ss/black_breaker.txt|2

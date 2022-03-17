@@ -56,8 +56,9 @@ const changeArticle = async () => {
     document.getElementById("pageSlider").value = startPage + 1;
     document.getElementById("currentPageNum").innerText = "1";
 
-    const book = JSON.parse(storage.sprBookObj);
     const title = storage.currentTitle;
+    // const book = JSON.parse(storage.sprBookObj);
+    const book = JSON.parse(storage["sprBookObj_" + title]);
     const bookTitle = articleNum === 0 ? book[title].title : null;
     const child2 = document.getElementById("childContainer_2");
     if(child2 !== null){

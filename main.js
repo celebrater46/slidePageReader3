@@ -1,59 +1,10 @@
 "use strict";
 
-// const getId = () => {
-//     const parameter = location.search;
-//     if(parameter.indexOf("book") > -1){
-//         const book = parameter.match(/book=\d+/);
-//         const id = book[0].substr(5);
-//         return parseInt(id);
-//     } else {
-//         return 0;
-//     }
-// }
-//
-// const getArticleNum = (id) => {
-//     const parameter = location.search;
-//     if(parameter.indexOf("article") > -1){
-//         const book = parameter.match(/article=\d+/);
-//         const num = book[0].substr(8);
-//         storage["sprBook" + getId() + "_article"] = num;
-//         return parseInt(num);
-//     } else {
-//         return 0;
-//     }
-// }
-//
-// const getVer = (fileName) => {
-//     if(storage.sprVersions){
-//         const v = JSON.parse(storage.sprVersions);
-//         if(v[fileName]){
-//             return parseInt(v[fileName]);
-//         } else {
-//             return 0;
-//         }
-//     }
-// }
-
 // バージョン番号を比べ、更新されていれば true
 const allowReload = (latest, fileName) => {
     const ls = getVer(fileName);
     return latest > ls;
 }
-
-// const getList = async() => {
-//     const response = await fetch('./books/bookList.txt');
-//     const str = await response.text();
-//     const br = checkBrCode(str);
-//     const array = str.split(br);
-//     return array.map((line) => {
-//         const titleAndPath = line.split("|");
-//         return {
-//             title: titleAndPath[0],
-//             path: titleAndPath[1],
-//             ver: titleAndPath[2]
-//         };
-//     });
-// }
 
 const setArticleSelector = (titles) => {
     if(titles){
@@ -73,15 +24,6 @@ const updateVerInLocalStorage = (path, ver) => {
     storage.sprVersions = JSON.stringify(vers);
 }
 
-// const getFileName = (path) => {
-//     if(path.indexOf("/") > -1){
-//         const fileName = path.match(/\/([a-zA-Z0-9_-]+)\.txt/);
-//         return fileName[0].replace(".txt", "");
-//     } else {
-//         return path.replace(".txt", "");
-//     }
-// }
-
 const init = async() => {
     const id = getId();
     const articleNum = getArticleNum();
@@ -100,12 +42,8 @@ const init = async() => {
         book = obj[fileName];
     }
     storage.sprMaxArticle = book.articles.length;
-    // if(articleNum === 0){
-    //     await addTitlePage(book.title, 1, 1);
-    // }
     const chapter = book.articles[articleNum].chapter;
     const subTitle = book.articles[articleNum].title;
-    // await asyncCreatePages(book.articles[articleNum].plane, 1);
     await startCreatePages(book.articles[articleNum].plane, 1);
     if(subTitle !== null){
         await addTitlePage(subTitle, 2, 1);
@@ -116,36 +54,15 @@ const init = async() => {
     if(articleNum === 0){
         await addTitlePage(book.title, 1, 1);
     }
-    // let articlePagesArray = [1];
-    // for(let i = 0; i < book.articles.length; i++){
-    //     const chapter = book.articles[i].chapter;
-    //     if(chapter !== null){
-    //         await addTitlePage(chapter, 2);
-    //     }
-    //     const subTitle = book.articles[i].title;
-    //     if(subTitle !== null){
-    //         await addTitlePage(subTitle, 2);
-    //     }
-    //     await asyncCreatePages(book.articles[i].plane);
-    //     articlePagesArray.push(container.childElementCount + 1);
-    // }
-    // articlePagesArray.pop();
-    // storage.sprArticleStartPageArray = articlePagesArray;
     setArticleSelector(book.subTitles);
     storage.sprCurrentArticle = articleNum;
     const childContainer = document.getElementById("childContainer_1");
-    // const max = container.childElementCount;
     const max = childContainer.childElementCount;
     container.style.width = max * window.innerWidth;
     storage.sprMaxPage = max;
-    // console.log("listObj:");
-    // console.log(listObj);
     updateVerInLocalStorage(fileName, listObj[id].ver);
     const obj = getArticleStartPageArray(book);
-    // console.log("obj: ");
-    // console.log(obj);
     setSlidersMax(obj.sum);
-    // scroll(articlePagesArray[articleNum], false);
     scroll(1, false);
     if(isDaytime()){
         changeColor("white");

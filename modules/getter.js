@@ -4,13 +4,11 @@ const getFinalPage = (articleNum) => {
     const startPages = storage.sprArticleStartPageArray.split(",");
     const startPage = parseInt(startPages[articleNum]);
     const maxPage = parseInt(storage.sprMaxPage);
-    // const endPage = startPage + maxPage;
     return startPage + maxPage;
 }
 
 // 1 article のページ数を「推計」する
 const calcPages = (lines) => {
-    // const maxLines = Math.floor(maxWidth / rubyLineWidth);
     let lineSizeSum = 0;
     lines.map((line) => {
         lineSizeSum += Math.ceil(line.length / maxChars);
@@ -22,10 +20,6 @@ const getArticleStartPageArray = (obj) => {
     let articleStartPageArray = [1];
     let pagesSum = 0;
     for(let i = 0; i < obj.articles.length; i++){
-        // const lines = obj.articles[i].plane.replace(
-        //     /｜([^《]+)《([^》]+)》/g,
-        //     "$1"
-        // );
         const str = deleteRuby(obj.articles[i].plane);
         const br = checkBrCode(str);
         const lines = str.split(br);
@@ -61,16 +55,9 @@ const getId = () => {
 }
 
 const getArticleNumFromSliderValue = (sliderValue) => {
-    // const articleNum = parseInt(storage.sprCurrentArticle);
     const startPages = storage.sprArticleStartPageArray.split(",");
     let i = 0;
-    // console.log("startPages: ");
-    // console.log(startPages);
-    // console.log("sliderValue: " + sliderValue);
-
     while(sliderValue >= parseInt(startPages[i])){
-        // console.log("parseInt(startPages[i]): " + parseInt(startPages[i]));
-        // console.log("sliderValue: " + sliderValue);
         if(i > 1000){
             // 無限ループ対策
             console.log("endless loop occurred.");
@@ -82,12 +69,6 @@ const getArticleNumFromSliderValue = (sliderValue) => {
         id: i - 1,
         page: sliderValue - startPages[i - 1]
     };
-    // return i - 1;
-    // for(let i = 0; i < startPages.length; i++){
-    // }
-    // const startPage = parseInt(startPages[articleNum]);
-    // const maxPage = parseInt(storage.sprMaxPage);
-    // const endPage = startPage + maxPage;
 }
 
 const getArticleNum = () => {
@@ -95,7 +76,6 @@ const getArticleNum = () => {
     if(parameter.indexOf("article") > -1){
         const book = parameter.match(/article=\d+/);
         const num = book[0].substr(8);
-        // storage["sprBook" + getId() + "_article"] = num;
         return parseInt(num);
     } else {
         return 0;

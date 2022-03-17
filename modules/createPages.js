@@ -1,15 +1,5 @@
 "use strict";
 
-// const scale = document.getElementById("scale");
-// const container = document.getElementById("containter")
-// const scale_p_ruby = document.getElementById("scale_p_ruby");
-// const rubyLineWidth = scale_p_ruby.clientWidth; // 一行の高さ（ルビあり）
-// const maxWidth = scale.clientWidth; // 縦書きの場合は反転
-// const maxHeight = scale.clientHeight;
-// const fontSizeNum = parseInt(storage.sprFontSize);
-// const fontSize = fontSizeArray[fontSizeNum];
-// const maxChars = Math.floor(maxHeight / fontSize); // 1行あたりの最大文字数
-
 const getIndexOfLineBreak = (encodedLine, remainLines) => {
     const scaleTest = document.getElementById("scaleTest");
     scaleTest.innerHTML = "";
@@ -164,7 +154,6 @@ const createPage = (i, childNum, remainText) => new Promise(resolve => {
     outer.classList.add("page");
     let pageDiv = document.createElement("div");
     outer.appendChild(pageDiv);
-    // container.appendChild(outer);
     childContainer.appendChild(outer);
     const scaleP = document.getElementById("scale_p");
     pageDiv.id = "p-" + i;
@@ -249,8 +238,6 @@ const addTitlePage = (str, num, childNum) => new Promise(resolve => {
     divPageChild.appendChild(h);
     divPage.appendChild(divPageChild);
     const childContainer = document.getElementById("childContainer_" + childNum);
-    // container.appendChild(divPage);
-    // childContainer.appendChild(divPage);
     childContainer.prepend(divPage);
     resolve();
 });

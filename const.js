@@ -28,7 +28,6 @@ if(storage.currentTitle === undefined){
     storage.currentTitle = "defaultTitle";
     console.log("currentTitle: " + storage.currentTitle);
 }
-// console.log("currentTitle: " + storage.currentTitle);
 if(storage.currentPage === undefined){
     storage.currentPage = 1;
 }
@@ -59,8 +58,3 @@ if(storage.sprBookObj === undefined){
     storage.sprBookObj = JSON.stringify({ default: null });
 }
 storage.sprSlidersAddtionalPageNum = 0;
-// if(storage.sprSlidersAddtionalPageNum === undefined){
-// }
-// if(storage.sprScrollPermission === undefined){
-//     storage.sprScrollPermission = "true";
-// }

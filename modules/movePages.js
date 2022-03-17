@@ -9,10 +9,18 @@ const getPageNum = () => {
     // console.log(storage.currentPage);
     const pageNum = parseInt(storage.currentPage);
     if(pageNum === "NaN" || pageNum < 1 || pageNum === null || pageNum === undefined){
+    // if(pageNum === "NaN" || pageNum === null || pageNum === undefined){
         return 1;
     } else if(pageNum > storage.sprMaxPage){
+        // storage.sprSlidersAddtionalPageNum = pageNum - 1;
         storage.currentPage = 1;
         return 1;
+    // } else if(pageNum < 2){
+    //     const articleNum = parseInt(storage.sprCurrentArticle);
+    //     if(articleNum > 0){
+    //
+    //     }
+    //     return pageNum;
     } else {
         return pageNum;
     }
@@ -65,9 +73,13 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
         let sliderNum = slider.value;
         if(isScroll){
             if(childNum === 0){
-                sliderNum--;
+                // sliderNum--;
                 // nowLoading.style.display = "block";
+                const prevAddition = parseInt(storage.sprSlidersAddtionalPageNum);
+                const newAddition = prevAddition - max;
+                storage.sprSlidersAddtionalPageNum = newAddition;
                 storage.currentPage = max;
+                sliderNum = max + newAddition;
                 window.scrollTo({
                     // left: (parseInt(storage.sprMaxPage) - 1) * window.innerWidth
                     // left: parseInt(storage.sprMaxPage) * window.innerWidth
@@ -85,8 +97,11 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
                 });
                 // scroll(max, true);
             } else {
-                sliderNum++;
+                const prevAddition = parseInt(storage.sprSlidersAddtionalPageNum);
+                const newAddition = prevAddition + prevMax;
+                storage.sprSlidersAddtionalPageNum = newAddition;
                 storage.currentPage = 1;
+                sliderNum = newAddition + 1;
                 scroll(0, false);
                 scroll(1, true);
             }
@@ -96,9 +111,10 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
         // scroll(childNum === 0 ? max + 1 : 0, false);
         // scroll(childNum === 0 ? max : 1, true);
         // console.log("Before setTimeOut!");
-        let timeId = setTimeout(() =>{
-            clearTimeout(timeId - 1);
-            console.log(timeId);
+        // let timeId = setTimeout(() =>{
+        setTimeout(() =>{
+            // clearTimeout(timeId - 1);
+            // console.log(timeId);
             const child1 = document.getElementById("childContainer_1");
             if(child1 !== null){
                 child1.remove();
@@ -117,7 +133,7 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
             // }
             // console.log("After setTimeOut!");
             resolve();
-        }, 10000);
+        }, 1000);
     });
 }
 
@@ -238,8 +254,10 @@ const moveToOtherArticle = (articleNum, page) => {
         // console.log("fullPath: " + fullPath);
         // window.location.href(path + "?book=" + getId() + "&article=" + articleNum);
         // window.location.href(path);
+        return true;
     } else {
         console.log("Could not move");
+        return false;
     }
 }
 
@@ -251,16 +269,18 @@ const checkIsMoveArticle = (pageNum, isLeft) => {
         // console.log("pageNum: " + pageNum);
         // console.log("nextArticle: " + nextArticle);
         // storage.sprCurrentArticle = nextArticle;
-        moveToOtherArticle(nextArticle, 1);
-        return true;
+        // const moved = moveToOtherArticle(nextArticle, 1);
+        return moveToOtherArticle(nextArticle, 1);
+        // return moved;
     } else if(isLeft === false && pageNum < 2){
         const nextArticle = parseInt(storage.sprCurrentArticle) - 1;
         // console.log("isLeft: " + isLeft);
         // console.log("pageNum: " + pageNum);
         // console.log("nextArticle: " + nextArticle);
         // storage.sprCurrentArticle = nextArticle;
-        moveToOtherArticle(nextArticle, getFinalPage(nextArticle));
-        return true;
+        // const moved = moveToOtherArticle(nextArticle, getFinalPage(nextArticle));
+        return moveToOtherArticle(nextArticle, getFinalPage(nextArticle));
+        // return moved;
     } else {
         return false;
     }
@@ -299,15 +319,17 @@ const clickedButton = (isLeft) => {
         const startPageArray = storage.sprArticleStartPageArray.split(",");
         additionalPage = parseInt(startPageArray[currentArticle]);
     }
-    console.log("currentArticle: " + currentArticle);
-    console.log("additionalPage: " + additionalPage);
+    // console.log("currentArticle: " + currentArticle);
+    // console.log("additionalPage: " + additionalPage);
     const startPageArray = storage.sprArticleStartPageArray.split(",");
     const startPage = parseInt(startPageArray[currentArticle]);
     // console.log("pageNum: " + pageNum);
     const isMove = checkIsMoveArticle(pageNum, isLeft);
     if(isMove === false){
         const newNum = getNewNum(pageNum, isLeft);
-        const sliderNewNum = newNum + additionalPage - 1;
+        // const sliderNewNum = newNum + additionalPage - 1;
+        const sliderNewNum = newNum + parseInt(storage.sprSlidersAddtionalPageNum);
+        // const sliderNewNum = (isLeft ? pageNum + 1 : pageNum - 1) + parseInt(storage.sprSlidersAddtionalPageNum);
         // console.log("newNum: " + newNum);
         // console.log("currentPage: " + storage.currentPage);
         scroll(newNum, true);

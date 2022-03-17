@@ -1,5 +1,10 @@
 "use strict";
 
+// スクロール無効化
+const disableScroll = (e) => {
+    e.preventDefault();
+}
+
 // バージョン番号を比べ、更新されていれば true
 const allowReload = (latest, fileName) => {
     const ls = getVer(fileName);
@@ -25,6 +30,8 @@ const updateVerInLocalStorage = (path, ver) => {
 }
 
 const init = async() => {
+    document.addEventListener('touchmove', disableScroll, { passive: false });
+    document.addEventListener('mousewheel', disableScroll, { passive: false });
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();

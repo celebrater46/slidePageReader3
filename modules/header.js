@@ -39,11 +39,41 @@ const changeColor = (color) => {
     pageNumP.style.color = colors[1];
 }
 
-const changeArticle = () => {
+const changeArticle = async () => {
+    nowLoading.style.display = "block";
+    leftButton.style.display = "none";
+    rightButton.style.display = "none";
+
     const array = storage.getItem("sprArticleStartPageArray").split(",");
-    const key = parseInt(selectArticle.selectedIndex);
-    const num = parseInt(array[key]);
-    scroll(num, true);
-    document.getElementById("pageSlider").value = num;
-    document.getElementById("currentPageNum").innerText = num.toString();
+    const articleNum = parseInt(selectArticle.selectedIndex);
+    const startPage = parseInt(array[articleNum]);
+    scroll(startPage, true);
+    document.getElementById("pageSlider").value = startPage + 1;
+    // document.getElementById("currentPageNum").innerText = num.toString();
+    document.getElementById("currentPageNum").innerText = "1";
+
+    const book = JSON.parse(storage.sprBookObj);
+    const title = storage.currentTitle;
+    const bookTitle = articleNum === 0 ? book[title].title : null;
+    const child2 = document.getElementById("childContainer_2");
+    if(child2 !== null){
+        child2.remove();
+    }
+    // console.log("book: ");
+    // console.log(book);
+    // console.log("book[title].articles[articleNum]: ");
+    // console.log(book[title].articles[articleNum]);
+    // console.log("title: " + title);
+    console.log("articleNum: " + articleNum);
+    await recreatePages(book[title].articles[articleNum], 2, bookTitle, false);
+    storage.currentPage = 1;
+    storage.sprCurrentArticle = articleNum;
+    // const pageNums = getStartAndEndPage();
+    storage.sprSlidersAddtionalPageNum = startPage;
+    setTimeout(() => {
+        scroll(1, false);
+        nowLoading.style.display = "none";
+        leftButton.style.display = "block";
+        rightButton.style.display = "block";
+    }, 1000);
 }

@@ -21,7 +21,7 @@ const onChangeSlider = async () => {
     const book = JSON.parse(storage.sprBookObj);
     const title = storage.currentTitle;
     const newArticle = getArticleNumFromSliderValue(slider.value);
-    const bookTitle = newArticle === 0 ? book[title].title : null;
+    const bookTitle = newArticle.id === 0 ? book[title].title : null;
     const child2 = document.getElementById("childContainer_2");
     if(child2 !== null){
         child2.remove();

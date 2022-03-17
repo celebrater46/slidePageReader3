@@ -54,7 +54,6 @@ const changeArticle = async () => {
     const startPage = parseInt(array[articleNum]);
     scroll(startPage, true);
     document.getElementById("pageSlider").value = startPage + 1;
-    // document.getElementById("currentPageNum").innerText = num.toString();
     document.getElementById("currentPageNum").innerText = "1";
 
     const book = JSON.parse(storage.sprBookObj);
@@ -64,16 +63,9 @@ const changeArticle = async () => {
     if(child2 !== null){
         child2.remove();
     }
-    // console.log("book: ");
-    // console.log(book);
-    // console.log("book[title].articles[articleNum]: ");
-    // console.log(book[title].articles[articleNum]);
-    // console.log("title: " + title);
-    console.log("articleNum: " + articleNum);
     await recreatePages(book[title].articles[articleNum], 2, bookTitle, false);
     storage.currentPage = 1;
     storage.sprCurrentArticle = articleNum;
-    // const pageNums = getStartAndEndPage();
     storage.sprSlidersAddtionalPageNum = startPage;
     changeArticleSelector(articleNum);
     setTimeout(() => {

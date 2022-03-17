@@ -120,13 +120,13 @@ const checkIsMoveArticle = (pageNum, isLeft) => {
 const clickedButton = (isLeft) => {
     const pageNum = parseInt(getPageNum());
     // let additionalPage = 1;
-    const currentArticle = parseInt(storage.sprCurrentArticle);
-    if(currentArticle > 0){
-        // const startPageArray = storage.sprArticleStartPageArray.split(",");
-        // additionalPage = parseInt(startPageArray[currentArticle]);
-    }
-    const startPageArray = storage.sprArticleStartPageArray.split(",");
-    const startPage = parseInt(startPageArray[currentArticle]);
+    // const currentArticle = parseInt(storage.sprCurrentArticle);
+    // if(currentArticle > 0){
+    //     // const startPageArray = storage.sprArticleStartPageArray.split(",");
+    //     // additionalPage = parseInt(startPageArray[currentArticle]);
+    // }
+    // const startPageArray = storage.sprArticleStartPageArray.split(",");
+    // const startPage = parseInt(startPageArray[currentArticle]);
     const isMove = checkIsMoveArticle(pageNum, isLeft);
     if(isMove === false){
         const newNum = getNewNum(pageNum, isLeft);

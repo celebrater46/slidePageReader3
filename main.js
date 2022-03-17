@@ -25,8 +25,6 @@ const updateVerInLocalStorage = (path, ver) => {
 }
 
 const init = async() => {
-    // document.addEventListener('touchmove', disableScroll, { passive: false });
-    // document.addEventListener('mousewheel', disableScroll, { passive: false });
     const id = getId();
     const articleNum = getArticleNum();
     const listObj = await getList();
@@ -37,14 +35,9 @@ const init = async() => {
     let book = {};
     if(reload){
         book = await createBook(listObj[id].path);
-        // let json = JSON.parse(storage["sprBookObj_" + bookTitle]);
-        // json[fileName] = book;
         storage["sprBookObj_" + bookTitle] = JSON.stringify(book);
     } else {
-        console.log('storage["sprBookObj_" + bookTitle]: ');
-        console.log(storage["sprBookObj_" + bookTitle]);
         book = JSON.parse(storage["sprBookObj_" + bookTitle]);
-        // book = obj[fileName];
     }
     storage.sprMaxArticle = book.articles.length;
     const chapter = book.articles[articleNum].chapter;

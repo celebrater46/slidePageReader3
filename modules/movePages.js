@@ -1,6 +1,5 @@
 "use strict";
 
-// const swipeSensor = document.getElementById("swipSensor");
 let startX = null;
 let endX = null;
 
@@ -10,24 +9,20 @@ const disableScroll = (e) => {
 }
 
 const activeButtons = () => {
-    console.log("isPhone: " + isPhone);
     if(isPhone){
         swipeSensor.style.display = "block";
         document.removeEventListener('touchmove', disableScroll, { passive: false });
         document.removeEventListener('mousewheel', disableScroll, { passive: false });
-        console.log("passive: true");
     } else {
         leftButton.style.display = "block";
         rightButton.style.display = "block";
     }
 }
 const deactiveButtons = () => {
-    console.log("isPhone: " + isPhone);
     if(isPhone){
         swipeSensor.style.display = "none";
         document.addEventListener('touchmove', disableScroll, { passive: false });
         document.addEventListener('mousewheel', disableScroll, { passive: false });
-        console.log("passive: false");
     } else {
         leftButton.style.display = "none";
         rightButton.style.display = "none";
@@ -58,8 +53,6 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
     return new Promise(async (resolve, reject)=> {
         const chapter = article.chapter;
         const subTitle = article.title;
-        // leftButton.style.display = "none";
-        // rightButton.style.display = "none";
         deactiveButtons();
         await startCreatePages(article.plane, childNum);
         if(subTitle !== null){
@@ -111,8 +104,6 @@ const recreatePages = (article, childNum, bookTitle, isScroll) => {
                 nowLoading.style.display = "none";
             }
             childContainer.id = "childContainer_1";
-            // leftButton.style.display = "block";
-            // rightButton.style.display = "block";
             activeButtons();
             resolve();
         }, 1000);
@@ -124,11 +115,8 @@ const moveToOtherArticle = (articleNum, page) => {
     if(articleNum < maxArticle && articleNum >= 0){
         storage.sprCurrentArticle = articleNum;
         const title = storage.currentTitle;
-        // const book = JSON.parse(storage.sprBookObj);
         const book = JSON.parse(storage["sprBookObj_" + title]);
         const childNum = page > 1 ? 0 : 2;
-        // const bookTitle = articleNum === 0 ? book[title].title : null;
-        // recreatePages(book[title].articles[articleNum], childNum, bookTitle, true);
         const bookTitle = articleNum === 0 ? book.title : null;
         recreatePages(book.articles[articleNum], childNum, bookTitle, true);
         return true;
@@ -193,7 +181,6 @@ const logSwipeMove = (e) => {
 
 const logSwipeEnd = (e) => {
     e.preventDefault();
-    console.log("swiped");
     if(endX - startX > 0) {
         clickedButton(true);
     } else {

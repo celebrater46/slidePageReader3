@@ -56,7 +56,4 @@ if(storage.sprVersions === undefined){
         default: "1"
     });
 }
-// if(storage.sprBookObj === undefined){
-//     storage.sprBookObj = JSON.stringify({ default: null });
-// }
 storage.sprSlidersAddtionalPageNum = 0;

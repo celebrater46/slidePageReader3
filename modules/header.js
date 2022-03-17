@@ -17,8 +17,6 @@ const getColors = (bgColor) => {
 
 const changeSelector = (color) => {
     const options = selectColor.options;
-    console.log("options: ");
-    console.log(options);
     for(let i = 0; i < options.length; i++){
         options[i].selected = options[i].value === color;
     }
@@ -46,8 +44,6 @@ const changeArticleSelector = (articleNum) => {
 
 const changeArticle = async () => {
     nowLoading.style.display = "block";
-    // leftButton.style.display = "none";
-    // rightButton.style.display = "none";
     deactiveButtons();
     const array = storage.getItem("sprArticleStartPageArray").split(",");
     const articleNum = parseInt(selectArticle.selectedIndex);
@@ -57,7 +53,6 @@ const changeArticle = async () => {
     document.getElementById("currentPageNum").innerText = "1";
 
     const title = storage.currentTitle;
-    // const book = JSON.parse(storage.sprBookObj);
     const book = JSON.parse(storage["sprBookObj_" + title]);
     const bookTitle = articleNum === 0 ? book[title].title : null;
     const child2 = document.getElementById("childContainer_2");
@@ -72,8 +67,6 @@ const changeArticle = async () => {
     setTimeout(() => {
         scroll(1, false);
         nowLoading.style.display = "none";
-        // leftButton.style.display = "block";
-        // rightButton.style.display = "block";
         activeButtons();
     }, 1000);
 }

@@ -51,7 +51,6 @@ const changeArticle = async () => {
     scroll(startPage, true);
     document.getElementById("pageSlider").value = startPage + 1;
     document.getElementById("currentPageNum").innerText = "1";
-
     const title = storage.currentTitle;
     const book = JSON.parse(storage["sprBookObj_" + title]);
     const bookTitle = articleNum === 0 ? book[title].title : null;

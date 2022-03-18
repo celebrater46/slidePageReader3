@@ -193,6 +193,17 @@ div#sliderDiv{
     bottom: -10vh;
 }
 
+div#burgerDiv{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+div#burgerDiv > img{
+    width: 60px;
+    height: 60px;
+}
+
 .headerIn{
     transform: translateY(10vh);
 }
@@ -286,5 +297,9 @@ div#swipSensor{
         background: black;
         color: silver;
         border-width: 0;
+    }
+
+    div#burgerDiv{
+        top: -100px;
     }
 }

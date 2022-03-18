@@ -69,3 +69,20 @@ const changeArticle = async () => {
         activeButtons();
     }, 1000);
 }
+
+const toggleTb = () => {
+    if(headerDiv.className.indexOf("headerIn") > -1
+    && sliderDiv.className.indexOf("sliderIn") > -1)
+    {
+        headerDiv.classList.remove("headerIn");
+        sliderDiv.classList.remove("sliderIn");
+    } else {
+        headerDiv.classList.add("headerIn");
+        sliderDiv.classList.add("sliderIn");
+    }
+    // console.log(headerDiv.classList);
+    // console.log(headerDiv.className);
+    // const headerClass = headerDiv.classList;
+    // console.log(headerClass);
+    // console.log(headerClass.indexOf("headerIn"));
+}

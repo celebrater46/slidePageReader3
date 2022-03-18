@@ -31,8 +31,8 @@ const changeColor = (color) => {
     const body = document.querySelector("body");
     body.style.backgroundColor = colors[0];
     body.style.color = colors[1];
-    headerDiv.style.backgroundColor = colors[0];
-    sliderDiv.style.backgroundColor = colors[0];
+    // headerDiv.style.backgroundColor = colors[0];
+    // sliderDiv.style.backgroundColor = colors[0];
     pageNumP.style.backgroundColor = value === "beige" ? "white" : colors[0];
     pageNumP.style.color = colors[1];
 }
